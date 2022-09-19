@@ -1,17 +1,57 @@
-import React, {useContext} from 'react';
-import {View, Text} from 'react-native';
-import {ThemeContext} from '../../context';
+import React from 'react';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StatusBar,
+  Animated,
+  Image,
+} from 'react-native';
+import {Backdrop, Indicator} from './components';
+import {styles} from './styles';
+import {useOnboarding} from './useOnboarding';
 
 export const Onboarding = () => {
-  const {
-    theme: {colors},
-  } = useContext(ThemeContext);
-
-  const {textPrimary, background} = colors;
-
+  const {dataOnboarding, scrollX, textPrimary, textSecondary, background} =
+    useOnboarding();
   return (
-    <View style={{backgroundColor: background, flex: 1}}>
-      <Text style={{color: textPrimary}}>Onboarding 1</Text>
-    </View>
+    <SafeAreaView style={{...styles.wrapper, backgroundColor: background}}>
+      <StatusBar hidden />
+      <Backdrop scrollX={scrollX} />
+      <Animated.FlatList
+        data={dataOnboarding}
+        keyExtractor={item => item.key}
+        horizontal
+        scrollEventThrottle={32}
+        onScroll={Animated.event([
+          {nativeEvent: {contentOffset: {x: scrollX}}},
+        ])}
+        contentContainerStyle={{paddingBottom: 100}}
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled
+        renderItem={({item}) => {
+          return (
+            <View style={styles.containerOnboard}>
+              <View style={styles.cardOnboard}>
+                <Image source={item.imgLogo} style={styles.imgOnboard} />
+              </View>
+              <View style={{flex: 0.3}}>
+                <Text style={{...styles.textTitle, color: textPrimary}}>
+                  {item.title}
+                </Text>
+                <Text style={{...styles.textDescription, color: textSecondary}}>
+                  {item.description}
+                </Text>
+              </View>
+              <Indicator
+                scrollX={scrollX}
+                data={dataOnboarding}
+                backgroundColor={textPrimary}
+              />
+            </View>
+          );
+        }}
+      />
+    </SafeAreaView>
   );
 };
