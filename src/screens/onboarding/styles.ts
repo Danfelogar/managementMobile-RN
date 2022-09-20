@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet, Platform} from 'react-native';
 
 export const {width, height} = Dimensions.get('screen');
 
@@ -13,10 +13,10 @@ export const styles = StyleSheet.create({
   containerOnboard: {
     width: width,
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   cardOnboard: {
-    backgroundColor: 'orange',
-    flex: 0.7,
+    flex: Platform.OS === 'ios' ? 0.6 : 0.7,
     justifyContent: 'center',
   },
   imgOnboard: {
@@ -24,11 +24,16 @@ export const styles = StyleSheet.create({
     height: height / 2,
     resizeMode: 'contain',
   },
+  cardOnboardText: {
+    flex: Platform.OS === 'ios' ? 0.4 : 0.3,
+    justifyContent: Platform.OS === 'ios' ? 'center' : 'flex-start',
+    paddingHorizontal: 25,
+  },
 
   textTitle: {
     fontWeight: '800',
     fontSize: 24,
-    marginBottom: 10,
+    marginBottom: 17,
   },
   textDescription: {
     fontWeight: '300',
@@ -38,6 +43,9 @@ export const styles = StyleSheet.create({
   wrapperIndicator: {
     position: 'absolute',
     bottom: -25,
+    // left: 0,
+    // width,
+    // backgroundColor: 'red',
     flexDirection: 'row',
   },
   ballIndicator: {

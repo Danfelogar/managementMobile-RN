@@ -7,7 +7,7 @@ import {
   Animated,
   Image,
 } from 'react-native';
-import {Backdrop, Indicator} from './components';
+import {Backdrop, Indicator, SquareDecorator} from './components';
 import {styles} from './styles';
 import {useOnboarding} from './useOnboarding';
 
@@ -18,14 +18,16 @@ export const Onboarding = () => {
     <SafeAreaView style={{...styles.wrapper, backgroundColor: background}}>
       <StatusBar hidden />
       <Backdrop scrollX={scrollX} />
+      <SquareDecorator scrollX={scrollX} background={background} />
       <Animated.FlatList
         data={dataOnboarding}
         keyExtractor={item => item.key}
         horizontal
         scrollEventThrottle={32}
-        onScroll={Animated.event([
-          {nativeEvent: {contentOffset: {x: scrollX}}},
-        ])}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {x: scrollX}}}],
+          {useNativeDriver: false},
+        )}
         contentContainerStyle={{paddingBottom: 100}}
         showsHorizontalScrollIndicator={false}
         pagingEnabled
@@ -35,7 +37,7 @@ export const Onboarding = () => {
               <View style={styles.cardOnboard}>
                 <Image source={item.imgLogo} style={styles.imgOnboard} />
               </View>
-              <View style={{flex: 0.3}}>
+              <View style={styles.cardOnboardText}>
                 <Text style={{...styles.textTitle, color: textPrimary}}>
                   {item.title}
                 </Text>
