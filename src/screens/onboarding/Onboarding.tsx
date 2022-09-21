@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from '@rneui/themed';
 import {
   View,
   Text,
@@ -8,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import {Backdrop, Indicator, SquareDecorator} from './components';
-import {styles} from './styles';
+import {styles, height, width} from './styles';
 import {useOnboarding} from './useOnboarding';
 
 export const Onboarding = () => {
@@ -45,11 +46,47 @@ export const Onboarding = () => {
                   {item.description}
                 </Text>
               </View>
-              <Indicator
-                scrollX={scrollX}
-                data={dataOnboarding}
-                backgroundColor={textPrimary}
-              />
+              <View style={{...styles.contentActions}}>
+                <Indicator
+                  scrollX={scrollX}
+                  data={dataOnboarding}
+                  backgroundColor={textPrimary}
+                />
+                {['1', '2'].includes(item.key) && (
+                  <Button
+                    icon={{
+                      name: 'arrow-right',
+                      type: 'font-awesome',
+                      size: height / 37.5,
+                      color: textPrimary,
+                    }}
+                    iconRight
+                    iconContainerStyle={{marginLeft: 10}}
+                    titleStyle={{fontWeight: '700'}}
+                    buttonStyle={{
+                      ...styles.btnStyle,
+                      backgroundColor: background,
+                    }}
+                    containerStyle={{
+                      ...styles.contentBtn,
+                    }}
+                  />
+                )}
+                {item.key === '3' && (
+                  <Button
+                    title="INGRESAR"
+                    iconContainerStyle={{marginLeft: 10}}
+                    titleStyle={{fontWeight: '700', color: textPrimary}}
+                    buttonStyle={{
+                      ...styles.btnLoginStyle,
+                      backgroundColor: background,
+                    }}
+                    containerStyle={{
+                      ...styles.contentBtn,
+                    }}
+                  />
+                )}
+              </View>
             </View>
           );
         }}

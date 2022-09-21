@@ -39,15 +39,52 @@ export const styles = StyleSheet.create({
     fontWeight: '300',
   },
 
+  //contentActions
+  contentActions: {
+    position: 'absolute',
+    bottom: -35,
+    left: 0,
+    width,
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'center',
+  },
+
+  contentBtn: {
+    display: 'flex',
+    width: width / 2,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignContent: 'center',
+    paddingHorizontal: 25,
+  },
+
+  btnStyle: {
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 13,
+    width: width / 7,
+    height: height / 17.5,
+  },
+
+  btnLoginStyle: {
+    borderColor: 'transparent',
+    borderWidth: 0,
+    borderRadius: 13,
+    width: width / 3.4,
+    height: height / 17.5,
+  },
+
   //Indicator
   wrapperIndicator: {
-    position: 'absolute',
-    bottom: -25,
-    // left: 0,
-    // width,
-    // backgroundColor: 'red',
+    display: 'flex',
+    width: width / 2,
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignSelf: 'center',
+    paddingHorizontal: 25,
   },
+
   ballIndicator: {
     height: 10,
     width: 10,
