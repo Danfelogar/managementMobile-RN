@@ -9,18 +9,29 @@ import {
   Image,
 } from 'react-native';
 import {Backdrop, Indicator, SquareDecorator} from './components';
-import {styles, height, width} from './styles';
+import {styles, height} from './styles';
 import {useOnboarding} from './useOnboarding';
 
 export const Onboarding = () => {
-  const {dataOnboarding, scrollX, textPrimary, textSecondary, background} =
-    useOnboarding();
+  const {
+    dataOnboarding,
+    scrollX,
+    textPrimary,
+    textSecondary,
+    background,
+    slidesRef,
+    idxSlides,
+    slidesScroll,
+  } = useOnboarding();
+
   return (
     <SafeAreaView style={{...styles.wrapper, backgroundColor: background}}>
       <StatusBar hidden />
       <Backdrop scrollX={scrollX} />
       <SquareDecorator scrollX={scrollX} background={background} />
       <Animated.FlatList
+        ref={slidesRef}
+        initialScrollIndex={idxSlides}
         data={dataOnboarding}
         keyExtractor={item => item.key}
         horizontal
@@ -70,6 +81,7 @@ export const Onboarding = () => {
                     containerStyle={{
                       ...styles.contentBtn,
                     }}
+                    onPress={() => slidesScroll(item.indexSlide)}
                   />
                 )}
                 {item.key === '3' && (
@@ -84,6 +96,12 @@ export const Onboarding = () => {
                     containerStyle={{
                       ...styles.contentBtn,
                     }}
+                    onPress={() =>
+                      Animated.event(
+                        [{nativeEvent: {contentOffset: {x: scrollX}}}],
+                        {useNativeDriver: false},
+                      )
+                    }
                   />
                 )}
               </View>
