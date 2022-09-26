@@ -1,7 +1,8 @@
-import {Animated, View} from 'react-native';
 import React from 'react';
-import {IDataOnboarding} from '../types';
-import {styles, width} from '../styles';
+import {Animated, View} from 'react-native';
+import {IDataOnboarding} from './types';
+import {customOnboarding} from './customOnboarding';
+import {width} from '../../helpers';
 
 interface Props {
   data: IDataOnboarding[];
@@ -11,7 +12,7 @@ interface Props {
 
 export function Indicator({scrollX, data, backgroundColor}: Props) {
   return (
-    <View style={styles.wrapperIndicator}>
+    <View style={customOnboarding.wrapperIndicator}>
       {data.map((item, idx) => {
         const inputRange = [(idx - 1) * width, idx * width, (idx + 1) * width];
         const scale = scrollX.interpolate({
@@ -28,7 +29,7 @@ export function Indicator({scrollX, data, backgroundColor}: Props) {
           <Animated.View
             key={`indicator-${idx}`}
             style={{
-              ...styles.ballIndicator,
+              ...customOnboarding.ballIndicator,
               backgroundColor: backgroundColor,
               transform: [{scale}],
               opacity,

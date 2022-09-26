@@ -1,5 +1,5 @@
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import {ThemeProvider} from './src/context';
 import {Navigation} from './src/navigation';
 
@@ -13,7 +13,7 @@ const App = () => {
   );
 };
 
-const AppState = ({children}: any) => {
+const AppState = ({children}: {children: JSX.Element | JSX.Element[]}) => {
   return <ThemeProvider>{children}</ThemeProvider>;
 };
 

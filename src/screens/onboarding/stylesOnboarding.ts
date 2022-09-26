@@ -1,8 +1,7 @@
-import {Dimensions, StyleSheet, Platform} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
+import {height, width} from '../../helpers';
 
-export const {width, height} = Dimensions.get('screen');
-
-export const styles = StyleSheet.create({
+export const stylesOnboarding = StyleSheet.create({
   //Onboarding
 
   wrapper: {
@@ -14,9 +13,10 @@ export const styles = StyleSheet.create({
     width: width,
     alignItems: 'center',
     justifyContent: 'flex-end',
+    position: 'relative',
   },
   cardOnboard: {
-    flex: Platform.OS === 'ios' ? 0.6 : 0.7,
+    flex: 0.9,
     justifyContent: 'center',
   },
   imgOnboard: {
@@ -25,24 +25,28 @@ export const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   cardOnboardText: {
-    flex: Platform.OS === 'ios' ? 0.4 : 0.3,
-    justifyContent: Platform.OS === 'ios' ? 'center' : 'flex-start',
+    flex: 0.45,
+    justifyContent: Platform.OS === 'ios' ? 'flex-start' : 'flex-start',
     paddingHorizontal: 25,
   },
 
   textTitle: {
     fontWeight: '800',
-    fontSize: 24,
+    fontSize: 29,
     marginBottom: 17,
+    fontFamily: 'Roboto-Regular',
   },
   textDescription: {
-    fontWeight: '300',
+    fontWeight: '400',
+    fontSize: 15,
+    fontFamily: 'Roboto-Regular',
+    // color: 'rgba(255, 255, 255, 0.7)',
   },
 
   //contentActions
   contentActions: {
     position: 'absolute',
-    bottom: -35,
+    bottom: -37,
     left: 0,
     width,
     display: 'flex',
@@ -60,6 +64,9 @@ export const styles = StyleSheet.create({
   },
 
   btnStyle: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderColor: 'transparent',
     borderWidth: 0,
     borderRadius: 13,
@@ -68,6 +75,9 @@ export const styles = StyleSheet.create({
   },
 
   btnLoginStyle: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderColor: 'transparent',
     borderWidth: 0,
     borderRadius: 13,
@@ -75,21 +85,9 @@ export const styles = StyleSheet.create({
     height: height / 17.5,
   },
 
-  //Indicator
-  wrapperIndicator: {
-    display: 'flex',
-    width: width / 2,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignSelf: 'center',
-    paddingHorizontal: 25,
-  },
-
-  ballIndicator: {
-    height: 10,
-    width: 10,
-    borderRadius: 5,
-    backgroundColor: '#333',
-    margin: 10,
+  TextBtnLogin: {
+    fontWeight: '900',
+    fontFamily: 'Roboto-Black',
+    fontSize: 16.5,
   },
 });

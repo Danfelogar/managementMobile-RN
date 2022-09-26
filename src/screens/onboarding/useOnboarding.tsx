@@ -5,6 +5,7 @@ import {ThemeContext} from '../../context';
 export const useOnboarding = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const [idxSlides, setIdxSlides] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
   const slidesRef = useRef<FlatList>(null);
   const {
     theme: {colors},
@@ -42,14 +43,18 @@ export const useOnboarding = () => {
 
   const slidesScroll = (idx: number) => {
     setIdxSlides(idx + 1);
+    setIsScrolling(true);
   };
 
   useEffect(() => {
-    slidesRef.current?.scrollToIndex({
-      index: idxSlides,
-      animated: true,
-    });
-  }, [idxSlides]);
+    if (isScrolling) {
+      slidesRef.current?.scrollToIndex({
+        index: idxSlides,
+        animated: true,
+      });
+      setIsScrolling(false);
+    }
+  }, [idxSlides, isScrolling]);
 
   return {
     //data

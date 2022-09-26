@@ -47,7 +47,7 @@ export const darkTheme = {
     primary: '#ff8600',
     secondary: '#1565c0',
     tertiary: '#7209b7',
-    background: '#121212',
+    background: '#202124',
     card: 'rgba(255, 255, 255, 0.16)',
     textPrimary: '#fff',
     textSecondary: 'rgba(255, 255, 255, 0.7)',

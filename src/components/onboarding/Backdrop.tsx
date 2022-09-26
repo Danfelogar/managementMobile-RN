@@ -1,7 +1,7 @@
 import React from 'react';
 import {Animated, StyleSheet} from 'react-native';
-import {width} from '../styles';
-import {useOnboarding} from '../useOnboarding';
+import {width} from '../../helpers';
+import {useOnboarding} from '../../screens';
 
 export function Backdrop({scrollX}: any) {
   const {bgs} = useOnboarding();

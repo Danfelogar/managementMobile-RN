@@ -20,9 +20,15 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>AbyssinicaSIL-Regular.ttf</string>
+		<string>BungeeSpice-Regular.ttf</string>
+		<string>Roboto-Regular.ttf</string>
+		<string>Roboto-Black.ttf</string>
+		<string>Roboto-Bold.ttf</string>
+		<string>Roboto-Thin.ttf</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string></string>
 	<key>CFBundleDisplayName</key>
 	<string>ManagementApp</string>
 	<key>CFBundleExecutable</key>

@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/AbyssinicaSIL-Regular.ttf",
+      "sha1": "6d928ce9fbe30fdebaf6878750ed2ad5acb7ff87"
+    },
+    {
+      "path": "assets/fonts/BungeeSpice-Regular.ttf",
+      "sha1": "950f46f38eb732bed184079ed8d3d29db42b8e61"
+    },
+    {
+      "path": "assets/fonts/Roboto-Regular.ttf",
+      "sha1": "56c5c0d38bde4c1f1549dda43db37b09c608aad3"
+    }
+  ]
+}

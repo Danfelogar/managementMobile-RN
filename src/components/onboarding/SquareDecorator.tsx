@@ -1,6 +1,6 @@
 import React from 'react';
 import {Animated} from 'react-native';
-import {height, width} from '../styles';
+import {height, width} from '../../helpers';
 
 export function SquareDecorator({
   scrollX,

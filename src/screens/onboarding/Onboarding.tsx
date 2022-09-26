@@ -1,5 +1,5 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {Button} from '@rneui/themed';
 import {
   View,
   Text,
@@ -8,11 +8,15 @@ import {
   Animated,
   Image,
 } from 'react-native';
-import {Backdrop, Indicator, SquareDecorator} from './components';
-import {styles, height} from './styles';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {Backdrop, Button, Indicator, SquareDecorator} from '../../components';
+import {height} from '../../helpers';
+import {stylesOnboarding} from './stylesOnboarding';
 import {useOnboarding} from './useOnboarding';
 
-export const Onboarding = () => {
+interface Props extends NativeStackScreenProps<any, any> {}
+
+export const Onboarding = ({navigation}: Props) => {
   const {
     dataOnboarding,
     scrollX,
@@ -25,7 +29,8 @@ export const Onboarding = () => {
   } = useOnboarding();
 
   return (
-    <SafeAreaView style={{...styles.wrapper, backgroundColor: background}}>
+    <SafeAreaView
+      style={{...stylesOnboarding.wrapper, backgroundColor: background}}>
       <StatusBar hidden />
       <Backdrop scrollX={scrollX} />
       <SquareDecorator scrollX={scrollX} background={background} />
@@ -45,64 +50,72 @@ export const Onboarding = () => {
         pagingEnabled
         renderItem={({item}) => {
           return (
-            <View style={styles.containerOnboard}>
-              <View style={styles.cardOnboard}>
-                <Image source={item.imgLogo} style={styles.imgOnboard} />
+            <View style={stylesOnboarding.containerOnboard}>
+              <View style={stylesOnboarding.cardOnboard}>
+                <Image
+                  source={item.imgLogo}
+                  style={stylesOnboarding.imgOnboard}
+                />
               </View>
-              <View style={styles.cardOnboardText}>
-                <Text style={{...styles.textTitle, color: textPrimary}}>
+              <View style={stylesOnboarding.cardOnboardText}>
+                <Text
+                  style={{...stylesOnboarding.textTitle, color: textPrimary}}>
                   {item.title}
                 </Text>
-                <Text style={{...styles.textDescription, color: textSecondary}}>
+                <Text
+                  style={{
+                    ...stylesOnboarding.textDescription,
+                    color: textSecondary,
+                  }}>
                   {item.description}
                 </Text>
               </View>
-              <View style={{...styles.contentActions}}>
+              <View style={{...stylesOnboarding.contentActions}}>
                 <Indicator
                   scrollX={scrollX}
                   data={dataOnboarding}
                   backgroundColor={textPrimary}
                 />
                 {['1', '2'].includes(item.key) && (
-                  <Button
-                    icon={{
-                      name: 'arrow-right',
-                      type: 'font-awesome',
-                      size: height / 37.5,
-                      color: textPrimary,
-                    }}
-                    iconRight
-                    iconContainerStyle={{marginLeft: 10}}
-                    titleStyle={{fontWeight: '700'}}
-                    buttonStyle={{
-                      ...styles.btnStyle,
-                      backgroundColor: background,
-                    }}
-                    containerStyle={{
-                      ...styles.contentBtn,
-                    }}
-                    onPress={() => slidesScroll(item.indexSlide)}
-                  />
+                  <View style={{...stylesOnboarding.contentBtn}}>
+                    <Button
+                      buttonStyle={{
+                        ...stylesOnboarding.btnStyle,
+                        backgroundColor: background,
+                      }}
+                      activeOpacity={0.9}
+                      onPress={() => slidesScroll(item.indexSlide)}
+                      firstIcon={
+                        <Icon
+                          name="arrow-right"
+                          size={height / 28}
+                          color={textPrimary}
+                        />
+                      }
+                    />
+                  </View>
                 )}
+
                 {item.key === '3' && (
-                  <Button
-                    title="INGRESAR"
-                    iconContainerStyle={{marginLeft: 10}}
-                    titleStyle={{fontWeight: '700', color: textPrimary}}
-                    buttonStyle={{
-                      ...styles.btnLoginStyle,
-                      backgroundColor: background,
-                    }}
-                    containerStyle={{
-                      ...styles.contentBtn,
-                    }}
-                    onPress={() =>
-                      Animated.event(
-                        [{nativeEvent: {contentOffset: {x: scrollX}}}],
-                        {useNativeDriver: false},
-                      )
-                    }
-                  />
+                  <View style={{...stylesOnboarding.contentBtn}}>
+                    <Button
+                      buttonStyle={{
+                        ...stylesOnboarding.btnLoginStyle,
+                        backgroundColor: background,
+                      }}
+                      activeOpacity={0.9}
+                      onPress={() => navigation.push('Login')}
+                      textContent={
+                        <Text
+                          style={{
+                            ...stylesOnboarding.TextBtnLogin,
+                            color: textPrimary,
+                          }}>
+                          INGRESAR
+                        </Text>
+                      }
+                    />
+                  </View>
                 )}
               </View>
             </View>
