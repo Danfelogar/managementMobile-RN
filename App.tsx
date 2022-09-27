@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {ThemeProvider} from './src/context';
+import {AuthProvider, ThemeProvider} from './src/context';
 import {Navigation} from './src/navigation';
 
 const App = () => {
@@ -14,7 +14,11 @@ const App = () => {
 };
 
 const AppState = ({children}: {children: JSX.Element | JSX.Element[]}) => {
-  return <ThemeProvider>{children}</ThemeProvider>;
+  return (
+    <AuthProvider>
+      <ThemeProvider>{children}</ThemeProvider>
+    </AuthProvider>
+  );
 };
 
 export default App;

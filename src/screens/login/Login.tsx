@@ -138,7 +138,7 @@ export function Login({navigation}: Props) {
           </View>
           <Text style={{...stylesLogin.textHelper, color: textSecondary}}>
             No recuerdas tus credenciales ?{' '}
-            <Text style={{color: primary}}>Comunícate con un líder</Text>
+            <Text style={{color: primary}}>Preciosa aquí</Text>
           </Text>
         </View>
       </ScrollView>
