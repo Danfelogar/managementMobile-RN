@@ -1,6 +1,7 @@
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
 import {IInputGeneric} from '../types';
+import {Controller} from 'react-hook-form';
 
 export function InputGeneric({
   keyboardType,
@@ -12,42 +13,64 @@ export function InputGeneric({
   isSecretText,
   inputColor,
   lastIcon,
+  name,
+  control,
 }: IInputGeneric) {
   return (
-    <View
-      style={{
-        ...styles.contentInputGeneric,
-        borderColor: borderColor,
-      }}>
-      {firstIcon && firstIcon}
-      <TextInput
-        style={{
-          ...styles.contentInput,
-          color: inputColor,
-          maxWidth:
-            firstIcon && lastIcon
-              ? '85%'
-              : firstIcon || lastIcon
-              ? '92%'
-              : '100%',
-        }}
-        placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor}
-        autoCorrect={autoCorrect}
-        secureTextEntry={isSecretText || false}
-        keyboardType={keyboardType || 'default'}
-        // onChangeText={onChangeText}
-        // value={'text'}
-      />
-      {lastIcon && lastIcon}
-    </View>
+    <Controller
+      shouldUnregister
+      control={control}
+      name={name}
+      render={({field: {onChange, value = ''}, formState: {errors}}) => {
+        return (
+          <View style={styles.WrapperStandard}>
+            <View
+              style={{
+                ...styles.contentInputGeneric,
+                borderColor: borderColor,
+              }}>
+              {firstIcon && firstIcon}
+              <TextInput
+                style={{
+                  ...styles.contentInput,
+                  color: inputColor,
+                  maxWidth:
+                    firstIcon && lastIcon
+                      ? '85%'
+                      : firstIcon || lastIcon
+                      ? '92%'
+                      : '100%',
+                }}
+                placeholder={placeholder}
+                placeholderTextColor={placeholderTextColor}
+                autoCorrect={autoCorrect}
+                secureTextEntry={isSecretText || false}
+                keyboardType={keyboardType || 'default'}
+                onChangeText={onChange}
+                value={value}
+              />
+              {lastIcon && lastIcon}
+            </View>
+            {!!errors[name] && (
+              <Text style={styles.helperText}>
+                {errors[name]?.message as string}
+              </Text>
+            )}
+          </View>
+        );
+      }}
+    />
   );
 }
 
 const styles = StyleSheet.create({
+  WrapperStandard: {
+    display: 'flex',
+    flexDirection: 'column',
+    // backgroundColor: 'orange',
+  },
   contentInputGeneric: {
     display: 'flex',
-    height: '100%',
     borderRadius: 10,
     paddingVertical: 6,
     paddingHorizontal: 10,
@@ -65,5 +88,12 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     height: '100%',
     padding: 10,
+  },
+  helperText: {
+    fontFamily: 'Roboto-Regular',
+    fontSize: 15.2,
+    paddingLeft: 10,
+    // fontWeight: '400',
+    color: '#ff4d4f',
   },
 });

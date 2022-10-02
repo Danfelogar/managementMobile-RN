@@ -14,6 +14,7 @@ export interface IButton {
   firstIcon?: ReactNode;
   textContent?: ReactNode;
   lastIcon?: ReactNode;
+  isLoading?: boolean;
 }
 
 export interface IInputGeneric {
@@ -26,4 +27,7 @@ export interface IInputGeneric {
   isSecretText?: boolean;
   inputColor: string;
   lastIcon?: ReactNode;
+  //control
+  name: string;
+  control: any;
 }

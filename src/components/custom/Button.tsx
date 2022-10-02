@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {ActivityIndicator, TouchableOpacity} from 'react-native';
 import {IButton} from './types';
 
 export const Button = ({
@@ -9,15 +9,23 @@ export const Button = ({
   firstIcon,
   textContent,
   lastIcon,
+  isLoading = false,
 }: IButton) => {
   return (
     <TouchableOpacity
+      disabled={isLoading}
       activeOpacity={activeOpacity || 0.5}
       onPress={onPress}
       style={{...buttonStyle}}>
-      {firstIcon && firstIcon}
-      {textContent && textContent}
-      {lastIcon && lastIcon}
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#ff8600" />
+      ) : (
+        <>
+          {firstIcon && firstIcon}
+          {textContent && textContent}
+          {lastIcon && lastIcon}
+        </>
+      )}
     </TouchableOpacity>
   );
 };

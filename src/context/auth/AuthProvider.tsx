@@ -51,6 +51,7 @@ export const AuthProvider: FC<Props> = ({children}) => {
     return await managementApi
       .post('/user/login', {...val})
       .then(({data}) => {
+        console.log({data});
         login(data as IUser);
       })
       .catch(err => {

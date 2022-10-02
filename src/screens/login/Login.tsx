@@ -1,4 +1,3 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {
   View,
@@ -7,30 +6,98 @@ import {
   Platform,
   Image,
   SafeAreaView,
-  TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
+
 import {Button, InputGeneric} from '../../components';
-import {height} from '../../helpers';
+import {height, ICredencial} from '../../helpers';
 import {stylesLogin} from './stylesLogin';
 import {useLogin} from './useLogin';
+import {FormProvider, useFormContext} from 'react-hook-form';
 
-interface Props extends NativeStackScreenProps<any, any> {}
-
-export function Login({navigation}: Props) {
+const LoginForm = () => {
   const {
     textPrimary,
     textSecondary,
     isPasswordSecret,
+    secondary,
+    card,
+    isLoading,
+    changePasswordSecret,
+    validateCredentialsLogin,
+  } = useLogin();
+  const {control, handleSubmit: onSubmit} = useFormContext<ICredencial>();
+  return (
+    <>
+      <View style={{...stylesLogin.contentInput}}>
+        <InputGeneric
+          control={control}
+          name={'email'}
+          borderColor={textPrimary}
+          firstIcon={
+            <IconFeather name="mail" size={height / 34} color={textPrimary} />
+          }
+          placeholder="Correo"
+          keyboardType="email-address"
+          placeholderTextColor={textSecondary}
+          inputColor={textPrimary}
+          autoCorrect
+        />
+      </View>
+      <View style={{...stylesLogin.contentInput}}>
+        <InputGeneric
+          control={control}
+          name={'contrasena'}
+          borderColor={textPrimary}
+          lastIcon={
+            <IconIonicons
+              onPress={changePasswordSecret}
+              name={isPasswordSecret ? 'eye' : 'eye-off'}
+              size={height / 34}
+              color={textPrimary}
+            />
+          }
+          placeholder="Contraseña"
+          isSecretText={isPasswordSecret}
+          placeholderTextColor={textSecondary}
+          inputColor={textPrimary}
+          autoCorrect
+        />
+      </View>
+      <View style={{...stylesLogin.contentBtnLogin}}>
+        <Button
+          isLoading={isLoading}
+          buttonStyle={{
+            ...stylesLogin.btnLoginStyle,
+            backgroundColor: card,
+          }}
+          activeOpacity={0.9}
+          onPress={onSubmit(validateCredentialsLogin)}
+          textContent={
+            <Text
+              style={{
+                ...stylesLogin.textBtnLogin,
+                color: secondary,
+              }}>
+              INICIAR SESIÓN
+            </Text>
+          }
+        />
+      </View>
+    </>
+  );
+};
+
+export function Login() {
+  const {
+    textPrimary,
+    textSecondary,
     background,
     primary,
-    secondary,
     tertiary,
-    card,
-    changePasswordSecret,
+    formMethods,
   } = useLogin();
   // console.log(Platform.OS, StatusBar.currentHeight);
   return (
@@ -46,19 +113,6 @@ export function Login({navigation}: Props) {
                 backgroundColor: background,
                 shadowColor: background,
               }}>
-              <TouchableOpacity
-                activeOpacity={0.85}
-                onPress={() => navigation.goBack()}
-                style={{...stylesLogin.contentIconAction}}>
-                <Icon
-                  name="arrow-back-ios"
-                  size={height / 28}
-                  color={textPrimary}
-                />
-                <Text style={{...stylesLogin.textIcon, color: textPrimary}}>
-                  Regresar
-                </Text>
-              </TouchableOpacity>
               <View style={{...stylesLogin.contentLogoTextAct}}>
                 <Text style={{...stylesLogin.textLogo}}>Una Herramienta</Text>
                 <Text style={{...stylesLogin.textLogo}}>a tu</Text>
@@ -82,60 +136,9 @@ export function Login({navigation}: Props) {
           <Text style={{...stylesLogin.textTitleBody, color: textPrimary}}>
             Empecemos la experiencia
           </Text>
-          <View style={{...stylesLogin.contentInput}}>
-            <InputGeneric
-              borderColor={textPrimary}
-              firstIcon={
-                <IconFeather
-                  name="mail"
-                  size={height / 34}
-                  color={textPrimary}
-                />
-              }
-              placeholder="Correo"
-              keyboardType="email-address"
-              placeholderTextColor={textSecondary}
-              inputColor={textPrimary}
-              autoCorrect
-            />
-          </View>
-          <View style={{...stylesLogin.contentInput}}>
-            <InputGeneric
-              borderColor={textPrimary}
-              lastIcon={
-                <IconIonicons
-                  onPress={changePasswordSecret}
-                  name={isPasswordSecret ? 'eye' : 'eye-off'}
-                  size={height / 34}
-                  color={textPrimary}
-                />
-              }
-              placeholder="Contraseña"
-              isSecretText={isPasswordSecret}
-              placeholderTextColor={textSecondary}
-              inputColor={textPrimary}
-              autoCorrect
-            />
-          </View>
-          <View style={{...stylesLogin.contentBtnLogin}}>
-            <Button
-              buttonStyle={{
-                ...stylesLogin.btnLoginStyle,
-                backgroundColor: card,
-              }}
-              activeOpacity={0.9}
-              onPress={() => navigation.push('Login')}
-              textContent={
-                <Text
-                  style={{
-                    ...stylesLogin.textBtnLogin,
-                    color: secondary,
-                  }}>
-                  INICIAR SESIÓN
-                </Text>
-              }
-            />
-          </View>
+          <FormProvider {...formMethods}>
+            <LoginForm />
+          </FormProvider>
           <Text style={{...stylesLogin.textHelper, color: textSecondary}}>
             No recuerdas tus credenciales ?{' '}
             <Text style={{color: primary}}>Preciosa aquí</Text>

@@ -12,6 +12,7 @@ export const useLogin = () => {
   const navigation = useNavigation();
 
   const [isPasswordSecret, setIsPasswordSecret] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formMethods = useForm<ICredencial>({
     resolver: yupResolver(validateLogin),
@@ -19,6 +20,15 @@ export const useLogin = () => {
 
   const changePasswordSecret = () => {
     setIsPasswordSecret(!isPasswordSecret);
+  };
+
+  const validateCredentialsLogin = (data: ICredencial) => {
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
+    handleLogin(data);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -51,9 +61,11 @@ export const useLogin = () => {
     tertiary,
     card,
     isPasswordSecret,
+    isLoading,
     //methods
     formMethods,
     //functions
     changePasswordSecret,
+    validateCredentialsLogin,
   };
 };

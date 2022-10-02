@@ -66,7 +66,7 @@ export const stylesLogin = StyleSheet.create({
     padding: Platform.OS === 'ios' ? 10 : 0,
   },
   textLogo: {
-    fontSize: 26,
+    fontSize: 23,
     fontWeight: '700',
     fontFamily: 'Roboto-Black',
     color: 'rgba(0,63,116,1)',
@@ -117,7 +117,7 @@ export const stylesLogin = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '15.5%',
+    maxHeight: '18%',
     marginBottom: 22,
   },
   contentBtnLogin: {
