@@ -9,7 +9,7 @@ import {validateLogin} from '../../helpers';
 
 export const useLogin = () => {
   const {isLoggedIn, handleLogin} = useContext(AuthContext);
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const [isPasswordSecret, setIsPasswordSecret] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ export const useLogin = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn === 'login') {
       navigation.navigate('Home');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

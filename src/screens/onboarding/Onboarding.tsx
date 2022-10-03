@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Backdrop, Button, Indicator, SquareDecorator} from '../../components';
+import {AuthContext} from '../../context';
 import {height} from '../../helpers';
 import {stylesOnboarding} from './stylesOnboarding';
 import {useOnboarding} from './useOnboarding';
@@ -27,6 +28,7 @@ export const Onboarding = ({navigation}: Props) => {
     idxSlides,
     slidesScroll,
   } = useOnboarding();
+  const {changeBlockedOnboard} = useContext(AuthContext);
 
   return (
     <SafeAreaView
@@ -104,7 +106,11 @@ export const Onboarding = ({navigation}: Props) => {
                         backgroundColor: background,
                       }}
                       activeOpacity={0.9}
-                      onPress={() => navigation.push('Login')}
+                      onPress={() => {
+                        console.log('setTrue');
+                        changeBlockedOnboard();
+                        navigation.push('Login');
+                      }}
                       textContent={
                         <Text
                           style={{

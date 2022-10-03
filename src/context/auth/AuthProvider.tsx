@@ -7,12 +7,14 @@ import {AuthContext, authReducer} from './';
 import {managementApi} from '../../services';
 
 export interface AuthState {
-  isLoggedIn: boolean;
+  isLoggedIn: 'login' | 'logout' | 'pending';
+  isBlockedOnboard: boolean;
   user?: IUser;
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
-  isLoggedIn: false,
+  isLoggedIn: 'pending',
+  isBlockedOnboard: false,
   user: undefined,
 };
 
@@ -23,10 +25,17 @@ interface Props {
 export const AuthProvider: FC<Props> = ({children}) => {
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
 
-  const validatedIsLogin = async () => {
+  const validatedIsLoginAndOnboard = async () => {
     const user = await AsyncStorage.getItem('@userCredentials');
+    const isBlockedOnboarding = await AsyncStorage.getItem('@blockedOnboard');
     if (user !== null) {
       login(JSON.parse(user), true);
+    }
+    if (user === null) {
+      dispatch({type: '[Auth] - Block Login'});
+    }
+    if (isBlockedOnboarding === 'locked') {
+      dispatch({type: '[Auth] - Blocked Onboarding', payload: true});
     }
   };
 
@@ -43,7 +52,7 @@ export const AuthProvider: FC<Props> = ({children}) => {
   };
 
   useEffect(() => {
-    validatedIsLogin();
+    validatedIsLoginAndOnboard();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -59,6 +68,11 @@ export const AuthProvider: FC<Props> = ({children}) => {
       });
   };
 
+  const changeBlockedOnboard = async () => {
+    await AsyncStorage.setItem('@blockedOnboard', 'locked');
+    dispatch({type: '[Auth] - Blocked Onboarding', payload: true});
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -67,6 +81,7 @@ export const AuthProvider: FC<Props> = ({children}) => {
         logout,
         //functions
         handleLogin,
+        changeBlockedOnboard,
       }}>
       {children}
     </AuthContext.Provider>
