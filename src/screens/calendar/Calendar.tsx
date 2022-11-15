@@ -6,7 +6,7 @@ import 'react-native-gesture-handler';
 import {Button} from '../../components';
 import {AuthContext} from '../../context';
 
-export const Home = () => {
+export const Calendar = () => {
   const {logout, user, isLoggedIn} = useContext(AuthContext);
   const navigation = useNavigation<any>();
   console.log({user});

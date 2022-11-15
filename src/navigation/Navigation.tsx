@@ -3,7 +3,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {ActivityIndicator, View} from 'react-native';
 
 import {AuthContext, ThemeContext} from '../context';
-import {Home, Login, Onboarding} from '../screens';
+import {Login, Onboarding} from '../screens';
+import {TabNavigation} from './TabNavigation';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +36,7 @@ export const Navigation = () => {
       }}>
       {isLoggedIn === 'login' && (
         <>
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="TabNavigation" component={TabNavigation} />
         </>
       )}
       {isLoggedIn === 'logout' && (

@@ -33,7 +33,7 @@ export const useLogin = () => {
 
   useEffect(() => {
     if (isLoggedIn === 'login') {
-      navigation.navigate('Home');
+      navigation.navigate('TabNavigation');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
