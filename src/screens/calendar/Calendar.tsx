@@ -1,4 +1,5 @@
-import {SafeAreaView, ScrollView, Text, View, Platform} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {LocaleConfig} from 'react-native-calendars';
 import 'react-native-gesture-handler';
 import IconFeather from 'react-native-vector-icons/Feather';
 import {Calendar as CalendarComponent} from 'react-native-calendars';
@@ -6,6 +7,48 @@ import {Calendar as CalendarComponent} from 'react-native-calendars';
 import {useCalendar} from './useCalendar';
 import {stylesCalendar} from './stylesCalendar';
 
+LocaleConfig.locales.fr = {
+  monthNames: [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ],
+  monthNamesShort: [
+    'Ene.',
+    'Feb.',
+    'Mar.',
+    'Abr.',
+    'May.',
+    'Jun.',
+    'Jul.',
+    'Ago.',
+    'Sep.',
+    'Oct.',
+    'Nov.',
+    'Dic.',
+  ],
+  dayNames: [
+    'Domingo',
+    'Lunes',
+    'Martes',
+    'Miércoles',
+    'Jueves',
+    'Viernes',
+    'Sábado',
+  ],
+  dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mié.', 'Jue.', 'Vie.', 'Sab.'],
+  today: 'Este Dia',
+};
+LocaleConfig.defaultLocale = 'fr';
 export const Calendar = () => {
   const {
     textPrimary,
@@ -49,11 +92,23 @@ export const Calendar = () => {
         }}>
         <View style={{marginTop: 10}}>
           <CalendarComponent
-            style={{
+            style={{...stylesCalendar.calendarComponent}}
+            theme={{
               backgroundColor: card,
-              marginTop: 10,
-              borderRadius: 12,
-              height: Platform.OS === 'android' ? 332 : 325,
+              calendarBackground: card,
+              textSectionTitleColor: textSecondary,
+              selectedDayBackgroundColor: primary,
+              dayTextColor: textSecondary,
+              selectedDotColor: background,
+              arrowColor: primary,
+              monthTextColor: textPrimary,
+              indicatorColor: textPrimary,
+              todayTextColor: primary,
+              textSectionTitleDisabledColor: '#412f79',
+              selectedDayTextColor: '#644040',
+              textDisabledColor: '#d9e1e8',
+              dotColor: '#b210a7',
+              disabledArrowColor: '#d6c60d',
             }}
           />
         </View>
@@ -273,6 +328,7 @@ export const Calendar = () => {
             </View>
           </View>
         </View>
+        <View style={{paddingBottom: 70}} />
       </ScrollView>
     </SafeAreaView>
   );

@@ -26,10 +26,10 @@ export const TabNavigation = () => {
         headerShown: false,
         tabBarActiveTintColor: `${colors.primary}`,
         tabBarStyle: {
-          // position: 'absolute',
+          position: 'absolute',
           backgroundColor: `${colors.secondary}`,
-          borderTopLeftRadius: 1200,
-          borderTopRightRadius: 1200,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
           height: Platform.OS === 'android' ? 60 : 90,
         },
         tabBarShowLabel: false,

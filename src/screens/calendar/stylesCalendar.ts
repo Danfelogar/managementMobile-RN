@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 export const stylesCalendar = StyleSheet.create({
   //calendar
@@ -91,5 +91,12 @@ export const stylesCalendar = StyleSheet.create({
     borderRadius: 16.8,
     marginHorizontal: 2,
     alignSelf: 'center',
+  },
+  calendarComponent: {
+    marginTop: 10,
+    borderRadius: 12,
+    paddingVertical: 10,
+    minHeight: Platform.OS === 'android' ? 332 : 325,
+    maxHeight: Platform.OS === 'android' ? 400 : 400,
   },
 });
