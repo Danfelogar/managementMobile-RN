@@ -1,4 +1,4 @@
 export * from './Inventory';
-export * from './styles';
+export * from './stylesInventory';
 export * from './types';
 export * from './useInventory';
