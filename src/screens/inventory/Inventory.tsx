@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, SafeAreaView, ScrollView} from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {useInventory} from './useInventory';
 import {stylesInventory} from './stylesInventory';
+import {ModalFilter} from '../../components';
+import {UIContext} from '../../context';
 
 export const Inventory = () => {
+  const {changeModalFilterInventory} = useContext(UIContext);
   const {
     textPrimary,
     textSecondary,
@@ -19,13 +23,18 @@ export const Inventory = () => {
     <SafeAreaView style={{flex: 1, backgroundColor: secondary}}>
       <View style={{backgroundColor: secondary}}>
         <View style={{...stylesInventory.wrapperHeaderIcon}}>
-          <IconFeather
-            name="search"
+          <AntDesign
+            name="scan1"
             style={{marginHorizontal: 12}}
-            size={28}
+            size={31}
             color={textPrimary}
           />
-          <IconFeather name="bell" size={28} color={textPrimary} />
+          <IconFeather
+            onPress={changeModalFilterInventory}
+            name="filter"
+            size={31}
+            color={textPrimary}
+          />
         </View>
         <View style={{...stylesInventory.wrapperHeaderText}}>
           <Text
@@ -114,6 +123,7 @@ export const Inventory = () => {
           </View>
         </View>
       </ScrollView>
+      <ModalFilter />
     </SafeAreaView>
   );
 };

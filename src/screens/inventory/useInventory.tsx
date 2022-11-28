@@ -4,7 +4,7 @@ import {useContext, useEffect} from 'react';
 import {AuthContext, ThemeContext} from '../../context';
 
 export const useInventory = () => {
-  const {user, isLoggedIn} = useContext(AuthContext);
+  const {isLoggedIn} = useContext(AuthContext);
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -20,7 +20,6 @@ export const useInventory = () => {
   } = colors;
 
   const navigation = useNavigation<any>();
-  console.log({user});
 
   useEffect(() => {
     if (!isLoggedIn) {

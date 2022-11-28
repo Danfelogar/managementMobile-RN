@@ -1,7 +1,8 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
-import {IInputGeneric} from '../types';
 import {Controller} from 'react-hook-form';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+
+import {IInputGeneric} from '../types';
 
 export function InputGeneric({
   keyboardType,

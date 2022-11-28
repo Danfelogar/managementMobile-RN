@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {AuthProvider, ThemeProvider} from './src/context';
+import {AuthProvider, ThemeProvider, UIProvider} from './src/context';
 import {Navigation} from './src/navigation';
 
 const App = () => {
@@ -16,7 +16,9 @@ const App = () => {
 const AppState = ({children}: {children: JSX.Element | JSX.Element[]}) => {
   return (
     <AuthProvider>
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeProvider>
+        <UIProvider>{children}</UIProvider>
+      </ThemeProvider>
     </AuthProvider>
   );
 };

@@ -71,4 +71,96 @@ export const stylesInventory = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'flex-end',
   },
+
+  //modal filter
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+    position: 'absolute',
+  },
+
+  wrapperModalFilter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00BCD4',
+    height: 300,
+    width: '80%',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#fff',
+    marginTop: 80,
+    marginLeft: 40,
+  },
+
+  //ModalFilters
+
+  modalContent: {
+    flex: 0.52,
+    borderTopLeftRadius: 37,
+    borderTopRightRadius: 37,
+    backgroundColor: '#fff',
+    paddingTop: 30,
+    paddingHorizontal: 20,
+  },
+  wrapperHeaderFilter: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    marginBottom: 17,
+  },
+  titleModalFilters: {
+    fontSize: 27.5,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+    marginLeft: 8.9,
+  },
+  titleOfSubFilters: {
+    fontSize: 16.3,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+  },
+  contentSelectors: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  textOptionsFilter: {
+    fontSize: 16,
+    fontWeight: '400',
+    textAlign: 'center',
+    fontFamily: 'Roboto-Regular',
+  },
+  cornerLeftBox: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    borderWidth: 2.2,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
+    height: 50,
+  },
+  centerBox: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    borderWidth: 2.2,
+    height: 50,
+  },
+  cornerRightBox: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    borderWidth: 2.2,
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+    height: 50,
+  },
+  btnFilter: {
+    borderRadius: 10,
+    alignContent: 'center',
+    justifyContent: 'center',
+    height: 50,
+    paddingHorizontal: 35,
+    marginBottom: 40,
+  },
 });
