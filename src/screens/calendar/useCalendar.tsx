@@ -1,10 +1,25 @@
 import {useNavigation} from '@react-navigation/native';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 
-import {AuthContext, ThemeContext} from '../../context';
+import {AuthContext, OTsContext, ThemeContext} from '../../context';
 
 export const useCalendar = () => {
+  let today = new Date(
+    new Date().getTime() - new Date().getTimezoneOffset() * 60000,
+  )
+    .toISOString()
+    .split('T')[0];
+
   const {isLoggedIn} = useContext(AuthContext);
+  const {dataOTsByMonth} = useContext(OTsContext);
+  const [daySelected, setDaySelected] = useState<string>(today);
+  const [monthSelected, setMonthSelected] = useState<string>();
+  const changeDaySelected = (day: string) => {
+    setDaySelected(day);
+  };
+  const changeMonthSelected = (month: number, year: number) => {
+    setMonthSelected(`${year}-${month}`);
+  };
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -37,7 +52,11 @@ export const useCalendar = () => {
     secondary,
     tertiary,
     card,
+    daySelected,
+    monthSelected,
     //methods
     //functions
+    changeDaySelected,
+    changeMonthSelected,
   };
 };

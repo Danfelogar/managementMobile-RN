@@ -163,4 +163,10 @@ export const stylesInventory = StyleSheet.create({
     paddingHorizontal: 35,
     marginBottom: 40,
   },
+  titleBntFilters: {
+    fontSize: 17.5,
+    fontWeight: '400',
+    fontFamily: 'Roboto-Regular',
+    marginLeft: 8.9,
+  },
 });

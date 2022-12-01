@@ -266,7 +266,7 @@ export const ModalFilter = () => {
               <View
                 style={{
                   ...stylesInventory.contentSelectors,
-                  justifyContent: 'flex-start',
+                  justifyContent: 'space-between',
                 }}>
                 <Button
                   isLoading={false}
@@ -279,10 +279,28 @@ export const ModalFilter = () => {
                   textContent={
                     <Text
                       style={{
-                        ...stylesInventory.titleModalFilters,
+                        ...stylesInventory.titleBntFilters,
                         color: textPrimary,
                       }}>
-                      FILTRAR
+                      Filtrar
+                    </Text>
+                  }
+                />
+                <Button
+                  isLoading={false}
+                  buttonStyle={{
+                    ...stylesInventory.btnFilter,
+                    backgroundColor: tertiary,
+                  }}
+                  activeOpacity={0.9}
+                  onPress={() => console.log('testing filter')}
+                  textContent={
+                    <Text
+                      style={{
+                        ...stylesInventory.titleBntFilters,
+                        color: textPrimary,
+                      }}>
+                      Limpiar Filtro
                     </Text>
                   }
                 />

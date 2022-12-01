@@ -1,3 +1,4 @@
+import {useContext} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {LocaleConfig} from 'react-native-calendars';
 import 'react-native-gesture-handler';
@@ -6,6 +7,7 @@ import {Calendar as CalendarComponent} from 'react-native-calendars';
 
 import {useCalendar} from './useCalendar';
 import {stylesCalendar} from './stylesCalendar';
+import {OTsContext} from '../../context';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -50,6 +52,7 @@ LocaleConfig.locales.fr = {
 };
 LocaleConfig.defaultLocale = 'fr';
 export const Calendar = () => {
+  // const {dataOTsByMonth} = useContext(OTsContext);
   const {
     textPrimary,
     textSecondary,
@@ -58,7 +61,11 @@ export const Calendar = () => {
     secondary,
     tertiary,
     card,
+    daySelected,
+    changeDaySelected,
+    changeMonthSelected,
   } = useCalendar();
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: secondary}}>
       <View style={{backgroundColor: secondary}}>
@@ -110,6 +117,16 @@ export const Calendar = () => {
               dotColor: '#b210a7',
               disabledArrowColor: '#d6c60d',
             }}
+            onDayPress={day => {
+              console.log('selected day', day);
+              changeDaySelected(day.dateString);
+            }}
+            onMonthChange={month => {
+              console.log('month changed', month);
+              changeMonthSelected(month.month, month.year);
+            }}
+            initialDate={daySelected}
+            current={daySelected}
           />
         </View>
         <View style={{...stylesCalendar.wrapperTitleBodyText}}>
