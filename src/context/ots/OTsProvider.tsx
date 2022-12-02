@@ -36,14 +36,16 @@ export const OTsProvider: FC<Props> = ({children}) => {
   let yearOfDate = new Date().getFullYear();
   let monthOfDate = new Date().getMonth() + 1;
 
-  const getOTsByData = async (searchParamsReq?: string): Promise<IOT[]> => {
+  const getOTsByData = async (
+    fecha_expedicion_exacta: string,
+  ): Promise<IOT[]> => {
     return await managementApi
       .get('/admin/ots', {
-        params: {searchParams: searchParamsReq || ''},
+        params: {fecha_expedicion_exacta},
       })
       .then(({data}) => {
         dispatch({type: '[OTS] Get ots data', payload: data});
-        console.log({data});
+        // console.log({data});
 
         return data;
       })
@@ -66,7 +68,7 @@ export const OTsProvider: FC<Props> = ({children}) => {
       })
       .then(({data}) => {
         dispatch({type: '[OTS] Get ots data by month', payload: data});
-        console.log({data});
+        // console.log({data});
 
         return data;
       })

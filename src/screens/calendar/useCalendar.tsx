@@ -1,7 +1,36 @@
 import {useNavigation} from '@react-navigation/native';
 import {useContext, useEffect, useState} from 'react';
+import moment from 'moment';
 
 import {AuthContext, OTsContext, ThemeContext} from '../../context';
+import {IOT} from './types';
+
+let objDay = [
+  'Domingo',
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+  'Sábado',
+];
+let objMonth = [
+  'Enero',
+  'Febrero',
+  'Marzo',
+  'Abril',
+  'Mayo',
+  'Junio',
+  'Julio',
+  'Agosto',
+  'Septiembre',
+  'Octubre',
+  'Noviembre',
+  'Diciembre',
+];
+let dayName = new Date().getDay();
+let monthName = new Date().getMonth();
+let dayNumber = new Date().getDate();
 
 export const useCalendar = () => {
   let today = new Date(
@@ -9,20 +38,30 @@ export const useCalendar = () => {
   )
     .toISOString()
     .split('T')[0];
-
+  let labelToday = `${objMonth[monthName]} ${dayNumber}, ${objDay[dayName]}`;
   const {isLoggedIn} = useContext(AuthContext);
-  const {dataOTsByMonth} = useContext(OTsContext);
-  const [daySelected, setDaySelected] = useState<string>(today);
-  const [monthSelected, setMonthSelected] = useState<string>();
-  const changeDaySelected = (day: string) => {
-    setDaySelected(day);
-  };
-  const changeMonthSelected = (month: number, year: number) => {
-    setMonthSelected(`${year}-${month}`);
-  };
+  const {dataOTsByMonth, getOTsDataByMonthQAndYear, getOTsByData} =
+    useContext(OTsContext);
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+  const [daySelected, setDaySelected] = useState<string>(today);
+  const changeDaySelected = (day: string) => {
+    setDaySelected(day);
+    getOTsByData(day);
+  };
+  const changeMonthSelected = (month: number, year: number) => {
+    getOTsDataByMonthQAndYear(`${year}-${month}`);
+  };
+
+  let objOTsByMonth = dataOTsByMonth.reduce((accumulator: {}, value: IOT) => {
+    return {
+      ...accumulator,
+      [moment(value?.fecha_expedicion).format('YYYY-MM-DD')]: {
+        marked: true,
+      },
+    };
+  }, {});
 
   const {
     textPrimary,
@@ -53,7 +92,8 @@ export const useCalendar = () => {
     tertiary,
     card,
     daySelected,
-    monthSelected,
+    objOTsByMonth,
+    labelToday,
     //methods
     //functions
     changeDaySelected,

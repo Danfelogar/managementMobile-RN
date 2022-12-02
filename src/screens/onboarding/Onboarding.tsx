@@ -107,7 +107,7 @@ export const Onboarding = ({navigation}: Props) => {
                       }}
                       activeOpacity={0.9}
                       onPress={() => {
-                        console.log('setTrue');
+                        // console.log('setTrue');
                         changeBlockedOnboard();
                         navigation.push('Login');
                       }}

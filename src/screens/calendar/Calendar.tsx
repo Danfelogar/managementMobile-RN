@@ -8,6 +8,7 @@ import {Calendar as CalendarComponent} from 'react-native-calendars';
 import {useCalendar} from './useCalendar';
 import {stylesCalendar} from './stylesCalendar';
 import {OTsContext} from '../../context';
+import {OTCard} from './OTCard';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -52,7 +53,7 @@ LocaleConfig.locales.fr = {
 };
 LocaleConfig.defaultLocale = 'fr';
 export const Calendar = () => {
-  // const {dataOTsByMonth} = useContext(OTsContext);
+  const {dataOTs} = useContext(OTsContext);
   const {
     textPrimary,
     textSecondary,
@@ -62,6 +63,8 @@ export const Calendar = () => {
     tertiary,
     card,
     daySelected,
+    objOTsByMonth,
+    labelToday,
     changeDaySelected,
     changeMonthSelected,
   } = useCalendar();
@@ -81,14 +84,14 @@ export const Calendar = () => {
         <View style={{...stylesCalendar.wrapperHeaderText}}>
           <Text
             style={{...stylesCalendar.textDateTitleHeader, color: textPrimary}}>
-            Today
+            Hoy
           </Text>
           <Text
             style={{
               ...stylesCalendar.textDateBodyHeader,
               color: textSecondary,
             }}>
-            August 24, Tuesday
+            {labelToday}
           </Text>
         </View>
       </View>
@@ -113,16 +116,17 @@ export const Calendar = () => {
               todayTextColor: primary,
               textSectionTitleDisabledColor: '#412f79',
               selectedDayTextColor: '#644040',
-              textDisabledColor: '#d9e1e8',
-              dotColor: '#b210a7',
+              textDisabledColor: textSecondary,
+              dotColor: tertiary,
               disabledArrowColor: '#d6c60d',
             }}
+            markedDates={objOTsByMonth || undefined}
             onDayPress={day => {
-              console.log('selected day', day);
+              // console.log('selected day', day);
               changeDaySelected(day.dateString);
             }}
             onMonthChange={month => {
-              console.log('month changed', month);
+              // console.log('month changed', month);
               changeMonthSelected(month.month, month.year);
             }}
             initialDate={daySelected}
@@ -131,220 +135,16 @@ export const Calendar = () => {
         </View>
         <View style={{...stylesCalendar.wrapperTitleBodyText}}>
           <Text style={{...stylesCalendar.textTitleTask, color: textPrimary}}>
-            Task
+            OTs
           </Text>
         </View>
-        <View style={{...stylesCalendar.wrapperListTask}}>
-          <View
-            style={{
-              ...stylesCalendar.wrapperContentTaskList,
-              backgroundColor: card,
-            }}>
-            <View style={{...stylesCalendar.contentBarTask}}>
-              <View
-                style={{
-                  ...stylesCalendar.barTask,
-                  backgroundColor: primary,
-                }}
-              />
-            </View>
-            <View style={{...stylesCalendar.contentTextForTask}}>
-              <Text
-                style={{
-                  ...stylesCalendar.textTitleTaskCard,
-                  color: textPrimary,
-                }}>
-                Finish UI Designs
-              </Text>
-              <Text
-                style={{
-                  ...stylesCalendar.textDateTaskCard,
-                  color: textSecondary,
-                }}>
-                22/11/2020 10:10 - 24/11/2020 23:11
-              </Text>
-            </View>
-            <View style={{...stylesCalendar.contentIndicatorTask}}>
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View style={{...stylesCalendar.wrapperListTask}}>
-          <View
-            style={{
-              ...stylesCalendar.wrapperContentTaskList,
-              backgroundColor: card,
-            }}>
-            <View style={{...stylesCalendar.contentBarTask}}>
-              <View
-                style={{
-                  ...stylesCalendar.barTask,
-                  backgroundColor: primary,
-                }}
-              />
-            </View>
-            <View style={{...stylesCalendar.contentTextForTask}}>
-              <Text
-                style={{
-                  ...stylesCalendar.textTitleTaskCard,
-                  color: textPrimary,
-                }}>
-                Finish UI Designs
-              </Text>
-              <Text
-                style={{
-                  ...stylesCalendar.textDateTaskCard,
-                  color: textSecondary,
-                }}>
-                22/11/2020 10:10 - 24/11/2020 23:11
-              </Text>
-            </View>
-            <View style={{...stylesCalendar.contentIndicatorTask}}>
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View style={{...stylesCalendar.wrapperListTask}}>
-          <View
-            style={{
-              ...stylesCalendar.wrapperContentTaskList,
-              backgroundColor: card,
-            }}>
-            <View style={{...stylesCalendar.contentBarTask}}>
-              <View
-                style={{
-                  ...stylesCalendar.barTask,
-                  backgroundColor: primary,
-                }}
-              />
-            </View>
-            <View style={{...stylesCalendar.contentTextForTask}}>
-              <Text
-                style={{
-                  ...stylesCalendar.textTitleTaskCard,
-                  color: textPrimary,
-                }}>
-                Finish UI Designs
-              </Text>
-              <Text
-                style={{
-                  ...stylesCalendar.textDateTaskCard,
-                  color: textSecondary,
-                }}>
-                22/11/2020 10:10 - 24/11/2020 23:11
-              </Text>
-            </View>
-            <View style={{...stylesCalendar.contentIndicatorTask}}>
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-            </View>
-          </View>
-        </View>
-
-        <View style={{...stylesCalendar.wrapperListTask}}>
-          <View
-            style={{
-              ...stylesCalendar.wrapperContentTaskList,
-              backgroundColor: card,
-            }}>
-            <View style={{...stylesCalendar.contentBarTask}}>
-              <View
-                style={{
-                  ...stylesCalendar.barTask,
-                  backgroundColor: primary,
-                }}
-              />
-            </View>
-            <View style={{...stylesCalendar.contentTextForTask}}>
-              <Text
-                style={{
-                  ...stylesCalendar.textTitleTaskCard,
-                  color: textPrimary,
-                }}>
-                Finish UI Designs
-              </Text>
-              <Text
-                style={{
-                  ...stylesCalendar.textDateTaskCard,
-                  color: textSecondary,
-                }}>
-                22/11/2020 10:10 - 24/11/2020 23:11
-              </Text>
-            </View>
-            <View style={{...stylesCalendar.contentIndicatorTask}}>
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-              <View
-                style={{
-                  ...stylesCalendar.circleTask,
-                  backgroundColor: tertiary,
-                }}
-              />
-            </View>
-          </View>
-        </View>
+        {dataOTs.length === 0 && (
+          <Text style={{...stylesCalendar.textVoidTask, color: textSecondary}}>
+            No se ha encontrado ninguna OT en el dia: '{daySelected}'
+          </Text>
+        )}
+        {dataOTs &&
+          dataOTs.map((item, idx) => <OTCard key={idx} item={item} />)}
         <View style={{paddingBottom: 70}} />
       </ScrollView>
     </SafeAreaView>

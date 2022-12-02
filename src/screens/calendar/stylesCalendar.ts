@@ -99,4 +99,10 @@ export const stylesCalendar = StyleSheet.create({
     minHeight: Platform.OS === 'android' ? 332 : 325,
     maxHeight: Platform.OS === 'android' ? 400 : 400,
   },
+  textVoidTask: {
+    fontSize: 18,
+    textAlign: 'center',
+    fontWeight: '400',
+    fontFamily: 'Roboto-Regular',
+  },
 });

@@ -13,7 +13,9 @@ interface ContextProps {
   oTForUpdate: IOT | undefined;
 
   //functions
-  getOTsDataByMonthQAndYear: (fecha_expedicion: string) => Promise<IOT[]>;
+  getOTsDataByMonthQAndYear: (
+    fecha_expedicion_exacta: string,
+  ) => Promise<IOT[]>;
   getOTsByData: (searchParamsReq?: any) => Promise<IOT[]>;
   changeIsLoading: () => void;
   changeIsUpdateOT: (val: boolean) => void;

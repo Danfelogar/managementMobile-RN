@@ -12,7 +12,7 @@ export interface IOT {
   numero_de_orden_de_compra?: string;
 
   fecha_expedicion: string;
-  tiempoDeEjecucion?: number;
+  tiempoDeEjecucion?: string;
   fecha_cierre?: string;
 
   imgDeLaMaquina: string;

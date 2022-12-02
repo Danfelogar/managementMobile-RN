@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 export const Navigation = () => {
   const {isBlockedOnboard, isLoggedIn} = useContext(AuthContext);
   const {theme} = useContext(ThemeContext);
-  console.log({isBlockedOnboard, isLoggedIn});
+  // console.log({isBlockedOnboard, isLoggedIn});
 
   if (isLoggedIn === 'pending') {
     return (
