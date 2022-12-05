@@ -1,18 +1,16 @@
-import React, {useContext} from 'react';
-import {Platform} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {Platform, TouchableOpacity, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
-import {Calendar, Inventory} from '../screens';
+import {Calendar, Inventory, useCalendar} from '../screens';
 import {ThemeContext} from '../context';
 
-// export const TabNavigation = () => {
-//   return (
-//     <View>
-//       <Text>TabNavigation</Text>
-//     </View>
-//   );
-// };
+function EmptyScreen() {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} />
+  );
+}
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +18,9 @@ export const TabNavigation = () => {
   const {
     theme: {colors},
   } = useContext(ThemeContext);
+  const [routeIdx, setRouteIdx] = useState<number>(0);
+  const {changeModalCreate} = useCalendar();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -34,6 +35,12 @@ export const TabNavigation = () => {
         },
         tabBarShowLabel: false,
       }}
+      screenListeners={{
+        state: (e: any) => {
+          // Do something with the state
+          setRouteIdx(e?.data?.state?.index!);
+        },
+      }}
       initialRouteName="Calendar">
       <Tab.Screen
         name="Calendar"
@@ -45,19 +52,68 @@ export const TabNavigation = () => {
               {focused ? (
                 <Icon2 name="calendar-alt" size={23} color={color} />
               ) : (
-                <Icon name="calendar" size={23} color={color} />
+                <Icon name="calendar" size={23} color={'#fff'} />
               )}
             </>
           ),
         }}
       />
+
+      <Tab.Screen
+        name={'ActionButton'}
+        component={EmptyScreen}
+        options={{
+          tabBarLabel: 'x',
+          tabBarIcon: () => (
+            <TouchableOpacity
+              onPress={() => {
+                if (routeIdx === 0) {
+                  changeModalCreate();
+                } else if (routeIdx === 2) {
+                  return;
+                }
+              }}
+              activeOpacity={0.9}>
+              <View
+                style={{
+                  width: 55,
+                  height: 55,
+                  backgroundColor: colors.secondary,
+                  borderRadius: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderWidth: 3,
+                  borderColor: colors.background,
+                  marginBottom: 55,
+                }}>
+                <Icon2 name="plus" size={23} color={'#fff'} />
+              </View>
+            </TouchableOpacity>
+          ),
+        }}
+      />
+
       <Tab.Screen
         name="Inventory"
         component={Inventory}
         options={{
           tabBarLabel: 'Inventario',
           tabBarIcon: ({color, focused}) => (
-            <Icon name={focused ? 'file' : 'file-o'} size={23} color={color} />
+            <>
+              {focused ? (
+                <Icon
+                  name={focused ? 'file' : 'file-o'}
+                  size={23}
+                  color={color}
+                />
+              ) : (
+                <Icon
+                  name={focused ? 'file' : 'file-o'}
+                  size={23}
+                  color={'#fff'}
+                />
+              )}
+            </>
           ),
         }}
       />

@@ -35,6 +35,7 @@ export const OTsProvider: FC<Props> = ({children}) => {
 
   let yearOfDate = new Date().getFullYear();
   let monthOfDate = new Date().getMonth() + 1;
+  let dayOfDate = new Date().toISOString().split('T')[0];
 
   const getOTsByData = async (
     fecha_expedicion_exacta: string,
@@ -127,7 +128,7 @@ export const OTsProvider: FC<Props> = ({children}) => {
   };
 
   const changeIsUpdateOT = (val: boolean) => {
-    dispatch({type: '[OTS] Change is updated ot', payload: val});
+    dispatch({type: '[OTS] Change is update ot', payload: val});
   };
 
   const changeOTForUpdate = (singleOT: IOT | undefined) => {
@@ -140,6 +141,7 @@ export const OTsProvider: FC<Props> = ({children}) => {
 
   useEffect(() => {
     getOTsDataByMonthQAndYear(`${yearOfDate}-${monthOfDate}`);
+    getOTsByData(dayOfDate);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

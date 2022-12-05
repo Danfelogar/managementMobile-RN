@@ -1,6 +1,6 @@
 import moment from 'moment';
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {Animated, Text, View} from 'react-native';
 
 import {stylesCalendar} from './stylesCalendar';
 import {IOT} from './types';
@@ -24,13 +24,22 @@ export const OTCard = ({item}: Props) => {
     tertiary,
     card,
   } = useCalendar();
-  console.log('itemTesting=====>', item);
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
   return (
     <View style={{...stylesCalendar.wrapperListTask}}>
-      <View
+      <Animated.View
         style={{
           ...stylesCalendar.wrapperContentTaskList,
           backgroundColor: card,
+          opacity: fadeAnim,
         }}>
         <View style={{...stylesCalendar.contentBarTask}}>
           <View
@@ -95,7 +104,7 @@ export const OTCard = ({item}: Props) => {
               />
             ))}
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };

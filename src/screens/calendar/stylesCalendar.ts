@@ -2,13 +2,6 @@ import {Platform, StyleSheet} from 'react-native';
 
 export const stylesCalendar = StyleSheet.create({
   //calendar
-  wrapperHeaderIcon: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    paddingHorizontal: 20,
-    marginTop: 8,
-  },
   wrapperHeaderText: {
     width: '100%',
     justifyContent: 'flex-start',
@@ -19,11 +12,13 @@ export const stylesCalendar = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
     fontFamily: 'Roboto-Black',
+    color: '#fff',
   },
   textDateBodyHeader: {
     fontSize: 18,
     fontWeight: '400',
     fontFamily: 'Roboto-Regular',
+    color: '#fff',
   },
   wrapperCalendar: {
     justifyContent: 'center',
@@ -50,6 +45,7 @@ export const stylesCalendar = StyleSheet.create({
     height: 85,
     flexDirection: 'row',
     padding: 8,
+    transition: 'all .2s',
   },
   contentBarTask: {
     width: '8%',
@@ -104,5 +100,40 @@ export const stylesCalendar = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '400',
     fontFamily: 'Roboto-Regular',
+  },
+  //Modal OT
+  modalContent: {
+    flex: 1,
+    borderTopLeftRadius: 37,
+    borderTopRightRadius: 37,
+    backgroundColor: '#fff',
+    paddingTop: 30,
+    paddingHorizontal: 20,
+  },
+  wrapperHeaderOT: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    marginBottom: 17,
+  },
+  titleModalOT: {
+    fontSize: 27.5,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+    marginLeft: 8.9,
+  },
+  titleOfInput: {
+    fontSize: 16.3,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+    marginBottom: 10,
+  },
+  contentInput: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    // maxHeight: '18%',
+    marginBottom: 22,
   },
 });

@@ -31,3 +31,15 @@ export interface IInputGeneric {
   name: string;
   control: any;
 }
+
+export interface IInputSelect {
+  borderColor: string;
+  itemArr?: Array<{value: string; label: string}>;
+  placeholder: string;
+  placeholderTextColor: string;
+  colorValueSelected: string;
+
+  //control
+  name: string;
+  control: any;
+}

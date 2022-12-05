@@ -2,13 +2,14 @@ import {useContext} from 'react';
 import {SafeAreaView, ScrollView, Text, View} from 'react-native';
 import {LocaleConfig} from 'react-native-calendars';
 import 'react-native-gesture-handler';
-import IconFeather from 'react-native-vector-icons/Feather';
 import {Calendar as CalendarComponent} from 'react-native-calendars';
 
 import {useCalendar} from './useCalendar';
 import {stylesCalendar} from './stylesCalendar';
-import {OTsContext} from '../../context';
+import {OTsContext, UIContext} from '../../context';
 import {OTCard} from './OTCard';
+import {ModalOT} from '../../components';
+import {FormProvider} from 'react-hook-form';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -53,7 +54,8 @@ LocaleConfig.locales.fr = {
 };
 LocaleConfig.defaultLocale = 'fr';
 export const Calendar = () => {
-  const {dataOTs} = useContext(OTsContext);
+  const {dataOTs, isUpdateOT} = useContext(OTsContext);
+  const {isOpenOTModal} = useContext(UIContext);
   const {
     textPrimary,
     textSecondary,
@@ -65,6 +67,8 @@ export const Calendar = () => {
     daySelected,
     objOTsByMonth,
     labelToday,
+    formMethodsCreate,
+    formMethodsUpdate,
     changeDaySelected,
     changeMonthSelected,
   } = useCalendar();
@@ -72,24 +76,11 @@ export const Calendar = () => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: secondary}}>
       <View style={{backgroundColor: secondary}}>
-        <View style={{...stylesCalendar.wrapperHeaderIcon}}>
-          <IconFeather
-            name="search"
-            style={{marginHorizontal: 12}}
-            size={28}
-            color={textPrimary}
-          />
-          <IconFeather name="bell" size={28} color={textPrimary} />
-        </View>
         <View style={{...stylesCalendar.wrapperHeaderText}}>
-          <Text
-            style={{...stylesCalendar.textDateTitleHeader, color: textPrimary}}>
-            Hoy
-          </Text>
+          <Text style={{...stylesCalendar.textDateTitleHeader}}>Hoy</Text>
           <Text
             style={{
               ...stylesCalendar.textDateBodyHeader,
-              color: textSecondary,
             }}>
             {labelToday}
           </Text>
@@ -147,6 +138,16 @@ export const Calendar = () => {
           dataOTs.map((item, idx) => <OTCard key={idx} item={item} />)}
         <View style={{paddingBottom: 70}} />
       </ScrollView>
+      {isOpenOTModal && isUpdateOT && (
+        <FormProvider {...formMethodsUpdate}>
+          <ModalOT />
+        </FormProvider>
+      )}
+      {isOpenOTModal && !isUpdateOT && (
+        <FormProvider {...formMethodsCreate}>
+          <ModalOT />
+        </FormProvider>
+      )}
     </SafeAreaView>
   );
 };

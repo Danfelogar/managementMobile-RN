@@ -6,7 +6,7 @@ type OTsActionsType =
   | {type: '[OTS] Get ots data'; payload: IOT[]}
   | {type: '[OTS] Get ots data by month'; payload: IOT[]}
   | {type: '[OTS] Change is loading ots'}
-  | {type: '[OTS] Change is updated ot'; payload: boolean}
+  | {type: '[OTS] Change is update ot'; payload: boolean}
   | {type: '[OTS] Get ot for update'; payload: IOT | undefined}
   | {type: '[OTS] Change msm text for update ot'; payload: string};
 
@@ -30,7 +30,7 @@ export const oTsReducer = (
         ...state,
         isLoading: !state.isLoading,
       };
-    case '[OTS] Change is updated ot':
+    case '[OTS] Change is update ot':
       return {
         ...state,
         isUpdateOT: action.payload,

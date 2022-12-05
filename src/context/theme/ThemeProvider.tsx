@@ -29,7 +29,7 @@ export const lightTheme = {
   dividerColor: 'rgba(0, 0, 0, 0.12)',
   colors: {
     primary: '#ff8600',
-    secondary: '#1565c0',
+    secondary: '#18314f',
     tertiary: '#7209b7',
     background: '#fff',
     card: 'rgba(0, 0, 0, 0.08)',

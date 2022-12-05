@@ -24,7 +24,7 @@ export const Inventory = () => {
       <View style={{backgroundColor: secondary}}>
         <View style={{...stylesInventory.wrapperHeaderIcon}}>
           <AntDesign
-            name="scan1"
+            name="qrcode"
             style={{marginHorizontal: 12}}
             size={31}
             color={textPrimary}
