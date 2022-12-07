@@ -14,6 +14,9 @@ export function InputGeneric({
   isSecretText,
   inputColor,
   lastIcon,
+  multiline = false,
+  multilineStyle,
+  heightMultiline,
   name,
   control,
 }: IInputGeneric) {
@@ -24,11 +27,16 @@ export function InputGeneric({
       name={name}
       render={({field: {onChange, value = ''}, formState: {errors}}) => {
         return (
-          <View style={styles.WrapperStandard}>
+          <View
+            style={[
+              styles.WrapperStandard,
+              multilineStyle ? multilineStyle : null,
+            ]}>
             <View
               style={{
                 ...styles.contentInputGeneric,
-                borderColor: borderColor,
+                borderColor: borderColor ? borderColor : 'transparent',
+                height: heightMultiline ? heightMultiline : 'auto',
               }}>
               {firstIcon && firstIcon}
               <TextInput
@@ -49,6 +57,7 @@ export function InputGeneric({
                 keyboardType={keyboardType || 'default'}
                 onChangeText={onChange}
                 value={value}
+                multiline={multiline}
               />
               {lastIcon && lastIcon}
             </View>

@@ -14,7 +14,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {IOT, stylesCalendar, useCalendar} from '../../../screens';
 import {OTsContext, UIContext} from '../../../context';
-import {InputGeneric, InputSelect} from '../Inputs';
+import {InputDataPicker, InputGeneric, InputSelect} from '../Inputs';
+import {width} from '../../../helpers';
 
 export const ModalOT = () => {
   const {isOpenOTModal, toggleModalOTs} = useContext(UIContext);
@@ -83,53 +84,94 @@ export const ModalOT = () => {
                 }}>
                 Maquina a realizar mantenimiento(maquina)
               </Text>
-              <InputSelect
-                borderColor={secondary}
-                control={control}
-                name="maquina"
-                placeholder="MAQ_YYYY"
-                colorValueSelected={textPrimary}
-                placeholderTextColor={textSecondary}
-                itemArr={idxIdRelationMaq}
-              />
+              <View style={{marginBottom: 13}}>
+                <InputSelect
+                  borderColor={secondary}
+                  control={control}
+                  name="maquina"
+                  placeholder="MAQ_YYYY"
+                  colorValueSelected={textPrimary}
+                  placeholderTextColor={textSecondary}
+                  itemArr={idxIdRelationMaq}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Slug(slug)
+                Slug
               </Text>
-              <InputGeneric
-                control={control}
-                name={'slug'}
-                borderColor={secondary}
-                placeholder="OT000X"
-                keyboardType="web-search"
-                placeholderTextColor={textSecondary}
-                inputColor={textPrimary}
-                autoCorrect={false}
-              />
+              <View style={{marginBottom: 13}}>
+                <InputGeneric
+                  control={control}
+                  name={'slug'}
+                  borderColor={secondary}
+                  placeholder="OT000X"
+                  keyboardType="web-search"
+                  placeholderTextColor={textSecondary}
+                  inputColor={textPrimary}
+                  autoCorrect={false}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Repuesto a necesitar(repuesto)
+                Repuesto a necesitar
               </Text>
+              <View style={{marginBottom: 13}}>
+                <InputSelect
+                  borderColor={secondary}
+                  control={control}
+                  name="repuesto"
+                  placeholder="YYYY Existencias: YY"
+                  colorValueSelected={textPrimary}
+                  placeholderTextColor={textSecondary}
+                  itemArr={idxIdRelationRep}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Encargado del mantenimiento(tecnico_ing)
+                Encargado del mantenimiento
               </Text>
+              <View style={{marginBottom: 13}}>
+                <InputSelect
+                  borderColor={secondary}
+                  control={control}
+                  name="tecnico_ing"
+                  placeholder="John Doe"
+                  colorValueSelected={textPrimary}
+                  placeholderTextColor={textSecondary}
+                  itemArr={idxUsersMttos}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Estado de la OT(estado_de_OT)
+                Estado de la OT
               </Text>
+              <View style={{marginBottom: 13}}>
+                <InputSelect
+                  borderColor={secondary}
+                  control={control}
+                  name="estado_de_OT"
+                  placeholder="Por establecer"
+                  colorValueSelected={textPrimary}
+                  placeholderTextColor={textSecondary}
+                  itemArr={[
+                    {label: 'Pendiente', value: 'pendiente'},
+                    {label: 'En Proceso', value: 'en_proceso'},
+                    {label: 'Finalizada', value: 'finalizada'},
+                  ]}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
@@ -137,30 +179,46 @@ export const ModalOT = () => {
                 }}>
                 Numero de orden de compra
               </Text>
-              <InputGeneric
-                control={control}
-                name={'numero_de_orden_de_compra'}
-                borderColor={secondary}
-                placeholder="ABC-123"
-                keyboardType="web-search"
-                placeholderTextColor={textSecondary}
-                inputColor={textPrimary}
-                autoCorrect={false}
-              />
+              <View style={{marginBottom: 13}}>
+                <InputGeneric
+                  control={control}
+                  name={'numero_de_orden_de_compra'}
+                  borderColor={secondary}
+                  placeholder="ABC-123"
+                  keyboardType="web-search"
+                  placeholderTextColor={textSecondary}
+                  inputColor={textPrimary}
+                  autoCorrect={false}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Fecha de expedición(fecha_expedicion)
+                Fecha de expedición
               </Text>
+              <View style={{marginBottom: 13}}>
+                <InputDataPicker
+                  control={control}
+                  name={'fecha_expedicion'}
+                  widthBtn={width / (Platform.OS === 'android' ? 1.65 : 1.8)}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Fecha de cierre(fecha_cierre)
+                Fecha de cierre
               </Text>
+              <View style={{marginBottom: 13}}>
+                <InputDataPicker
+                  control={control}
+                  name={'fecha_cierre'}
+                  widthBtn={width / (Platform.OS === 'android' ? 1.65 : 1.8)}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
@@ -168,16 +226,18 @@ export const ModalOT = () => {
                 }}>
                 Tiempo de ejecución
               </Text>
-              <InputGeneric
-                control={control}
-                name={'tiempoDeEjecucion'}
-                borderColor={secondary}
-                placeholder="15"
-                keyboardType="numeric"
-                placeholderTextColor={textSecondary}
-                inputColor={textPrimary}
-                autoCorrect={false}
-              />
+              <View style={{marginBottom: 13}}>
+                <InputGeneric
+                  control={control}
+                  name={'tiempoDeEjecucion'}
+                  borderColor={secondary}
+                  placeholder="15"
+                  keyboardType="numeric"
+                  placeholderTextColor={textSecondary}
+                  inputColor={textPrimary}
+                  autoCorrect={false}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
@@ -185,20 +245,51 @@ export const ModalOT = () => {
                 }}>
                 Imagen(imgDeLaMaquina)
               </Text>
+              <View style={{marginBottom: 13}} />
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Tareas(tareas)
+                Tareas
               </Text>
+              <View style={{marginBottom: 13}}>
+                <InputGeneric
+                  control={control}
+                  name={'tareas'}
+                  borderColor={secondary}
+                  placeholder="La maquina necesita un par de ajustes en..."
+                  keyboardType="default"
+                  placeholderTextColor={textSecondary}
+                  inputColor={textPrimary}
+                  autoCorrect={false}
+                  multiline
+                  heightMultiline={88}
+                  multilineStyle={{height: 88}}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Comentarios(comentario)
+                Comentarios
               </Text>
+              <View style={{marginBottom: 13}}>
+                <InputGeneric
+                  control={control}
+                  name={'comentario'}
+                  borderColor={secondary}
+                  placeholder="Se debe de revisar los accesorios de la maquina ..."
+                  keyboardType="default"
+                  placeholderTextColor={textSecondary}
+                  inputColor={textPrimary}
+                  autoCorrect={false}
+                  multiline
+                  heightMultiline={110}
+                  multilineStyle={{height: 110}}
+                />
+              </View>
             </ScrollView>
           </View>
         </View>

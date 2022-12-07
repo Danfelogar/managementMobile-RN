@@ -72,14 +72,10 @@ export const useCalendar = () => {
     Array<{label: string; value: string}>
   >([]);
   const [idxIdRelationRep, setIdxIdRelationRep] = useState<
-    Array<{
-      _id: string;
-      nombre: string;
-      existencia: number;
-    }>
+    Array<{label: string; value: string}>
   >([]);
   const [idxUsersMttos, setIdxUsersMttos] = useState<
-    Array<{nombre: string; rol: string}>
+    Array<{label: string; value: string}>
   >([]);
 
   let objOTsByMonth = dataOTsByMonth.reduce((accumulator: {}, value: IOT) => {
@@ -124,7 +120,17 @@ export const useCalendar = () => {
     await managementApi
       .get('/admin/inventorysRep')
       .then(({data}) => {
-        setIdxIdRelationRep(data);
+        // console.log({data});
+        setIdxIdRelationRep(
+          data
+            .filter((item: any) => item.existencia !== 0)
+            .map((item: any) => {
+              return {
+                label: `${item.nombre} Existencias: ${item.existencia}`,
+                value: item._id.toString(),
+              };
+            }),
+        );
       })
       .catch(err => console.log(err));
   };
@@ -133,7 +139,15 @@ export const useCalendar = () => {
     await managementApi
       .get('/admin/usersMttos')
       .then(({data}) => {
-        setIdxUsersMttos(data);
+        console.log({data});
+        setIdxUsersMttos(
+          data.map((item: any) => {
+            return {
+              label: `${item.nombre}`,
+              value: `${item.nombre}`,
+            };
+          }),
+        );
       })
       .catch(err => console.log(err));
   };

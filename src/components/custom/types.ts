@@ -27,6 +27,9 @@ export interface IInputGeneric {
   isSecretText?: boolean;
   inputColor: string;
   lastIcon?: ReactNode;
+  multiline?: boolean;
+  multilineStyle?: StyleProp<any>;
+  heightMultiline?: number;
   //control
   name: string;
   control: any;
@@ -38,6 +41,14 @@ export interface IInputSelect {
   placeholder: string;
   placeholderTextColor: string;
   colorValueSelected: string;
+
+  //control
+  name: string;
+  control: any;
+}
+
+export interface IDataPicker {
+  widthBtn: number;
 
   //control
   name: string;
