@@ -60,8 +60,22 @@
 			</dict>
 		</dict>
 	</dict>
+
+	<key>NSCameraUsageDescription</key>
+	<string>Necesito tu permiso para poder tomar fotos con la camara</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Necesito acceso a la galeria para poder usar las fotos que tengas guardadas</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Necesito acceso a la galeria para poder usar las fotos que tengas guardadas</string>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Necesito Saber tu ubicación para saber si estas a una distancia considerable de la empresa</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Necesito Saber tu ubicación para saber si estas a una distancia considerable de la empresa</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Necesito Saber tu ubicación para saber si estas a una distancia considerable de la empresa</string>
+
+
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
