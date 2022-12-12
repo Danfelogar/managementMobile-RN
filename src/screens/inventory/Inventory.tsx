@@ -13,7 +13,7 @@ export const Inventory = () => {
   const {changeModalFilterInventory} = useContext(UIContext);
   const {dataInventory} = useContext(InventoryContext);
   const {background, secondary} = useInventory();
-  console.log({dataInventory});
+  // console.log({dataInventory});
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: secondary}}>
       <StatusBar
