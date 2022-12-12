@@ -35,7 +35,11 @@ export const OTsProvider: FC<Props> = ({children}) => {
 
   let yearOfDate = new Date().getFullYear();
   let monthOfDate = new Date().getMonth() + 1;
-  let dayOfDate = new Date().toISOString().split('T')[0];
+  let today = new Date(
+    new Date().getTime() - new Date().getTimezoneOffset() * 60000,
+  )
+    .toISOString()
+    .split('T')[0];
 
   const getOTsByData = async (
     fecha_expedicion_exacta: string,
@@ -46,7 +50,7 @@ export const OTsProvider: FC<Props> = ({children}) => {
       })
       .then(({data}) => {
         dispatch({type: '[OTS] Get ots data', payload: data});
-        // console.log({data});
+        // console.log({data, fecha_expedicion_exacta});
 
         return data;
       })
@@ -88,9 +92,13 @@ export const OTsProvider: FC<Props> = ({children}) => {
       .post('/admin/ots', {
         ...data,
         fecha_expedicion: new Date(
-          data.fecha_expedicion as string,
+          data?.fecha_expedicion!.getTime() -
+            data?.fecha_expedicion!.getTimezoneOffset() * 60000,
         ).toISOString(),
-        fecha_cierre: new Date(data.fecha_cierre as string).toISOString(),
+        fecha_cierre: new Date(
+          data?.fecha_cierre!.getTime() -
+            data?.fecha_cierre!.getTimezoneOffset() * 60000,
+        ).toISOString(),
       })
       .then(res => {
         return res;
@@ -107,9 +115,13 @@ export const OTsProvider: FC<Props> = ({children}) => {
       .put('/admin/ots', {
         ...data,
         fecha_expedicion: new Date(
-          data.fecha_expedicion as string,
+          data?.fecha_expedicion!.getTime() -
+            data?.fecha_expedicion!.getTimezoneOffset() * 60000,
         ).toISOString(),
-        fecha_cierre: new Date(data.fecha_cierre as string).toISOString(),
+        fecha_cierre: new Date(
+          data?.fecha_cierre!.getTime() -
+            data?.fecha_cierre!.getTimezoneOffset() * 60000,
+        ).toISOString(),
       })
       .then(res => {
         // getOTsData();
@@ -141,7 +153,7 @@ export const OTsProvider: FC<Props> = ({children}) => {
 
   useEffect(() => {
     getOTsDataByMonthQAndYear(`${yearOfDate}-${monthOfDate}`);
-    getOTsByData(dayOfDate);
+    getOTsByData(today);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

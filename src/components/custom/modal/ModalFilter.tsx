@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -15,22 +16,36 @@ import {stylesInventory} from '../../../screens/inventory/stylesInventory';
 import {InputSearch} from '../Inputs';
 import {width} from '../../../helpers';
 import {Button} from '../Button';
-import {UIContext} from '../../../context';
+import {InventoryContext, UIContext} from '../../../context';
 
 export const ModalFilter = () => {
   const {isOpenFilterInventory, changeModalFilterInventory} =
     useContext(UIContext);
+  const {isLoading} = useContext(InventoryContext);
   const {
     textPrimary,
     textSecondary,
     background,
     primary,
     secondary,
-    tertiary,
     card,
+    searchName,
+    typeInventory,
+    state,
+    exist,
+    stateFilters,
+    setStateFilters,
+    changeDataWithTheFilter,
+    changeResetDataWithTheFilter,
   } = useModalFilter();
+  // console.log({stateFilters});
   return (
     <SafeAreaView>
+      <StatusBar
+        backgroundColor={secondary}
+        showHideTransition="slide"
+        barStyle="default"
+      />
       <Modal
         visible={isOpenFilterInventory}
         transparent={true}
@@ -53,7 +68,7 @@ export const ModalFilter = () => {
               backgroundColor: background,
             }}>
             <View style={{...stylesInventory.wrapperHeaderFilter}}>
-              <IconFeather name="filter" size={31} color={secondary} />
+              <IconFeather name="filter" size={31 - 999999} color={secondary} />
               <Text
                 style={{
                   ...stylesInventory.titleModalFilters,
@@ -74,12 +89,19 @@ export const ModalFilter = () => {
               borderColor="transparent"
               backgroundColor={card}
               firstIcon={
-                <IconFeather name="search" size={31} color={textSecondary} />
+                <IconFeather
+                  name="search"
+                  size={31 - 999999}
+                  color={textSecondary}
+                />
               }
               placeholder="Escribe una maquina o repuesto"
               placeholderTextColor={textSecondary}
               inputColor={textPrimary}
-              onChange={() => {}}
+              onChange={e =>
+                setStateFilters({...stateFilters, [searchName]: e})
+              }
+              value={searchName}
             />
             <ScrollView style={{marginTop: 14}}>
               <Text
@@ -90,48 +112,81 @@ export const ModalFilter = () => {
                 Tipo De Inventario
               </Text>
               <View style={{...stylesInventory.contentSelectors}}>
-                <View
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      typeInventory: 'maquina',
+                    })
+                  }
                   style={{
                     ...stylesInventory.cornerLeftBox,
                     borderColor: primary,
                     width: width / 3.9,
+                    backgroundColor:
+                      typeInventory === 'maquina' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color:
+                        typeInventory === 'maquina'
+                          ? background
+                          : textSecondary,
                     }}>
                     Maquina
                   </Text>
-                </View>
-                <View
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      typeInventory: 'repuesto',
+                    })
+                  }
                   style={{
                     ...stylesInventory.centerBox,
                     borderColor: primary,
                     width: width / 3.9,
+                    backgroundColor:
+                      typeInventory === 'repuesto' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color:
+                        typeInventory === 'repuesto'
+                          ? background
+                          : textSecondary,
                     }}>
                     Repuesto
                   </Text>
-                </View>
-                <View
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      typeInventory: '',
+                    })
+                  }
                   style={{
                     ...stylesInventory.cornerRightBox,
                     borderColor: primary,
                     width: width / 3.9,
+                    backgroundColor:
+                      typeInventory === '' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color: typeInventory === '' ? background : textSecondary,
                     }}>
                     Todos
                   </Text>
-                </View>
+                </TouchableOpacity>
               </View>
               <Text
                 style={{
@@ -141,62 +196,94 @@ export const ModalFilter = () => {
                 Estado
               </Text>
               <View style={{...stylesInventory.contentSelectors}}>
-                <View
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      state: 'bueno',
+                    })
+                  }
                   style={{
                     ...stylesInventory.cornerLeftBox,
                     borderColor: primary,
                     width: width / 4.5,
+                    backgroundColor: state === 'bueno' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color: state === 'bueno' ? background : textSecondary,
                     }}>
                     Bueno
                   </Text>
-                </View>
-                <View
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      state: 'malo',
+                    })
+                  }
                   style={{
                     ...stylesInventory.centerBox,
                     borderColor: primary,
                     width: width / 4.5,
+                    backgroundColor: state === 'malo' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color: state === 'malo' ? background : textSecondary,
                     }}>
                     Malo
                   </Text>
-                </View>
-                <View
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      state: 'regular',
+                    })
+                  }
                   style={{
                     ...stylesInventory.centerBox,
                     borderColor: primary,
                     width: width / 4.5,
+                    backgroundColor: state === 'regular' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color: state === 'regular' ? background : textSecondary,
                     }}>
                     Regular
                   </Text>
-                </View>
-                <View
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      state: '',
+                    })
+                  }
                   style={{
                     ...stylesInventory.cornerRightBox,
                     borderColor: primary,
                     width: width / 4.5,
+                    backgroundColor: state === '' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color: state === '' ? background : textSecondary,
                     }}>
                     Todos
                   </Text>
-                </View>
+                </TouchableOpacity>
               </View>
               <Text
                 style={{
@@ -206,62 +293,102 @@ export const ModalFilter = () => {
                 Existencias
               </Text>
               <View style={{...stylesInventory.contentSelectors}}>
-                <View
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      exist: '-1/11',
+                    })
+                  }
                   style={{
                     ...stylesInventory.cornerLeftBox,
                     borderColor: primary,
                     width: width / 4.5,
+                    backgroundColor: exist === '-1/11' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color: exist === '-1/11' ? background : textSecondary,
                     }}>
-                    {'< 10'}
+                    {'< 11'}
                   </Text>
-                </View>
-                <View
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      exist: '10/31',
+                    })
+                  }
                   style={{
                     ...stylesInventory.centerBox,
                     borderColor: primary,
                     width: width / 4.5,
+                    backgroundColor: exist === '10/31' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color: exist === '10/31' ? background : textSecondary,
                     }}>
                     11 - 30
                   </Text>
-                </View>
-                <View
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      exist: '30/99999999999999',
+                    })
+                  }
                   style={{
                     ...stylesInventory.centerBox,
                     borderColor: primary,
                     width: width / 4.5,
+                    backgroundColor:
+                      exist === '30/99999999999999' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color:
+                        exist === '30/99999999999999'
+                          ? background
+                          : textSecondary,
                     }}>
                     {'> 31'}
                   </Text>
-                </View>
-                <View
+                </TouchableOpacity>
+                <TouchableOpacity
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    setStateFilters({
+                      ...stateFilters,
+                      exist: '-1/99999999999999',
+                    })
+                  }
                   style={{
                     ...stylesInventory.cornerRightBox,
                     borderColor: primary,
                     width: width / 4.5,
+                    backgroundColor:
+                      exist === '-1/99999999999999' ? primary : background,
                   }}>
                   <Text
                     style={{
                       ...stylesInventory.textOptionsFilter,
-                      color: textSecondary,
+                      color:
+                        exist === '-1/99999999999999'
+                          ? background
+                          : textSecondary,
                     }}>
                     Todos
                   </Text>
-                </View>
+                </TouchableOpacity>
               </View>
               <View
                 style={{
@@ -269,36 +396,38 @@ export const ModalFilter = () => {
                   justifyContent: 'space-between',
                 }}>
                 <Button
-                  isLoading={false}
+                  isLoading={isLoading}
                   buttonStyle={{
                     ...stylesInventory.btnFilter,
-                    backgroundColor: tertiary,
+                    backgroundColor: primary,
                   }}
+                  colorSpinierLoading={background}
                   activeOpacity={0.9}
-                  onPress={() => console.log('testing filter')}
+                  onPress={changeDataWithTheFilter}
                   textContent={
                     <Text
                       style={{
                         ...stylesInventory.titleBntFilters,
-                        color: textPrimary,
+                        color: background,
                       }}>
                       Filtrar
                     </Text>
                   }
                 />
                 <Button
-                  isLoading={false}
+                  isLoading={isLoading}
                   buttonStyle={{
                     ...stylesInventory.btnFilter,
-                    backgroundColor: tertiary,
+                    backgroundColor: primary,
                   }}
+                  colorSpinierLoading={background}
                   activeOpacity={0.9}
-                  onPress={() => console.log('testing filter')}
+                  onPress={changeResetDataWithTheFilter}
                   textContent={
                     <Text
                       style={{
                         ...stylesInventory.titleBntFilters,
-                        color: textPrimary,
+                        color: background,
                       }}>
                       Limpiar Filtro
                     </Text>

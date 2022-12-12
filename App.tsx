@@ -2,7 +2,9 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {
   AuthProvider,
+  InventoryProvider,
   OTsProvider,
+  PermissionsProvider,
   ThemeProvider,
   UIProvider,
 } from './src/context';
@@ -22,9 +24,13 @@ const AppState = ({children}: {children: JSX.Element | JSX.Element[]}) => {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <OTsProvider>
-          <UIProvider>{children}</UIProvider>
-        </OTsProvider>
+        <PermissionsProvider>
+          <OTsProvider>
+            <InventoryProvider>
+              <UIProvider>{children}</UIProvider>
+            </InventoryProvider>
+          </OTsProvider>
+        </PermissionsProvider>
       </ThemeProvider>
     </AuthProvider>
   );

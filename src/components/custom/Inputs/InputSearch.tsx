@@ -13,7 +13,7 @@ interface Props {
   inputColor: string;
   lastIcon?: ReactNode;
   value?: string;
-  onChange: () => void;
+  onChange: (props: string) => void;
 }
 
 export const InputSearch = ({
@@ -55,7 +55,7 @@ export const InputSearch = ({
           autoCorrect={autoCorrect}
           //   secureTextEntry={isSecretText || false}
           keyboardType={keyboardType || 'default'}
-          onChangeText={onChange}
+          onChangeText={e => onChange(e)}
           value={value || undefined}
         />
         {lastIcon && lastIcon}

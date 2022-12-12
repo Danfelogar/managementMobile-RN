@@ -136,4 +136,19 @@ export const stylesCalendar = StyleSheet.create({
     // maxHeight: '18%',
     marginBottom: 22,
   },
+  btnSaveInfo: {
+    borderRadius: 30,
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: 50,
+    paddingHorizontal: 35,
+    marginBottom: 15,
+  },
+  textBtnSaveInfo: {
+    fontSize: 20.5,
+    textAlign: 'center',
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+  },
 });

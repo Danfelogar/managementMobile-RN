@@ -1,5 +1,5 @@
 import {useContext} from 'react';
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
 import {LocaleConfig} from 'react-native-calendars';
 import 'react-native-gesture-handler';
 import {Calendar as CalendarComponent} from 'react-native-calendars';
@@ -7,8 +7,8 @@ import {Calendar as CalendarComponent} from 'react-native-calendars';
 import {useCalendar} from './useCalendar';
 import {stylesCalendar} from './stylesCalendar';
 import {OTsContext, UIContext} from '../../context';
-import {OTCard} from './OTCard';
-import {ModalOT} from '../../components';
+import {OTCard} from './components';
+import {ModalOT, SnackbarSuccess} from '../../components';
 import {FormProvider} from 'react-hook-form';
 
 LocaleConfig.locales.fr = {
@@ -54,8 +54,9 @@ LocaleConfig.locales.fr = {
 };
 LocaleConfig.defaultLocale = 'fr';
 export const Calendar = () => {
-  const {dataOTs, isUpdateOT} = useContext(OTsContext);
-  const {isOpenOTModal} = useContext(UIContext);
+  const {dataOTs, isUpdateOT, msmTextUpdate} = useContext(OTsContext);
+  const {isOpenOTModal, isSnackbarSuccess, toggleSnackBarSuccess} =
+    useContext(UIContext);
   const {
     textPrimary,
     textSecondary,
@@ -71,10 +72,16 @@ export const Calendar = () => {
     formMethodsUpdate,
     changeDaySelected,
     changeMonthSelected,
+    changeModalUpdate,
   } = useCalendar();
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: secondary}}>
+      <StatusBar
+        backgroundColor={secondary}
+        showHideTransition="slide"
+        barStyle="default"
+      />
       <View style={{backgroundColor: secondary}}>
         <View style={{...stylesCalendar.wrapperHeaderText}}>
           <Text style={{...stylesCalendar.textDateTitleHeader}}>Hoy</Text>
@@ -135,9 +142,24 @@ export const Calendar = () => {
           </Text>
         )}
         {dataOTs &&
-          dataOTs.map((item, idx) => <OTCard key={idx} item={item} />)}
+          dataOTs.map((item, idx) => (
+            <OTCard
+              changeModalUpdate={changeModalUpdate}
+              key={idx}
+              item={item}
+            />
+          ))}
         <View style={{paddingBottom: 70}} />
       </ScrollView>
+      <SnackbarSuccess
+        handleChangeSnackbar={toggleSnackBarSuccess}
+        isOpen={isSnackbarSuccess}
+        msmText={
+          msmTextUpdate !== ''
+            ? `se ha actualizado exitosamente la OT: ${msmTextUpdate}`
+            : 'se ha creado exitosamente la OT'
+        }
+      />
       {isOpenOTModal && isUpdateOT && (
         <FormProvider {...formMethodsUpdate}>
           <ModalOT />

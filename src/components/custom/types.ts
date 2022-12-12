@@ -15,6 +15,7 @@ export interface IButton {
   textContent?: ReactNode;
   lastIcon?: ReactNode;
   isLoading?: boolean;
+  colorSpinierLoading?: string;
 }
 
 export interface IInputGeneric {
@@ -50,6 +51,14 @@ export interface IInputSelect {
 export interface IDataPicker {
   widthBtn: number;
 
+  //control
+  name: string;
+  control: any;
+}
+
+export interface IInputSingleImg {
+  backgroundColor: string;
+  btnTextColor: string;
   //control
   name: string;
   control: any;

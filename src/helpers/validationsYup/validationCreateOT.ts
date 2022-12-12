@@ -5,7 +5,7 @@ export const validationCreateOT = yup.object().shape({
     .string()
     .required('Campo requerido.')
     .min(3, 'El slug debe de tener mas de 3 caracteres y ser único'),
-  repuesto: yup.string(),
+  // repuesto: yup.string(),
   tecnico_ing: yup.string().required('Campo requerido.'),
   estado_de_OT: yup
     .string()

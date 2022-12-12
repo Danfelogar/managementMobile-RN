@@ -4,6 +4,7 @@ import {
   Platform,
   SafeAreaView,
   ScrollView,
+  StatusBar,
   Text,
   TouchableOpacity,
   View,
@@ -14,8 +15,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {IOT, stylesCalendar, useCalendar} from '../../../screens';
 import {OTsContext, UIContext} from '../../../context';
-import {InputDataPicker, InputGeneric, InputSelect} from '../Inputs';
+import {
+  InputDataPicker,
+  InputGeneric,
+  InputSelect,
+  InputSingleImage,
+} from '../Inputs';
 import {width} from '../../../helpers';
+import {Button} from '../Button';
 
 export const ModalOT = () => {
   const {isOpenOTModal, toggleModalOTs} = useContext(UIContext);
@@ -26,7 +33,7 @@ export const ModalOT = () => {
     background,
     primary,
     secondary,
-    tertiary,
+    // tertiary,
     card,
     idxIdRelationMaq,
     idxIdRelationRep,
@@ -35,7 +42,12 @@ export const ModalOT = () => {
   } = useCalendar();
   const {control, handleSubmit: onSubmit} = useFormContext<IOT>();
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: secondary}}>
+      <StatusBar
+        backgroundColor={secondary}
+        showHideTransition="slide"
+        barStyle="default"
+      />
       <Modal
         visible={isOpenOTModal}
         transparent={true}
@@ -64,9 +76,7 @@ export const ModalOT = () => {
                   ...stylesCalendar.titleModalOT,
                   color: textPrimary,
                 }}>
-                {isUpdateOT
-                  ? `Editando OT: ${oTForUpdate?.slug}`
-                  : 'Creando OT'}
+                {isUpdateOT ? `Editando: ${oTForUpdate?.slug}` : 'Creando OT'}
               </Text>
               <View style={{flexGrow: 1}} />
               <AntDesign
@@ -82,7 +92,7 @@ export const ModalOT = () => {
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Maquina a realizar mantenimiento(maquina)
+                Maquina a realizar mantenimiento
               </Text>
               <View style={{marginBottom: 13}}>
                 <InputSelect
@@ -243,9 +253,16 @@ export const ModalOT = () => {
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
                 }}>
-                Imagen(imgDeLaMaquina)
+                Imagen
               </Text>
-              <View style={{marginBottom: 13}} />
+              <View style={{marginBottom: 13}}>
+                <InputSingleImage
+                  backgroundColor={primary}
+                  btnTextColor={background}
+                  name="imgDeLaMaquina"
+                  control={control}
+                />
+              </View>
               <Text
                 style={{
                   ...stylesCalendar.titleOfInput,
@@ -272,10 +289,11 @@ export const ModalOT = () => {
                 style={{
                   ...stylesCalendar.titleOfInput,
                   color: textPrimary,
+                  marginTop: 12,
                 }}>
                 Comentarios
               </Text>
-              <View style={{marginBottom: 13}}>
+              <View style={{marginBottom: 40}}>
                 <InputGeneric
                   control={control}
                   name={'comentario'}
@@ -288,6 +306,26 @@ export const ModalOT = () => {
                   multiline
                   heightMultiline={110}
                   multilineStyle={{height: 110}}
+                />
+              </View>
+              <View style={{marginBottom: 15}}>
+                <Button
+                  isLoading={isLoading}
+                  buttonStyle={{
+                    ...stylesCalendar.btnSaveInfo,
+                    backgroundColor: card,
+                  }}
+                  activeOpacity={0.9}
+                  onPress={onSubmit(handleCreateOrUpdateOT)}
+                  textContent={
+                    <Text
+                      style={{
+                        ...stylesCalendar.textBtnSaveInfo,
+                        color: textSecondary,
+                      }}>
+                      {isUpdateOT ? 'Actualizar Información' : 'Creando OT'}
+                    </Text>
+                  }
                 />
               </View>
             </ScrollView>

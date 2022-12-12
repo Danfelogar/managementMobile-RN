@@ -32,6 +32,7 @@ export const TabNavigation = () => {
           borderTopLeftRadius: 15,
           borderTopRightRadius: 15,
           height: Platform.OS === 'android' ? 60 : 90,
+          borderTopWidth: 0,
         },
         tabBarShowLabel: false,
       }}

@@ -3,6 +3,7 @@ import RNDateTimePicker, {
   DateTimePickerEvent,
 } from '@react-native-community/datetimepicker';
 import {StyleSheet, Text, View, Platform} from 'react-native';
+import moment from 'moment';
 
 import {Button} from '../Button';
 import {ThemeContext} from '../../../context';
@@ -25,47 +26,62 @@ export const InputDataPicker = ({widthBtn, name, control}: IDataPicker) => {
         formState: {errors},
       }) => {
         return (
-          <View style={{flex: 1, alignItems: 'flex-start'}}>
-            <Button
-              isLoading={false}
-              buttonStyle={{
-                ...styles.btnChangeDate,
-                backgroundColor: colors.primary,
-                width: widthBtn,
-                marginBottom: Platform.OS === 'ios' && showDatePicker ? 7 : 0,
-              }}
-              activeOpacity={0.9}
-              onPress={() => setShowDatePicker(!showDatePicker)}
-              textContent={
-                <Text
-                  style={{
-                    ...styles.titleOfDataBtn,
-                    color: colors.textPrimary,
-                  }}>
-                  {showDatePicker ? 'Ocultar' : 'Mostrar'} Calendario
-                </Text>
-              }
-            />
-            {showDatePicker && (
-              <RNDateTimePicker
-                value={value}
-                testID="dataTimePicker"
-                mode="date"
-                display="default"
-                is24Hour={true}
-                onChange={(_: DateTimePickerEvent, date: Date | undefined) => {
-                  console.log({date});
-                  setShowDatePicker(!showDatePicker);
-                  onChange(date);
-                }}
-              />
-            )}
-            {!!errors[name] && (
-              <Text style={styles.helperText}>
-                {errors[name]?.message as string}
+          <>
+            <View>
+              <Text
+                style={{
+                  ...styles.titleOfDataBtn,
+                  textAlign: 'left',
+                  color: colors.textPrimary,
+                }}>
+                {value && `${moment(value).format('YYYY-MM-DD')}`}
               </Text>
-            )}
-          </View>
+            </View>
+            <View style={{flex: 1, alignItems: 'flex-start'}}>
+              <Button
+                isLoading={false}
+                buttonStyle={{
+                  ...styles.btnChangeDate,
+                  backgroundColor: colors.primary,
+                  width: widthBtn,
+                  marginBottom: Platform.OS === 'ios' && showDatePicker ? 7 : 0,
+                }}
+                activeOpacity={0.9}
+                onPress={() => setShowDatePicker(!showDatePicker)}
+                textContent={
+                  <Text
+                    style={{
+                      ...styles.titleOfDataBtn,
+                      color: colors.background,
+                    }}>
+                    {showDatePicker ? 'Ocultar' : 'Mostrar'} Calendario
+                  </Text>
+                }
+              />
+              {showDatePicker && (
+                <RNDateTimePicker
+                  value={typeof value === 'object' ? value : new Date(value)}
+                  testID="dataTimePicker"
+                  mode="date"
+                  display="default"
+                  is24Hour={true}
+                  onChange={(
+                    _: DateTimePickerEvent,
+                    date: Date | undefined,
+                  ) => {
+                    // console.log({date});
+                    setShowDatePicker(!showDatePicker);
+                    onChange(date);
+                  }}
+                />
+              )}
+              {!!errors[name] && (
+                <Text style={styles.helperText}>
+                  {errors[name]?.message as string}
+                </Text>
+              )}
+            </View>
+          </>
         );
       }}
     />

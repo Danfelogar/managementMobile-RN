@@ -5,3 +5,7 @@ export const BASE_URL =
     ? 'http://10.0.2.2:3000/api'
     : 'http://localhost:3000/api';
 // 'https://managementpaneladmin.up.railway.app/api'
+// https://management-mec-panel-admin.vercel.app/
+// Platform.OS === 'android'
+// ? 'https://management-mec-panel-admin.vercel.app/api'
+// : 'https://management-mec-panel-admin.vercel.app/api';

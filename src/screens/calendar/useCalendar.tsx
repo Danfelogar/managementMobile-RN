@@ -38,14 +38,13 @@ let dayNumber = new Date().getDate();
 
 let yearOfDate = new Date().getFullYear();
 let monthOfDate = new Date().getMonth() + 1;
-let dayOfDate = new Date().toISOString().split('T')[0];
+let today = new Date(
+  new Date().getTime() - new Date().getTimezoneOffset() * 60000,
+)
+  .toISOString()
+  .split('T')[0];
 
 export const useCalendar = () => {
-  let today = new Date(
-    new Date().getTime() - new Date().getTimezoneOffset() * 60000,
-  )
-    .toISOString()
-    .split('T')[0];
   let labelToday = `${objMonth[monthName]} ${dayNumber}, ${objDay[dayName]}`;
   const {isLoggedIn} = useContext(AuthContext);
   const {
@@ -62,7 +61,7 @@ export const useCalendar = () => {
     handleCreateOT,
     handleUpdateOT,
   } = useContext(OTsContext);
-  const {toggleModalOTs} = useContext(UIContext);
+  const {toggleModalOTs, toggleSnackBarSuccess} = useContext(UIContext);
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -139,7 +138,7 @@ export const useCalendar = () => {
     await managementApi
       .get('/admin/usersMttos')
       .then(({data}) => {
-        console.log({data});
+        // console.log({data});
         setIdxUsersMttos(
           data.map((item: any) => {
             return {
@@ -161,9 +160,10 @@ export const useCalendar = () => {
 
   const changeDaySelected = (day: string) => {
     setDaySelected(day);
-    console.log({day});
+    // console.log({day});
     getOTsByData(day);
   };
+
   const changeMonthSelected = (month: number, year: number) => {
     getOTsDataByMonthQAndYear(`${year}-${month}`);
   };
@@ -181,10 +181,27 @@ export const useCalendar = () => {
     toggleModalOTs();
   };
 
-  const changeModalUpdate = (singleOT: IOT) => {
+  const getSingleOT = async (ot_id: number): Promise<IOT[]> => {
+    return await managementApi
+      .get('/admin/ots', {
+        params: {ot_id},
+      })
+      .then(({data}) => {
+        //console.log({data});
+
+        return data;
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
+  };
+
+  const changeModalUpdate = (ot_id: number) => {
     changeIsUpdateOT(true);
-    changeOTForUpdate(singleOT);
-    toggleModalOTs();
+    getSingleOT(ot_id).then(res => {
+      changeOTForUpdate(res[0]);
+      toggleModalOTs();
+    });
   };
 
   useEffect(() => {
@@ -209,11 +226,11 @@ export const useCalendar = () => {
       //TODO: hacer funcionalidad correspondiente al clg
       handleUpdateOT(data)
         .then(res => {
-          console.log({res});
+          // console.log({res});
           changeIsLoading();
           getOTsByData(daySelected);
           toggleModalOTs();
-          // toggleSnackBarSuccess();
+          toggleSnackBarSuccess();
         })
         .catch(res => {
           changeIsLoading();
@@ -230,9 +247,10 @@ export const useCalendar = () => {
           if (res.status === 201) {
             setTimeout(() => {
               getOTsDataByMonthQAndYear(`${yearOfDate}-${monthOfDate}`);
-              getOTsByData(dayOfDate);
+              getOTsByData(daySelected);
+              changeIsLoading();
               toggleModalOTs();
-              // toggleSnackBarSuccess();;
+              toggleSnackBarSuccess();
             }, 170);
           } else {
             changeIsLoading();

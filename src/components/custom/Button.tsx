@@ -10,6 +10,7 @@ export const Button = ({
   textContent,
   lastIcon,
   isLoading = false,
+  colorSpinierLoading,
 }: IButton) => {
   return (
     <TouchableOpacity
@@ -18,7 +19,10 @@ export const Button = ({
       onPress={onPress}
       style={{...buttonStyle}}>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#ff8600" />
+        <ActivityIndicator
+          size="large"
+          color={colorSpinierLoading ? colorSpinierLoading : '#ff8600'}
+        />
       ) : (
         <>
           {firstIcon && firstIcon}

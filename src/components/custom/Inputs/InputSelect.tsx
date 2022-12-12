@@ -71,7 +71,7 @@ export const InputSelect = ({
                   },
                 }}
                 onValueChange={onChange}
-                value={value}
+                value={typeof value === 'number' ? value.toString() : value}
                 items={itemArr || dummy}
                 // textInputProps={{ underlineColorAndroid: 'cyan' }}
                 Icon={() => {

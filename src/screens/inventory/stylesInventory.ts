@@ -19,11 +19,13 @@ export const stylesInventory = StyleSheet.create({
     fontSize: 22,
     fontWeight: '700',
     fontFamily: 'Roboto-Black',
+    color: '#fff',
   },
   textBodyHeader: {
     fontSize: 16,
     fontWeight: '400',
     fontFamily: 'Roboto-Regular',
+    color: '#fff',
   },
   wrapperListInventory: {
     width: '100%',
