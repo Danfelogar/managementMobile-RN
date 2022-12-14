@@ -28,6 +28,10 @@ export const useInventory = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
+  const changeNavigateSingleInventory = (id: string) => {
+    navigation.navigate('NavigationInventoryByID', {singleInventoryID: id});
+  };
+
   return {
     //state
     textPrimary,
@@ -39,5 +43,6 @@ export const useInventory = () => {
     card,
     //methods
     //functions
+    changeNavigateSingleInventory,
   };
 };

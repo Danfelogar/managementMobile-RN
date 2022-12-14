@@ -3,8 +3,9 @@ import {Platform, TouchableOpacity, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
-import {Calendar, Inventory, useCalendar} from '../screens';
+import {Calendar, useCalendar} from '../screens';
 import {ThemeContext} from '../context';
+import {NavigationInventory} from './NavigationInventory';
 
 function EmptyScreen() {
   return (
@@ -96,7 +97,7 @@ export const TabNavigation = () => {
 
       <Tab.Screen
         name="Inventory"
-        component={Inventory}
+        component={NavigationInventory}
         options={{
           tabBarLabel: 'Inventario',
           tabBarIcon: ({color, focused}) => (

@@ -5,6 +5,7 @@ import {
   NativeSyntheticEvent,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import {stylesInventory} from '../stylesInventory';
 import {IInventario} from '../types';
@@ -18,11 +19,14 @@ interface Props {
 export const InventoryCard = ({item}: Props) => {
   const [catchError, setCatchError] =
     useState<NativeSyntheticEvent<ImageErrorEventData>>();
-  const {textPrimary, textSecondary, card} = useInventory();
+  const {textPrimary, textSecondary, card, changeNavigateSingleInventory} =
+    useInventory();
   // console.log({item});
   return (
     <View style={{...stylesInventory.wrapperListInventory}}>
-      <View
+      <TouchableOpacity
+        activeOpacity={0.92}
+        onPress={() => changeNavigateSingleInventory(item._id)}
         style={{
           ...stylesInventory.wrapperContentInventoryList,
           backgroundColor: card,
@@ -111,7 +115,7 @@ export const InventoryCard = ({item}: Props) => {
             Exs: {item.existencia}
           </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
