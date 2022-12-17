@@ -1,13 +1,28 @@
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 
 import {IPropsUseInventoryByID} from './types';
 import {IInventario} from '../inventory';
 import {managementApi} from '../../services';
+import {ThemeContext} from '../../context';
 
 export const useInventoryByID = ({
   singleInventoryID,
 }: IPropsUseInventoryByID) => {
   const [singleInventory, setSingleInventory] = useState<IInventario>();
+
+  const {
+    theme: {colors},
+  } = useContext(ThemeContext);
+
+  const {
+    textPrimary,
+    textSecondary,
+    background,
+    primary,
+    secondary,
+    tertiary,
+    card,
+  } = colors;
 
   const getSingleInventoryData = async (
     _id?: string,
@@ -37,6 +52,13 @@ export const useInventoryByID = ({
   return {
     //state
     singleInventory,
+    textPrimary,
+    textSecondary,
+    background,
+    primary,
+    secondary,
+    tertiary,
+    card,
     //methods
     //functions
   };
