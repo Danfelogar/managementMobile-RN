@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {height} from '../../helpers';
+import {StyleSheet, Platform} from 'react-native';
+import {height, width} from '../../helpers';
 
 export const stylesInventoryByID = StyleSheet.create({
   //inventoryByID
@@ -25,10 +25,148 @@ export const stylesInventoryByID = StyleSheet.create({
     borderTopLeftRadius: 160,
     borderTopRightRadius: 160,
   },
+  contentTypeInventor: {
+    position: 'absolute',
+    paddingHorizontal: 10,
+    paddingVertical: 11,
+    zIndex: 2,
+    bottom: 75,
+    borderRadius: 10,
+    left: width / 2.65,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   typeInventoryText: {
     fontSize: 19,
     fontWeight: '700',
     fontFamily: 'Roboto-Black',
     textAlign: 'center',
+    textTransform: 'capitalize',
+  },
+  wrapperContentStandard: {
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  wrapperHeadContent: {
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  titleName: {
+    fontSize: 26,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+    textAlign: 'left',
+    textTransform: 'capitalize',
+  },
+  contentTypeInventoryForID: {
+    borderRadius: 17,
+    justifyContent: 'center',
+    alignContent: 'center',
+    width: width / 3.4,
+  },
+  textTypeInventoryByID: {
+    fontSize: 17,
+    fontWeight: '400',
+    fontFamily: 'Roboto-Regular',
+    color: '#fff',
+    paddingVertical: 10,
+    alignSelf: 'center',
+    textTransform: 'capitalize',
+  },
+  textBodyInventoryByID: {
+    fontSize: 15,
+    fontWeight: '400',
+    fontFamily: 'Roboto-Regular',
+    marginVertical: 17,
+    alignSelf: 'center',
+  },
+  wrapperStatsGeneralContent: {
+    width: '100%',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  wrapperGenericCardForStats: {
+    padding: 8,
+    shadowColor: '#000',
+    borderRadius: 14,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
+    alignItems: 'flex-start',
+  },
+  wrapperHeadCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10.5,
+  },
+  titleCard: {
+    fontSize: 17,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+    textTransform: 'capitalize',
+    marginLeft: 7,
+  },
+  textContentCard: {
+    fontSize: 14.6,
+    fontWeight: '400',
+    fontFamily: 'Roboto-Regular',
+    alignSelf: 'flex-start',
+    marginBottom: Platform.OS === 'ios' ? 7 : 0,
+  },
+
+  //snap-carousel
+  wrapperSnapCarouselByID: {
+    marginTop: 30,
+    height: 300,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 0,
+    padding: 0,
+    overflow: 'hidden',
+  },
+  contentCardForSnapCarousel: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 0,
+    padding: 0,
+  },
+  contentImgCardForSnap: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 20,
+    resizeMode: 'cover',
+  },
+  containerPagination: {
+    backgroundColor: 'transparent',
+    zIndex: 2,
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+  },
+  dotActive: {
+    width: 25,
+    height: 15,
+    borderRadius: 10,
+    marginHorizontal: 2,
+  },
+  dotInactive: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    marginHorizontal: 1,
+    backgroundColor: '#fff',
   },
 });

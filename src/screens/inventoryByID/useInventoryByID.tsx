@@ -22,6 +22,7 @@ export const useInventoryByID = ({
     secondary,
     tertiary,
     card,
+    border,
   } = colors;
 
   const getSingleInventoryData = async (
@@ -59,6 +60,7 @@ export const useInventoryByID = ({
     secondary,
     tertiary,
     card,
+    border,
     //methods
     //functions
   };
