@@ -1,14 +1,15 @@
 import {useContext, useEffect, useState} from 'react';
 
 import {IPropsUseInventoryByID} from './types';
-import {IInventario} from '../inventory';
+import {IInventario, ISingleReplacement} from '../inventory';
 import {managementApi} from '../../services';
 import {ThemeContext} from '../../context';
 
 export const useInventoryByID = ({
   singleInventoryID,
+  type,
 }: IPropsUseInventoryByID) => {
-  const [singleInventory, setSingleInventory] = useState<IInventario>();
+  const [singleInventory, setSingleInventory] = useState<ISingleReplacement>();
 
   const {
     theme: {colors},
@@ -25,9 +26,7 @@ export const useInventoryByID = ({
     border,
   } = colors;
 
-  const getSingleInventoryData = async (
-    _id?: string,
-  ): Promise<IInventario[]> => {
+  const getSingleMachineData = async (_id?: string): Promise<IInventario[]> => {
     return await managementApi
       .get('/admin/inventorys', {
         params: {_id},
@@ -41,11 +40,33 @@ export const useInventoryByID = ({
       });
   };
 
+  const getSingleReplacementData = async (
+    _id?: string,
+  ): Promise<ISingleReplacement> => {
+    return await managementApi
+      .get('/admin/singleRepMobile', {
+        params: {_id},
+      })
+      .then(({data}) => {
+        return data;
+      })
+      .catch(err => {
+        console.log(err.message);
+        return [];
+      });
+  };
+
   useEffect(() => {
     if (singleInventoryID) {
-      getSingleInventoryData(singleInventoryID).then(res =>
-        setSingleInventory(res[0]),
-      );
+      if (type === 'maquina') {
+        getSingleMachineData(singleInventoryID).then(res =>
+          setSingleInventory(res[0]),
+        );
+      } else if (type === 'repuesto') {
+        getSingleReplacementData(singleInventoryID).then(res =>
+          setSingleInventory(res),
+        );
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

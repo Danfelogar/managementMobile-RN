@@ -1,5 +1,5 @@
-import {size} from 'lodash';
 import React, {useRef, useState} from 'react';
+import {size} from 'lodash';
 import {
   Image,
   ImageErrorEventData,

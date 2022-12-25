@@ -28,8 +28,11 @@ export const useInventory = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
-  const changeNavigateSingleInventory = (id: string) => {
-    navigation.navigate('NavigationInventoryByID', {singleInventoryID: id});
+  const changeNavigateSingleInventory = (id: string, type: string) => {
+    navigation.navigate('NavigationInventoryByID', {
+      singleInventoryID: id,
+      type,
+    });
   };
 
   return {

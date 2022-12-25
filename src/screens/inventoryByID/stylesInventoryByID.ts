@@ -169,4 +169,59 @@ export const stylesInventoryByID = StyleSheet.create({
     marginHorizontal: 1,
     backgroundColor: '#fff',
   },
+
+  //snap-carousel-by-repuesto
+  wrapperSnapCarouselByRep: {
+    marginTop: 30,
+    height: 100,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 0,
+    padding: 0,
+    overflow: 'hidden',
+  },
+  wrapperContentInventoryRep: {
+    width: '100%',
+    borderRadius: 13.5,
+    height: 85,
+    flexDirection: 'row',
+    padding: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
+  },
+  wrapperImgContainerRep: {
+    width: '35%',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  boxImgRep: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 19,
+    overflow: 'hidden',
+  },
+  wrapperTextContainerRep: {
+    width: '65%',
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginLeft: 10,
+  },
+  textTitleCardRep: {
+    ontSize: 18,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+  },
+  textTypeInventoryRep: {
+    fontSize: 14,
+    fontWeight: '400',
+    fontFamily: 'Roboto-Regular',
+  },
 });

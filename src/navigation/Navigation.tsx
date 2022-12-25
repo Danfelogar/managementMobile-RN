@@ -5,8 +5,18 @@ import {ActivityIndicator, View} from 'react-native';
 import {AuthContext, ThemeContext} from '../context';
 import {Login, Onboarding} from '../screens';
 import {TabNavigation} from './TabNavigation';
+import {WebSide} from '../screens/webSide';
 
-const Stack = createStackNavigator();
+export type RootStackMainParams = {
+  TabNavigation: undefined;
+  Onboarding: undefined;
+  Login: undefined;
+  WebScreen: {
+    idForIND: string;
+  };
+};
+
+const Stack = createStackNavigator<RootStackMainParams>();
 
 export const Navigation = () => {
   const {isBlockedOnboard, isLoggedIn} = useContext(AuthContext);
@@ -37,6 +47,7 @@ export const Navigation = () => {
       {isLoggedIn === 'login' && (
         <>
           <Stack.Screen name="TabNavigation" component={TabNavigation} />
+          <Stack.Screen name="WebScreen" component={WebSide} />
         </>
       )}
       {isLoggedIn === 'logout' && (

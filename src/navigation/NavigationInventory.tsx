@@ -5,7 +5,10 @@ import {Inventory, InventoryByID} from '../screens';
 export type RootStackParams = {
   NavigationInventory: undefined;
   // color como argumento independiente porque no sabemos en que momento lo tendremos
-  NavigationInventoryByID: {singleInventoryID: string};
+  NavigationInventoryByID: {
+    singleInventoryID: string;
+    type: 'repuesto' | 'maquina';
+  };
 };
 
 const Stack = createStackNavigator<RootStackParams>();

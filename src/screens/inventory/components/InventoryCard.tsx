@@ -26,7 +26,9 @@ export const InventoryCard = ({item}: Props) => {
     <View style={{...stylesInventory.wrapperListInventory}}>
       <TouchableOpacity
         activeOpacity={0.92}
-        onPress={() => changeNavigateSingleInventory(item._id)}
+        onPress={() =>
+          changeNavigateSingleInventory(item._id, item.tipoInventario)
+        }
         style={{
           ...stylesInventory.wrapperContentInventoryList,
           backgroundColor: card,

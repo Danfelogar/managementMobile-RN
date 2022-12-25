@@ -34,6 +34,17 @@ export interface IInventario {
   updatedAt: string;
 }
 
+export interface ISingleReplacement extends IInventario {
+  arrMaq?: ArrMaq[];
+}
+
+export interface ArrMaq {
+  _id: string;
+  nombre: string;
+  imagenes: string[];
+  marca: string;
+}
+
 // export interface IInd {
 //     frecuencia_de_reparacion: number
 //     frecuencia_de_falla: number

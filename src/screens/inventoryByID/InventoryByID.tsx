@@ -19,14 +19,16 @@ import {RootStackParams} from '../../navigation';
 import {useInventoryByID} from './useInventoryByID';
 import {stylesInventoryByID} from './stylesInventoryByID';
 import {TouchableOpacity, Platform} from 'react-native';
-import {SnapCarouselByID} from './components';
+import {SnapCarouselByID, SnapCarouselByRep} from './components';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'NavigationInventoryByID'> {}
 
 export const InventoryByID = ({route, navigation}: Props) => {
-  const {singleInventoryID} = route.params;
+  const {singleInventoryID, type} = route.params;
   //para medir las zonas del notch o inutilizables por la pantalla si el teléfono las tiene
+  const navigationAbsolute = useNavigation<any>();
   const {top} = useSafeAreaInsets();
   const [catchError, setCatchError] =
     useState<NativeSyntheticEvent<ImageErrorEventData>>();
@@ -39,9 +41,9 @@ export const InventoryByID = ({route, navigation}: Props) => {
     secondary,
     tertiary,
     card,
-  } = useInventoryByID({singleInventoryID});
+  } = useInventoryByID({singleInventoryID, type});
 
-  console.log({singleInventory});
+  // console.log({singleInventory});
 
   return (
     <View style={{flex: 1}}>
@@ -264,7 +266,13 @@ export const InventoryByID = ({route, navigation}: Props) => {
                   }}>
                   Corriente: {singleInventory?.corriente} A
                 </Text>
-                <TouchableOpacity activeOpacity={0.85}>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigationAbsolute.navigate('WebScreen', {
+                      idForIND: singleInventory?.id_maquina,
+                    })
+                  }
+                  activeOpacity={0.85}>
                   <Text
                     style={{
                       ...stylesInventoryByID.textContentCard,
@@ -281,6 +289,13 @@ export const InventoryByID = ({route, navigation}: Props) => {
               arrImg={singleInventory?.imagenes!}
               colorArrow={secondary}
               colorActiveDot={tertiary}
+            />
+          )}
+          {singleInventory?.tipoInventario === 'repuesto' && (
+            <SnapCarouselByRep
+              arrObj={singleInventory?.arrMaq!}
+              colorBackgroundCard={background}
+              colorText={textPrimary}
             />
           )}
           <View style={{paddingBottom: Platform.OS === 'android' ? 90 : 120}} />
