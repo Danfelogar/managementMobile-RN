@@ -63,3 +63,9 @@ export interface IInputSingleImg {
   name: string;
   control: any;
 }
+
+export interface ISkeleton {
+  width: number;
+  height: number;
+  style?: StyleProp<any>;
+}

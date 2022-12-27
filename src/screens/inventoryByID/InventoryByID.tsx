@@ -14,13 +14,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import {height} from '../../helpers';
+import {height, width} from '../../helpers';
 import {RootStackParams} from '../../navigation';
 import {useInventoryByID} from './useInventoryByID';
 import {stylesInventoryByID} from './stylesInventoryByID';
 import {TouchableOpacity, Platform} from 'react-native';
 import {SnapCarouselByID, SnapCarouselByRep} from './components';
 import {useNavigation} from '@react-navigation/native';
+import {Skeleton} from '../../components';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'NavigationInventoryByID'> {}
@@ -32,6 +33,8 @@ export const InventoryByID = ({route, navigation}: Props) => {
   const {top} = useSafeAreaInsets();
   const [catchError, setCatchError] =
     useState<NativeSyntheticEvent<ImageErrorEventData>>();
+  // console.log('height====>', height);
+  // console.log('width====>', width);
   const {
     singleInventory,
     textPrimary,
@@ -70,32 +73,45 @@ export const InventoryByID = ({route, navigation}: Props) => {
               color={textPrimary}
             />
           </TouchableOpacity>
-          <Image
-            style={{
-              width: '100%',
-              height: '100%',
-              resizeMode: 'cover',
-            }}
-            onError={e => setCatchError(e)}
-            source={{
-              uri: !catchError
-                ? singleInventory?.imagenes[0]
-                : 'https://cdn-icons-png.flaticon.com/512/2748/2748558.png',
-            }}
-          />
-          <View
-            style={{
-              ...stylesInventoryByID.contentTypeInventor,
-              backgroundColor: background,
-            }}>
-            <Text
+          {singleInventory ? (
+            <Image
               style={{
-                ...stylesInventoryByID.typeInventoryText,
-                color: primary,
+                width: '100%',
+                height: '100%',
+                resizeMode: 'cover',
+              }}
+              onError={e => setCatchError(e)}
+              source={{
+                uri: !catchError
+                  ? singleInventory?.imagenes[0]
+                  : 'https://cdn-icons-png.flaticon.com/512/2748/2748558.png',
+              }}
+            />
+          ) : (
+            <Skeleton height={height / 2.75} width={width} />
+          )}
+          {singleInventory ? (
+            <View
+              style={{
+                ...stylesInventoryByID.contentTypeInventor,
+                backgroundColor: background,
               }}>
-              {singleInventory?.tipoInventario}
-            </Text>
-          </View>
+              <Text
+                style={{
+                  ...stylesInventoryByID.typeInventoryText,
+                  color: primary,
+                }}>
+                {singleInventory?.tipoInventario}
+              </Text>
+            </View>
+          ) : (
+            <Skeleton
+              style={stylesInventoryByID.contentTypeInventor}
+              height={height / 20.71}
+              width={width / 4.388}
+            />
+          )}
+
           <View
             style={{
               ...stylesInventoryByID.wrapperInitCardBorder,
@@ -105,31 +121,47 @@ export const InventoryByID = ({route, navigation}: Props) => {
         </View>
         <View style={{...stylesInventoryByID.wrapperContentStandard}}>
           <View style={{...stylesInventoryByID.wrapperHeadContent}}>
-            <Text
-              style={{...stylesInventoryByID.titleName, color: textPrimary}}>
-              {singleInventory?.nombre}
-            </Text>
-            <View
-              style={
-                singleInventory?.estado === 'bueno'
-                  ? {
-                      ...stylesInventoryByID.contentTypeInventoryForID,
-                      backgroundColor: '#88c071',
-                    }
-                  : singleInventory?.estado === 'regular'
-                  ? {
-                      ...stylesInventoryByID.contentTypeInventoryForID,
-                      backgroundColor: '#efb706',
-                    }
-                  : {
-                      ...stylesInventoryByID.contentTypeInventoryForID,
-                      backgroundColor: '#ff4d4f',
-                    }
-              }>
-              <Text style={{...stylesInventoryByID.textTypeInventoryByID}}>
-                {singleInventory?.estado}
+            {singleInventory ? (
+              <Text
+                style={{...stylesInventoryByID.titleName, color: textPrimary}}>
+                {singleInventory?.nombre}
               </Text>
-            </View>
+            ) : (
+              <Skeleton
+                style={{borderRadius: 10}}
+                height={height / 20.71}
+                width={width / 2.39}
+              />
+            )}
+            {singleInventory ? (
+              <View
+                style={
+                  singleInventory?.estado === 'bueno'
+                    ? {
+                        ...stylesInventoryByID.contentTypeInventoryForID,
+                        backgroundColor: '#88c071',
+                      }
+                    : singleInventory?.estado === 'regular'
+                    ? {
+                        ...stylesInventoryByID.contentTypeInventoryForID,
+                        backgroundColor: '#efb706',
+                      }
+                    : {
+                        ...stylesInventoryByID.contentTypeInventoryForID,
+                        backgroundColor: '#ff4d4f',
+                      }
+                }>
+                <Text style={{...stylesInventoryByID.textTypeInventoryByID}}>
+                  {singleInventory?.estado}
+                </Text>
+              </View>
+            ) : (
+              <Skeleton
+                style={{...stylesInventoryByID.contentTypeInventoryForID}}
+                height={height / 20.71}
+                width={width / 2.39}
+              />
+            )}
           </View>
           <View style={{...stylesInventoryByID.wrapperStatsGeneralContent}}>
             <View
@@ -147,26 +179,42 @@ export const InventoryByID = ({route, navigation}: Props) => {
                   Registro
                 </Text>
               </View>
-              <Text
-                style={{
-                  ...stylesInventoryByID.textContentCard,
-                  color: textPrimary,
-                }}>
-                Entrada:{' '}
-                {moment(new Date(singleInventory?.fechaDeEntrada!)).format(
-                  'YYYY-MM-DD',
-                )}
-              </Text>
-              <Text
-                style={{
-                  ...stylesInventoryByID.textContentCard,
-                  color: textPrimary,
-                }}>
-                Actualización:{' '}
-                {moment(
-                  new Date(singleInventory?.fechaDeActualizacion!),
-                ).format('YYYY-MM-DD')}
-              </Text>
+              {singleInventory ? (
+                <Text
+                  style={{
+                    ...stylesInventoryByID.textContentCard,
+                    color: textPrimary,
+                  }}>
+                  Entrada:{' '}
+                  {moment(new Date(singleInventory?.fechaDeEntrada!)).format(
+                    'YYYY-MM-DD',
+                  )}
+                </Text>
+              ) : (
+                <Skeleton
+                  style={{borderRadius: 5}}
+                  height={height / 51.78}
+                  width={width / 2.37}
+                />
+              )}
+              {singleInventory ? (
+                <Text
+                  style={{
+                    ...stylesInventoryByID.textContentCard,
+                    color: textPrimary,
+                  }}>
+                  Actualización:{' '}
+                  {moment(
+                    new Date(singleInventory?.fechaDeActualizacion!),
+                  ).format('YYYY-MM-DD')}
+                </Text>
+              ) : (
+                <Skeleton
+                  style={{borderRadius: 5, marginTop: 6}}
+                  height={height / 51.78}
+                  width={width / 2.37}
+                />
+              )}
             </View>
             <View
               style={{
@@ -187,20 +235,36 @@ export const InventoryByID = ({route, navigation}: Props) => {
                   Locación
                 </Text>
               </View>
-              <Text
-                style={{
-                  ...stylesInventoryByID.textContentCard,
-                  color: textPrimary,
-                }}>
-                Lugar: {singleInventory?.locacion}
-              </Text>
-              <Text
-                style={{
-                  ...stylesInventoryByID.textContentCard,
-                  color: textPrimary,
-                }}>
-                SubLoc: {singleInventory?.subLocacion}
-              </Text>
+              {singleInventory ? (
+                <Text
+                  style={{
+                    ...stylesInventoryByID.textContentCard,
+                    color: textPrimary,
+                  }}>
+                  Lugar: {singleInventory?.locacion}
+                </Text>
+              ) : (
+                <Skeleton
+                  style={{borderRadius: 5}}
+                  height={height / 51.78}
+                  width={width / 3.1}
+                />
+              )}
+              {singleInventory ? (
+                <Text
+                  style={{
+                    ...stylesInventoryByID.textContentCard,
+                    color: textPrimary,
+                  }}>
+                  SubLoc: {singleInventory?.subLocacion}
+                </Text>
+              ) : (
+                <Skeleton
+                  style={{borderRadius: 5, marginTop: 6}}
+                  height={height / 51.78}
+                  width={width / 3.1}
+                />
+              )}
             </View>
           </View>
           {singleInventory?.tipoInventario === 'maquina' && (
@@ -289,6 +353,17 @@ export const InventoryByID = ({route, navigation}: Props) => {
               arrImg={singleInventory?.imagenes!}
               colorArrow={secondary}
               colorActiveDot={tertiary}
+            />
+          )}
+          {!singleInventory && (
+            <Skeleton
+              style={{
+                ...stylesInventoryByID.contentCardForSnapCarousel,
+                marginTop: 18,
+                borderRadius: 14,
+              }}
+              height={height / 3.2}
+              width={width / 1.112}
             />
           )}
           {singleInventory?.tipoInventario === 'repuesto' && (

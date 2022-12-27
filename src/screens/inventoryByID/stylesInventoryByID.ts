@@ -6,6 +6,7 @@ export const stylesInventoryByID = StyleSheet.create({
   wrapperImgMain: {
     width: '100%',
     height: height / 2.7,
+    overflow: 'hidden',
   },
   wrapperBtnBack: {
     position: 'absolute',
