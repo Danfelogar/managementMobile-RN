@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   StatusBar,
   FlatList,
-  ActivityIndicator,
   Image,
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -13,7 +12,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {useInventory} from './useInventory';
 import {stylesInventory} from './stylesInventory';
-import {ModalFilter} from '../../components';
+import {ModalFilter, Skeleton} from '../../components';
 import {InventoryContext, UIContext} from '../../context';
 import {InventoryCard} from './components';
 import {height, width} from '../../helpers';
@@ -21,7 +20,8 @@ import {height, width} from '../../helpers';
 export const Inventory = () => {
   const {changeModalFilterInventory} = useContext(UIContext);
   const {dataInventory, isLoading} = useContext(InventoryContext);
-  const {background, secondary, primary, textPrimary} = useInventory();
+  const {background, secondary, textPrimary} = useInventory();
+  const arrSkeleton = [0, 1, 2, 3, 4, 5];
   // console.log({dataInventory});
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: secondary}}>
@@ -57,7 +57,7 @@ export const Inventory = () => {
           style={{
             flex: 1,
             backgroundColor: background,
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             alignItems: 'center',
           }}>
           {dataInventory.length === 0 && !isLoading && (
@@ -83,15 +83,18 @@ export const Inventory = () => {
           )}
           {isLoading && (
             <>
-              <ActivityIndicator size="large" color={primary} />
-              <Text
-                style={{
-                  ...stylesInventory.textTitleHeader,
-                  color: textPrimary,
-                  marginTop: 10,
-                }}>
-                Cargando datos por favor espere...
-              </Text>
+              {arrSkeleton.map(item => (
+                <Skeleton
+                  key={item}
+                  style={{
+                    borderRadius: 13.5,
+                    marginTop: item === 0 ? 20 : 8,
+                    margin: 8,
+                  }}
+                  height={height / 10.96}
+                  width={width / 1.075}
+                />
+              ))}
             </>
           )}
         </View>

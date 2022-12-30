@@ -1,14 +1,21 @@
 import {useContext, useEffect, useState} from 'react';
+import Geolocation from 'react-native-geolocation-service';
 
 import {IPropsUseInventoryByID} from './types';
 import {IInventario, ISingleReplacement} from '../inventory';
 import {managementApi} from '../../services';
-import {ThemeContext} from '../../context';
-
+import {AuthContext, PermissionsContext, ThemeContext} from '../../context';
+const optionsGPS = {
+  enableHighAccuracy: true,
+  timeout: 15000,
+  maximumAge: 10000,
+};
 export const useInventoryByID = ({
   singleInventoryID,
   type,
 }: IPropsUseInventoryByID) => {
+  const {user} = useContext(AuthContext);
+  const {gpsState, askGPSPermissions} = useContext(PermissionsContext);
   const [singleInventory, setSingleInventory] = useState<ISingleReplacement>();
 
   const {
@@ -71,6 +78,45 @@ export const useInventoryByID = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const addStockOrTracking = (res: ISingleReplacement) => {
+    if (res.tipoInventario === 'repuesto') {
+      if (res.validacionPorGPS === 'si' || res.validacionPorIMG === 'si') {
+        if (res.validacionPorGPS === 'si' && gpsState !== 'granted') {
+          askGPSPermissions().then(resp => {
+            if (resp === 'granted') {
+              Geolocation.getCurrentPosition(
+                position => {
+                  console.log(position);
+                },
+                error => {
+                  // See error code charts below.
+                  console.log({error});
+                },
+                optionsGPS,
+              );
+            }
+          });
+        }
+        console.log({gpsState});
+        if (res.validacionPorGPS === 'si' && gpsState === 'granted') {
+          Geolocation.getCurrentPosition(
+            position => {
+              console.log(position);
+            },
+            error => {
+              // See error code charts below.
+              console.log({error});
+            },
+            optionsGPS,
+          );
+        }
+        if (res.validacionPorIMG) {
+          //aqui va la api que valida imgs
+        }
+      }
+    }
+  };
+
   return {
     //state
     singleInventory,
@@ -84,5 +130,6 @@ export const useInventoryByID = ({
     border,
     //methods
     //functions
+    addStockOrTracking,
   };
 };

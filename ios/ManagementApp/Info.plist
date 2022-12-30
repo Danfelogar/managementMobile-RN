@@ -69,11 +69,11 @@
 	<string>Necesito acceso a la galeria para poder usar las fotos que tengas guardadas</string>
 
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Necesito Saber tu ubicación para saber si estas a una distancia considerable de la empresa</string>
+	<string>Necesito Saber tu ubicación para corroborar si estas a una distancia considerable de la empresa</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Necesito Saber tu ubicación para saber si estas a una distancia considerable de la empresa</string>
+	<string>Necesito Saber tu ubicación para corroborar si estas a una distancia considerable de la empresa</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Necesito Saber tu ubicación para saber si estas a una distancia considerable de la empresa</string>
+	<string>Necesito Saber tu ubicación para corroborar si estas a una distancia considerable de la empresa</string>
 
 
 	<key>UILaunchStoryboardName</key>

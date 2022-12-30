@@ -9,6 +9,10 @@ type PermissionsActionsType =
   | {
       type: '[PERMISSIONS] Get Gallery Permissions Status';
       payload: PermissionStatus;
+    }
+  | {
+      type: '[PERMISSIONS] Get GPS Permissions Status';
+      payload: PermissionStatus;
     };
 
 export const PermissionsReducer = (
@@ -25,6 +29,11 @@ export const PermissionsReducer = (
       return {
         ...state,
         galleryState: action.payload,
+      };
+    case '[PERMISSIONS] Get GPS Permissions Status':
+      return {
+        ...state,
+        gpsState: action.payload,
       };
     default:
       return state;

@@ -60,40 +60,43 @@ export const TabNavigation = () => {
           ),
         }}
       />
-
-      <Tab.Screen
-        name={'ActionButton'}
-        component={EmptyScreen}
-        options={{
-          tabBarLabel: 'x',
-          tabBarIcon: () => (
-            <TouchableOpacity
-              onPress={() => {
-                if (routeIdx === 0) {
-                  changeModalCreate();
-                } else if (routeIdx === 2) {
-                  return;
-                }
-              }}
-              activeOpacity={0.9}>
-              <View
-                style={{
-                  width: 55,
-                  height: 55,
-                  backgroundColor: colors.secondary,
-                  borderRadius: 30,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderWidth: 3,
-                  borderColor: colors.background,
-                  marginBottom: 55,
-                }}>
-                <Icon2 name="plus" size={23} color={'#fff'} />
-              </View>
-            </TouchableOpacity>
-          ),
-        }}
-      />
+      <>
+        {routeIdx === 0 && (
+          <Tab.Screen
+            name={'ActionButton'}
+            component={EmptyScreen}
+            options={{
+              tabBarLabel: 'x',
+              tabBarIcon: () => (
+                <TouchableOpacity
+                  onPress={() => {
+                    if (routeIdx === 0) {
+                      changeModalCreate();
+                    } else if (routeIdx === 2) {
+                      return;
+                    }
+                  }}
+                  activeOpacity={0.9}>
+                  <View
+                    style={{
+                      width: 55,
+                      height: 55,
+                      backgroundColor: colors.secondary,
+                      borderRadius: 30,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      borderWidth: 3,
+                      borderColor: colors.background,
+                      marginBottom: 55,
+                    }}>
+                    <Icon2 name="plus" size={23} color={'#fff'} />
+                  </View>
+                </TouchableOpacity>
+              ),
+            }}
+          />
+        )}
+      </>
 
       <Tab.Screen
         name="Inventory"

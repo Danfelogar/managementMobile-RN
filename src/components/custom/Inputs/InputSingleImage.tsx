@@ -40,7 +40,34 @@ export const InputSingleImage = ({
       render={({field: {onChange, value = ''}, formState: {errors}}) => {
         const takePhoto = () => {
           if (cameraState !== 'granted') {
-            askCameraPermissions();
+            askCameraPermissions().then(res => {
+              if (res === 'granted') {
+                launchCamera(
+                  {
+                    mediaType: 'photo',
+                    quality: 0.7,
+                  },
+                  ({assets, didCancel}: ImagePickerResponse) => {
+                    if (didCancel) {
+                      return;
+                    }
+                    if (!assets) {
+                      return;
+                    }
+                    // console.log(assets);
+                    const uri = assets[0]?.uri;
+                    const type = assets[0]?.type;
+                    const name = assets[0]?.fileName;
+                    const source = {
+                      uri,
+                      type,
+                      name,
+                    };
+                    onFilesSelected(source);
+                  },
+                );
+              }
+            });
           }
           if (cameraState === 'granted') {
             launchCamera(
@@ -72,7 +99,37 @@ export const InputSingleImage = ({
 
         const takePhotoByGallery = () => {
           if (galleryState !== 'granted') {
-            askGalleryPermissions();
+            askGalleryPermissions().then(res => {
+              if (res === 'granted') {
+                launchImageLibrary(
+                  {
+                    mediaType: 'photo',
+                    quality: 0.7,
+                  },
+                  ({assets, didCancel, errorMessage}: ImagePickerResponse) => {
+                    if (didCancel) {
+                      return;
+                    }
+                    if (!assets) {
+                      return;
+                    }
+                    if (errorMessage) {
+                      return console.log({errorMessage});
+                    }
+                    // console.log({assets});
+                    const uri = assets[0]?.uri;
+                    const type = assets[0]?.type;
+                    const name = assets[0]?.fileName;
+                    const source = {
+                      uri,
+                      type,
+                      name,
+                    };
+                    onFilesSelected(source);
+                  },
+                );
+              }
+            });
           }
           if (galleryState === 'granted') {
             launchImageLibrary(

@@ -44,6 +44,7 @@ export const InventoryByID = ({route, navigation}: Props) => {
     secondary,
     tertiary,
     card,
+    addStockOrTracking,
   } = useInventoryByID({singleInventoryID, type});
 
   // console.log({singleInventory});
@@ -72,6 +73,33 @@ export const InventoryByID = ({route, navigation}: Props) => {
               size={height / 28}
               color={textPrimary}
             />
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              if (singleInventory?.tipoInventario) {
+                return addStockOrTracking(singleInventory);
+              } else {
+                return console.log('espero a que cargue');
+              }
+            }}
+            style={{
+              ...stylesInventoryByID.wrapperBtnAdd,
+              backgroundColor: background,
+              top: top + 15,
+              right: 0,
+            }}>
+            <Text
+              style={{
+                ...stylesInventoryByID.typeInventoryText,
+                color: textPrimary,
+              }}>
+              {singleInventory?.tipoInventario === 'repuesto'
+                ? 'Agregar Existencias'
+                : singleInventory?.tipoInventario === 'maquina'
+                ? 'Hacer Seguimiento'
+                : '...Cargando'}
+            </Text>
           </TouchableOpacity>
           {singleInventory ? (
             <Image

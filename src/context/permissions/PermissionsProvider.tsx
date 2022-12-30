@@ -13,11 +13,13 @@ import {PermissionsReducer} from './permissionsReducer';
 export interface PermissionsState {
   cameraState: PermissionStatus;
   galleryState: PermissionStatus;
+  gpsState: PermissionStatus;
 }
 
 const PERMISSIONS_INITIAL_STATE: PermissionsState = {
   cameraState: 'unavailable',
   galleryState: 'unavailable',
+  gpsState: 'unavailable',
 };
 
 interface Props {
@@ -52,6 +54,7 @@ export const PermissionsProvider: FC<Props> = ({children}) => {
     if (permissionStatus === 'blocked' || permissionStatus === 'limited') {
       openSettings();
     }
+    return permissionStatus;
   };
 
   const checkGalleryPermissions = async () => {
@@ -88,9 +91,10 @@ export const PermissionsProvider: FC<Props> = ({children}) => {
       });
     }
 
-    if (permissionStatus === 'blocked') {
+    if (permissionStatus === 'blocked' || permissionStatus === 'limited') {
       openSettings();
     }
+    return permissionStatus;
   };
 
   const checkCameraPermissions = async () => {
@@ -108,6 +112,48 @@ export const PermissionsProvider: FC<Props> = ({children}) => {
     });
   };
 
+  const askGPSPermissions = async () => {
+    let permissionStatus: PermissionStatus;
+
+    if (Platform.OS === 'ios') {
+      //   permissionStatus = await check(PERMISSIONS.IOS.CAMERA);
+      permissionStatus = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+      dispatch({
+        type: '[PERMISSIONS] Get GPS Permissions Status',
+        payload: permissionStatus,
+      });
+    } else {
+      //   permissionStatus = await check(PERMISSIONS.ANDROID.CAMERA);
+      permissionStatus = await request(
+        PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+      );
+      dispatch({
+        type: '[PERMISSIONS] Get GPS Permissions Status',
+        payload: permissionStatus,
+      });
+    }
+
+    if (permissionStatus === 'blocked' || permissionStatus === 'limited') {
+      openSettings();
+    }
+    return permissionStatus;
+  };
+
+  const checkGPSPermissions = async () => {
+    let permissionStatus: PermissionStatus;
+
+    if (Platform.OS === 'ios') {
+      permissionStatus = await check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+    } else {
+      permissionStatus = await check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+    }
+
+    dispatch({
+      type: '[PERMISSIONS] Get GPS Permissions Status',
+      payload: permissionStatus,
+    });
+  };
+
   useEffect(() => {
     AppState.addEventListener('change', state => {
       if (state !== 'active') {
@@ -116,6 +162,7 @@ export const PermissionsProvider: FC<Props> = ({children}) => {
 
       checkCameraPermissions();
       checkGalleryPermissions();
+      checkGPSPermissions();
     });
   }, []);
 
@@ -128,6 +175,8 @@ export const PermissionsProvider: FC<Props> = ({children}) => {
         checkCameraPermissions,
         askGalleryPermissions,
         checkGalleryPermissions,
+        askGPSPermissions,
+        checkGPSPermissions,
       }}>
       {children}
     </PermissionsContext.Provider>

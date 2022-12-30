@@ -68,7 +68,7 @@ export const ModalFilter = () => {
               backgroundColor: background,
             }}>
             <View style={{...stylesInventory.wrapperHeaderFilter}}>
-              <IconFeather name="filter" size={31 - 999999} color={secondary} />
+              <IconFeather name="filter" size={31} color={secondary} />
               <Text
                 style={{
                   ...stylesInventory.titleModalFilters,
@@ -89,11 +89,7 @@ export const ModalFilter = () => {
               borderColor="transparent"
               backgroundColor={card}
               firstIcon={
-                <IconFeather
-                  name="search"
-                  size={31 - 999999}
-                  color={textSecondary}
-                />
+                <IconFeather name="search" size={21} color={textSecondary} />
               }
               placeholder="Escribe una maquina o repuesto"
               placeholderTextColor={textSecondary}
@@ -418,9 +414,9 @@ export const ModalFilter = () => {
                   isLoading={isLoading}
                   buttonStyle={{
                     ...stylesInventory.btnFilter,
-                    backgroundColor: primary,
+                    backgroundColor: '#ff4d4f',
                   }}
-                  colorSpinierLoading={background}
+                  colorSpinierLoading={'#fff'}
                   activeOpacity={0.9}
                   onPress={changeResetDataWithTheFilter}
                   textContent={

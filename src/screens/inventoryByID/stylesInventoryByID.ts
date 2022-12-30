@@ -17,6 +17,15 @@ export const stylesInventoryByID = StyleSheet.create({
     borderBottomRightRadius: 25,
     zIndex: 2,
   },
+  wrapperBtnAdd: {
+    position: 'absolute',
+    paddingHorizontal: 10,
+    paddingVertical: Platform.OS === 'ios' ? 12 : 10,
+    paddingLeft: 23,
+    borderTopLeftRadius: 25,
+    borderBottomLeftRadius: 25,
+    zIndex: 2,
+  },
   wrapperInitCardBorder: {
     position: 'absolute',
     width: '100%',
