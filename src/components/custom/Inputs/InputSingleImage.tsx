@@ -12,7 +12,7 @@ import {PermissionsContext} from '../../../context/permissions/PermissionsContex
 import {IInputSingleImg} from '../types';
 import {managementApi} from '../../../services';
 
-interface source {
+export interface source {
   uri: string | undefined;
   type: string | undefined;
   name: string | undefined;

@@ -6,12 +6,14 @@ export interface IUIState {
   isOpenFilterInventory: boolean;
   isOpenOTModal: boolean;
   isSnackbarSuccess: boolean;
+  isSnackbarError: boolean;
 }
 
 export const UI_INITIAL_STATE: IUIState = {
   isOpenFilterInventory: false,
   isOpenOTModal: false,
   isSnackbarSuccess: false,
+  isSnackbarError: false,
 };
 
 interface Props {
@@ -33,6 +35,10 @@ export const UIProvider: FC<Props> = ({children}) => {
     dispatch({type: '[UI] Toggle Snackbar Success'});
   };
 
+  const toggleSnackBarError = () => {
+    dispatch({type: '[UI] Toggle Snackbar Error'});
+  };
+
   return (
     <UIContext.Provider
       value={{
@@ -41,6 +47,7 @@ export const UIProvider: FC<Props> = ({children}) => {
         changeModalFilterInventory,
         toggleModalOTs,
         toggleSnackBarSuccess,
+        toggleSnackBarError,
       }}>
       {children}
     </UIContext.Provider>

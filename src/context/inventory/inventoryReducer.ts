@@ -8,7 +8,8 @@ type InventoriesActionsType =
     }
   | {
       type: '[INVENTORIES] Change is loading inventories';
-    };
+    }
+  | {type: '[INVENTORIES] Change is distance in Km'; payload: number};
 
 export const inventoryReducer = (
   state: InventoriesState,
@@ -24,6 +25,11 @@ export const inventoryReducer = (
       return {
         ...state,
         isLoading: !state.isLoading,
+      };
+    case '[INVENTORIES] Change is distance in Km':
+      return {
+        ...state,
+        distanceInKm: action.payload,
       };
     default:
       return state;

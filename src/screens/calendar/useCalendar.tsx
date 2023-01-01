@@ -225,7 +225,7 @@ export const useCalendar = () => {
       changeMsmTextUpdate(data._id);
       //TODO: hacer funcionalidad correspondiente al clg
       handleUpdateOT(data)
-        .then(res => {
+        .then(() => {
           // console.log({res});
           changeIsLoading();
           getOTsByData(daySelected);

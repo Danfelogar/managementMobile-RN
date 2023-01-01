@@ -8,11 +8,13 @@ import {inventoryReducer} from './inventoryReducer';
 export interface InventoriesState {
   isLoading: boolean;
   dataInventory: IInventario[] | [];
+  distanceInKm: number;
 }
 
 const INVENTORIES_INITIAL_STATE: InventoriesState = {
   isLoading: false,
   dataInventory: [],
+  distanceInKm: 0,
 };
 
 interface Props {
@@ -67,6 +69,10 @@ export const InventoryProvider: FC<Props> = ({children}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const changeDistanceInKm = (val: number) => {
+    dispatch({type: '[INVENTORIES] Change is distance in Km', payload: val});
+  };
+
   return (
     <InventoryContext.Provider
       value={{
@@ -74,6 +80,7 @@ export const InventoryProvider: FC<Props> = ({children}) => {
         //functions
         getInventoriesData,
         changeIsLoading,
+        changeDistanceInKm,
       }}>
       {children}
     </InventoryContext.Provider>

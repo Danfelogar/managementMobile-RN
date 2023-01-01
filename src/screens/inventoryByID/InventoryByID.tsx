@@ -21,7 +21,7 @@ import {stylesInventoryByID} from './stylesInventoryByID';
 import {TouchableOpacity, Platform} from 'react-native';
 import {SnapCarouselByID, SnapCarouselByRep} from './components';
 import {useNavigation} from '@react-navigation/native';
-import {Skeleton} from '../../components';
+import {Button, Skeleton, SnackbarError} from '../../components';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'NavigationInventoryByID'> {}
@@ -44,7 +44,10 @@ export const InventoryByID = ({route, navigation}: Props) => {
     secondary,
     tertiary,
     card,
-    addStockOrTracking,
+    isSnackbarError,
+    textError,
+    updateStockOrAddTracking,
+    toggleSnackBarError,
   } = useInventoryByID({singleInventoryID, type});
 
   // console.log({singleInventory});
@@ -74,33 +77,38 @@ export const InventoryByID = ({route, navigation}: Props) => {
               color={textPrimary}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => {
-              if (singleInventory?.tipoInventario) {
-                return addStockOrTracking(singleInventory);
-              } else {
-                return console.log('espero a que cargue');
-              }
-            }}
-            style={{
+          <Button
+            isLoading={false}
+            colorSpinierLoading={tertiary}
+            buttonStyle={{
               ...stylesInventoryByID.wrapperBtnAdd,
               backgroundColor: background,
               top: top + 15,
               right: 0,
-            }}>
-            <Text
-              style={{
-                ...stylesInventoryByID.typeInventoryText,
-                color: textPrimary,
-              }}>
-              {singleInventory?.tipoInventario === 'repuesto'
-                ? 'Agregar Existencias'
-                : singleInventory?.tipoInventario === 'maquina'
-                ? 'Hacer Seguimiento'
-                : '...Cargando'}
-            </Text>
-          </TouchableOpacity>
+            }}
+            activeOpacity={0.8}
+            onPress={() => {
+              if (singleInventory?.tipoInventario) {
+                return updateStockOrAddTracking(singleInventory);
+              } else {
+                return console.log('espero a que cargue');
+              }
+            }}
+            textContent={
+              <Text
+                style={{
+                  ...stylesInventoryByID.typeInventoryText,
+                  color: textPrimary,
+                }}>
+                {singleInventory?.tipoInventario === 'repuesto'
+                  ? 'Agregar Existencias'
+                  : singleInventory?.tipoInventario === 'maquina'
+                  ? 'Hacer Seguimiento'
+                  : '...Cargando'}
+              </Text>
+            }
+          />
+
           {singleInventory ? (
             <Image
               style={{
@@ -139,7 +147,6 @@ export const InventoryByID = ({route, navigation}: Props) => {
               width={width / 4.388}
             />
           )}
-
           <View
             style={{
               ...stylesInventoryByID.wrapperInitCardBorder,
@@ -404,6 +411,24 @@ export const InventoryByID = ({route, navigation}: Props) => {
           <View style={{paddingBottom: Platform.OS === 'android' ? 90 : 120}} />
         </View>
       </ScrollView>
+      {/* <SnackbarSuccess
+        handleChangeSnackbar={toggleSnackBarSuccess}
+        isOpen={isSnackbarSuccess}
+        msmText={
+          msmTextUpdate !== ''
+            ? `se ha actualizado exitosamente la OT: ${msmTextUpdate}`
+            : 'se ha creado exitosamente la OT'
+        }
+      /> */}
+      <SnackbarError
+        handleChangeSnackbar={toggleSnackBarError}
+        isOpen={isSnackbarError}
+        msmText={
+          textError
+            ? textError
+            : 'ha ocurrido un error interno revisar la consola'
+        }
+      />
     </View>
   );
 };

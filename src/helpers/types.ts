@@ -4,7 +4,7 @@ export interface IUser {
   token: string;
   user: {
     email: string;
-    rol: string;
+    rol: 'super_admin' | 'admin_bodega' | 'bodega' | 'admin_mtto' | 'mtto';
     nombre: string;
   };
 }

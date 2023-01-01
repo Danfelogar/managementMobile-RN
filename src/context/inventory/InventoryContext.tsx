@@ -7,6 +7,7 @@ interface ContextProps {
   //   msmTextUpdate: string;
   isLoading: boolean;
   dataInventory: IInventario[] | [];
+  distanceInKm: number;
   //   isUpdateInventory: Boolean;
   // inventoryForUpdate: IInventario | undefined
 
@@ -19,6 +20,7 @@ interface ContextProps {
     existencia_end?: string,
   ) => Promise<IInventario[]>;
   changeIsLoading: () => void;
+  changeDistanceInKm: (val: number) => void;
   //   changeIsUpdateInventory: (val: boolean) => void;
   // changeInventoryForUpdate: (singleInventory: IInventario) => void
   //   changeMsmTextDelete: (email: string) => void;
