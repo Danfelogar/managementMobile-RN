@@ -7,7 +7,7 @@ export interface IInventario {
   imagenes: string[];
   fechaDeEntrada: string;
   fechaDeActualizacion: string;
-  existencia: number;
+  existencia: number | string;
   locacion: 'produccion' | 'taller' | 'bodega' | 'oficina_administrativa';
   subLocacion: number;
 

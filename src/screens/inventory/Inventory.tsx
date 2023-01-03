@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useIsFocused} from '@react-navigation/native';
 
 import {useInventory} from './useInventory';
 import {stylesInventory} from './stylesInventory';
@@ -19,10 +20,20 @@ import {height, width} from '../../helpers';
 
 export const Inventory = () => {
   const {changeModalFilterInventory} = useContext(UIContext);
-  const {dataInventory, isLoading} = useContext(InventoryContext);
+  const {dataInventory, isLoading, getInventoriesData} =
+    useContext(InventoryContext);
+  const isFocused = useIsFocused();
   const {background, secondary, textPrimary} = useInventory();
   const arrSkeleton = [0, 1, 2, 3, 4, 5];
   // console.log({dataInventory});
+  useEffect(() => {
+    if (isFocused) {
+      getInventoriesData();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFocused]);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: secondary}}>
       <StatusBar

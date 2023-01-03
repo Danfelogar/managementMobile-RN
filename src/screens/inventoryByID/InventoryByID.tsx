@@ -21,7 +21,14 @@ import {stylesInventoryByID} from './stylesInventoryByID';
 import {TouchableOpacity, Platform} from 'react-native';
 import {SnapCarouselByID, SnapCarouselByRep} from './components';
 import {useNavigation} from '@react-navigation/native';
-import {Button, Skeleton, SnackbarError} from '../../components';
+import {
+  Button,
+  ModalStocks,
+  Skeleton,
+  SnackbarError,
+  SnackbarSuccess,
+} from '../../components';
+import {FormProvider} from 'react-hook-form';
 
 interface Props
   extends StackScreenProps<RootStackParams, 'NavigationInventoryByID'> {}
@@ -45,9 +52,16 @@ export const InventoryByID = ({route, navigation}: Props) => {
     tertiary,
     card,
     isSnackbarError,
+    isSnackbarSuccess,
+    textSuccess,
     textError,
+    isLoadingStockOrAddTracking,
+    isLoading,
+    formMethodsUpdate,
     updateStockOrAddTracking,
     toggleSnackBarError,
+    toggleSnackBarSuccess,
+    handleUpdateStock,
   } = useInventoryByID({singleInventoryID, type});
 
   // console.log({singleInventory});
@@ -78,7 +92,7 @@ export const InventoryByID = ({route, navigation}: Props) => {
             />
           </TouchableOpacity>
           <Button
-            isLoading={false}
+            isLoading={isLoadingStockOrAddTracking}
             colorSpinierLoading={tertiary}
             buttonStyle={{
               ...stylesInventoryByID.wrapperBtnAdd,
@@ -411,15 +425,15 @@ export const InventoryByID = ({route, navigation}: Props) => {
           <View style={{paddingBottom: Platform.OS === 'android' ? 90 : 120}} />
         </View>
       </ScrollView>
-      {/* <SnackbarSuccess
+      <SnackbarSuccess
         handleChangeSnackbar={toggleSnackBarSuccess}
         isOpen={isSnackbarSuccess}
         msmText={
-          msmTextUpdate !== ''
-            ? `se ha actualizado exitosamente la OT: ${msmTextUpdate}`
-            : 'se ha creado exitosamente la OT'
+          textSuccess
+            ? textSuccess
+            : 'ha ocurrido un error interno revisar la consola'
         }
-      /> */}
+      />
       <SnackbarError
         handleChangeSnackbar={toggleSnackBarError}
         isOpen={isSnackbarError}
@@ -429,6 +443,12 @@ export const InventoryByID = ({route, navigation}: Props) => {
             : 'ha ocurrido un error interno revisar la consola'
         }
       />
+      <FormProvider {...formMethodsUpdate}>
+        <ModalStocks
+          isLoading={isLoading}
+          handleUpdateStock={handleUpdateStock}
+        />
+      </FormProvider>
     </View>
   );
 };

@@ -9,4 +9,4 @@ export const BASE_URL =
 // Platform.OS === 'android'
 // ? 'https://management-mec-panel-admin.vercel.app/api'
 // : 'https://management-mec-panel-admin.vercel.app/api';
-export const distanceCompareInKm = 0.21;
+export const distanceCompareInKm = 0.21; //distance in Km validation

@@ -5,6 +5,7 @@ import {uiReducer} from './uiReducer';
 export interface IUIState {
   isOpenFilterInventory: boolean;
   isOpenOTModal: boolean;
+  isUpdateStocksModal: boolean;
   isSnackbarSuccess: boolean;
   isSnackbarError: boolean;
 }
@@ -12,6 +13,7 @@ export interface IUIState {
 export const UI_INITIAL_STATE: IUIState = {
   isOpenFilterInventory: false,
   isOpenOTModal: false,
+  isUpdateStocksModal: false,
   isSnackbarSuccess: false,
   isSnackbarError: false,
 };
@@ -31,6 +33,10 @@ export const UIProvider: FC<Props> = ({children}) => {
     dispatch({type: '[UI] Change Modal OT State'});
   };
 
+  const toggleModalStocks = () => {
+    dispatch({type: '[UI] Change Modal Stocks State'});
+  };
+
   const toggleSnackBarSuccess = () => {
     dispatch({type: '[UI] Toggle Snackbar Success'});
   };
@@ -46,6 +52,7 @@ export const UIProvider: FC<Props> = ({children}) => {
         //functions
         changeModalFilterInventory,
         toggleModalOTs,
+        toggleModalStocks,
         toggleSnackBarSuccess,
         toggleSnackBarError,
       }}>

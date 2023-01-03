@@ -4,7 +4,8 @@ type UIActionType =
   | {type: '[UI] Change Modal Filter Inventory State'}
   | {type: '[UI] Change Modal OT State'}
   | {type: '[UI] Toggle Snackbar Success'}
-  | {type: '[UI] Toggle Snackbar Error'};
+  | {type: '[UI] Toggle Snackbar Error'}
+  | {type: '[UI] Change Modal Stocks State'};
 
 export const uiReducer = (state: IUIState, action: UIActionType): IUIState => {
   switch (action.type) {
@@ -17,6 +18,11 @@ export const uiReducer = (state: IUIState, action: UIActionType): IUIState => {
       return {
         ...state,
         isOpenOTModal: !state.isOpenOTModal,
+      };
+    case '[UI] Change Modal Stocks State':
+      return {
+        ...state,
+        isUpdateStocksModal: !state.isUpdateStocksModal,
       };
     case '[UI] Toggle Snackbar Success':
       return {

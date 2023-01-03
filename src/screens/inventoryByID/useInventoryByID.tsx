@@ -1,5 +1,6 @@
 import {useContext, useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
+import {yupResolver} from '@hookform/resolvers/yup';
 
 import {IPropsUseInventoryByID} from './types';
 import {IInventario, ISingleReplacement} from '../inventory';
@@ -17,7 +18,11 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {source as Isource} from '../../components';
-import {distanceCompareInKm} from '../../helpers';
+import {
+  distanceCompareInKm,
+  validationUpdateInventoryStock,
+} from '../../helpers';
+import {useForm} from 'react-hook-form';
 
 const authorizedToUpdate = ['admin_bodega', 'bodega'];
 
@@ -34,20 +39,24 @@ export const useInventoryByID = ({
   type,
 }: IPropsUseInventoryByID) => {
   const {user} = useContext(AuthContext);
-  const {toggleSnackBarError, isSnackbarError} = useContext(UIContext);
-  const {distanceInKm, changeDistanceInKm} = useContext(InventoryContext);
+  const {
+    toggleSnackBarError,
+    toggleSnackBarSuccess,
+    toggleModalStocks,
+    isUpdateStocksModal,
+    isSnackbarError,
+    isSnackbarSuccess,
+  } = useContext(UIContext);
   const {gpsState, askGPSPermissions, askCameraPermissions, cameraState} =
     useContext(PermissionsContext);
-  const [validationImg, setValidationImg] = useState<{
-    message: string | undefined;
-    response: boolean | undefined;
-  }>({
-    message: undefined,
-    response: undefined,
-  });
+  const {inventoryForUpdate, changeInventoryForUpdate} =
+    useContext(InventoryContext);
   const [textError, setTextError] = useState<string | undefined>(undefined);
+  const [textSuccess, setTextSuccess] = useState<string | undefined>(undefined);
   const [singleInventory, setSingleInventory] = useState<ISingleReplacement>();
-
+  const [isLoadingStockOrAddTracking, setIsLoadingStockOrAddTracking] =
+    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -108,49 +117,62 @@ export const useInventoryByID = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //open modals
-  useEffect(() => {
-    console.log({distanceInKm, validationImg});
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [distanceInKm, validationImg]);
+  const formMethodsUpdate = useForm<Partial<ISingleReplacement>>({
+    resolver: yupResolver(validationUpdateInventoryStock),
+  });
 
-  //set snakbarerror
   useEffect(() => {
-    if (distanceCompareInKm < distanceInKm) {
-      //TODO: hacer que funciones snackbar error
-      setTextError(
-        ' esta por fuera del rango de los 0.2Km designados por la empresa',
-      );
-      changeDistanceInKm(0);
-      toggleSnackBarError();
-    } else if (validationImg.message === 'Validation fails') {
-      //TODO: hacer que funciones snackbar error
-      setTextError(
-        ' La foto tomada no coincide con la registrada en la base de datos',
-      );
-      setValidationImg({
-        message: undefined,
-        response: undefined,
+    if (inventoryForUpdate?._id) {
+      formMethodsUpdate.reset({
+        ...inventoryForUpdate,
+        existencia: inventoryForUpdate.existencia.toString(),
       });
-      toggleSnackBarError();
     }
+
     return () => {
-      // changeDistanceInKm(0);
-      // setTextError(undefined);
-      // setValidationImg({
-      //   message: undefined,
-      //   response: undefined,
-      // });
+      formMethodsUpdate.reset();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [distanceInKm, validationImg]);
+  }, [inventoryForUpdate, isUpdateStocksModal]);
+
+  const handleUpdateStock = async (data: Partial<ISingleReplacement>) => {
+    //TODO: hacer servicio de actualización
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
+    console.log({data});
+    return await managementApi
+      .put('/admin/inventorys', {
+        ...data,
+        existencia: Number(data.existencia),
+      })
+      .then(() => {
+        setTextSuccess(
+          `Se han actualizado con éxito las existencias del repuesto: ${data.nombre}`,
+        );
+        getSingleReplacementData(singleInventoryID).then(res =>
+          setSingleInventory(res),
+        );
+        toggleModalStocks();
+        toggleSnackBarSuccess();
+        return setIsLoading(false);
+      })
+      .catch(err => {
+        console.log(err.message);
+        setTextError(err.message);
+        toggleSnackBarError();
+        toggleModalStocks();
+        return setIsLoading(false);
+      });
+  };
 
   const validationImgForStock = async (
     imgReference: string,
     imgDemo: string,
   ) => {
     // console.log({imgReference, imgDemo});
-    await managementApi
+    return await managementApi
       .post('/validation/img', null, {
         params: {
           imgReference: imgReference,
@@ -159,10 +181,6 @@ export const useInventoryByID = ({
       })
       .then(({data}) => {
         // console.log({data});
-        setValidationImg({
-          message: data.message,
-          response: data.response,
-        });
         return data;
       })
       .catch(err => {
@@ -172,38 +190,41 @@ export const useInventoryByID = ({
       });
   };
 
-  const getPhotographs = (imgBase: string) => {
-    launchImageLibrary(
-      {
-        mediaType: 'photo',
-        quality: 0.7,
-      },
-      ({assets, didCancel, errorMessage}: ImagePickerResponse) => {
-        if (didCancel) {
-          return;
-        }
-        if (!assets) {
-          return;
-        }
-        if (errorMessage) {
-          return console.log({errorMessage});
-        }
-        // console.log({assets});
-        const uri = assets[0]?.uri;
-        const typeURL = assets[0]?.type;
-        const name = assets[0]?.fileName;
-        const source = {
-          uri,
-          type: typeURL,
-          name,
-        };
-        onFilesSelected(source, imgBase);
-      },
-    );
+  const getPhotographs = async (imgBase: string) => {
+    return new Promise((resolve, reject) => {
+      launchImageLibrary(
+        {
+          mediaType: 'photo',
+          quality: 0.7,
+        },
+        ({assets, didCancel, errorMessage}: ImagePickerResponse) => {
+          if (didCancel) {
+            return;
+          }
+          if (!assets) {
+            return;
+          }
+          if (errorMessage) {
+            console.log({errorMessage});
+            reject(errorMessage);
+          }
+          // console.log({assets});
+          const uri = assets[0]?.uri;
+          const typeURL = assets[0]?.type;
+          const name = assets[0]?.fileName;
+          const source = {
+            uri,
+            type: typeURL,
+            name,
+          };
+          resolve(onFilesSelected(source, imgBase));
+        },
+      );
+    });
   };
 
   const onFilesSelected = async (target: Isource, imgBase: string) => {
-    // console.log({target});
+    // console.log({target, imgBase});
     if (!target) {
       return;
     }
@@ -222,7 +243,7 @@ export const useInventoryByID = ({
       //console.log(data);
       //seteamos la nueva imagen traida del backend con cloudinary en el formulario con useForm y renderizamos de una
       // onChange(data.message);
-      validationImgForStock(imgBase, data.message);
+      return validationImgForStock(imgBase, data.message);
     } catch (error: any) {
       console.log({error});
       setTextError(error.message);
@@ -234,7 +255,7 @@ export const useInventoryByID = ({
     return deg * (Math.PI / 180);
   };
 
-  const getDistanceFromLatLoninkm = (
+  const getDistanceFromLatLonInKm = (
     lat1: number,
     lon1: number,
     lat2: number,
@@ -252,32 +273,39 @@ export const useInventoryByID = ({
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const d = R * c; // Distance in km
     // console.log({d})
-    changeDistanceInKm(d);
     return d;
   };
 
-  const getGeoLocation = (lat: string, long: string) => {
-    Geolocation.getCurrentPosition(
-      (position): number => {
-        // console.log(position);
-        return getDistanceFromLatLoninkm(
-          position.coords.latitude,
-          position.coords.longitude,
-          Number(lat),
-          Number(long),
-        );
-      },
-      error => {
-        // See error code charts below.
-        console.log({error});
-        setTextError(error.message);
-        return toggleSnackBarError();
-      },
-      optionsGPS,
-    );
+  const getGeoLocation = async (lat: string, long: string) => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        position => {
+          // console.log(position);
+          resolve(
+            getDistanceFromLatLonInKm(
+              position.coords.latitude,
+              position.coords.longitude,
+              Number(lat),
+              Number(long),
+            ),
+          );
+        },
+        error => {
+          // See error code charts below.
+          console.log({error});
+          setTextError(error.message);
+          reject(toggleSnackBarError());
+        },
+        optionsGPS,
+      );
+    });
   };
 
   const updateStockOrAddTracking = async (res: ISingleReplacement) => {
+    if (isLoadingStockOrAddTracking) {
+      return;
+    }
+    setIsLoadingStockOrAddTracking(true);
     if (
       (res.tipoInventario === 'repuesto' || res.tipoInventario === 'maquina') &&
       !authorizedToUpdate.includes(user?.user?.rol!) &&
@@ -297,31 +325,92 @@ export const useInventoryByID = ({
         if (res.validacionPorGPS === 'si' && gpsState !== 'granted') {
           askGPSPermissions().then(async resp => {
             if (resp === 'granted') {
-              getGeoLocation(
+              const gpsRes = await getGeoLocation(
                 res.coordenadas_gps?.split(',')[0]!,
                 res.coordenadas_gps?.split(',')[1]!,
               );
+              // console.log({gpsRes});
+              if (typeof gpsRes !== 'number') {
+                setTextError(
+                  'ha ocurrido un error en la validación por GPS, por favor revisar la consola',
+                );
+                setIsLoadingStockOrAddTracking(false);
+                return toggleSnackBarError();
+              } else if (distanceCompareInKm < gpsRes) {
+                //TODO: hacer que funciones snackbar error
+                setTextError(
+                  ' esta por fuera del rango de los 0.2Km designados por la empresa',
+                );
+                setIsLoadingStockOrAddTracking(false);
+                return toggleSnackBarError();
+              }
             }
           });
         }
         if (res.validacionPorGPS === 'si' && gpsState === 'granted') {
-          getGeoLocation(
+          const gpsRes = await getGeoLocation(
             res.coordenadas_gps?.split(',')[0]!,
             res.coordenadas_gps?.split(',')[1]!,
           );
+          // console.log({gpsRes});
+          if (typeof gpsRes !== 'number') {
+            setTextError(
+              'ha ocurrido un error en la validación por GPS, por favor revisar la consola',
+            );
+            setIsLoadingStockOrAddTracking(false);
+            return toggleSnackBarError();
+          } else if (distanceCompareInKm < gpsRes) {
+            //TODO: hacer que funciones snackbar error
+            setTextError(
+              ' esta por fuera del rango de los 0.2Km designados por la empresa',
+            );
+            setIsLoadingStockOrAddTracking(false);
+            return toggleSnackBarError();
+          }
         }
         if (res.validacionPorIMG === 'si' && cameraState !== 'granted') {
           //aqui va la api que valida imgs
           askCameraPermissions().then(async resp => {
             if (resp === 'granted') {
-              getPhotographs(res.imagenes[0]);
+              const getPhoto: any = await getPhotographs(res.imagenes[0]);
+              console.log({getPhoto});
+
+              if (getPhoto.message === 'Validation fails') {
+                //TODO: hacer que funciones snackbar error
+                setTextError(
+                  ' La foto tomada no coincide con la registrada en la base de datos',
+                );
+                setIsLoadingStockOrAddTracking(false);
+                return toggleSnackBarError();
+              }
             }
           });
         }
         if (res.validacionPorIMG === 'si' && cameraState === 'granted') {
-          getPhotographs(res.imagenes[0]);
+          const getPhoto: any = await getPhotographs(res.imagenes[0]);
+          console.log({getPhoto});
+
+          if (getPhoto.message === 'Validation fails') {
+            //TODO: hacer que funciones snackbar error
+            setTextError(
+              ' La foto tomada no coincide con la registrada en la base de datos',
+            );
+            setIsLoadingStockOrAddTracking(false);
+            return toggleSnackBarError();
+          } else if (getPhoto.message === undefined) {
+            //TODO: hacer que funciones snackbar error
+            setTextError(
+              'Ha ocurrido algo durante la validacion de la foto, por favor revisar la consola',
+            );
+            setIsLoadingStockOrAddTracking(false);
+            return toggleSnackBarError();
+          }
         }
       }
+      //TODO: retornar aqui la accion que abra el modal
+      changeInventoryForUpdate(res);
+      setIsLoadingStockOrAddTracking(false);
+      return toggleModalStocks();
     } else if (
       res.tipoInventario === 'maquina' &&
       authorizedToAdd.includes(user?.user?.rol!) &&
@@ -330,8 +419,12 @@ export const useInventoryByID = ({
     } else if (user?.user?.rol! === 'super_admin') {
       if (res.tipoInventario === 'maquina') {
         //TODO: openModal for follow
+        setIsLoadingStockOrAddTracking(false);
       } else if (res.tipoInventario === 'repuesto') {
         //TODO: openModal for stocks
+        changeInventoryForUpdate(res);
+        setIsLoadingStockOrAddTracking(false);
+        return toggleModalStocks();
       }
     }
   };
@@ -348,10 +441,17 @@ export const useInventoryByID = ({
     card,
     border,
     isSnackbarError,
+    isSnackbarSuccess,
     textError,
+    textSuccess,
+    isLoadingStockOrAddTracking,
+    isLoading,
     //methods
+    formMethodsUpdate,
     //functions
     updateStockOrAddTracking,
     toggleSnackBarError,
+    toggleSnackBarSuccess,
+    handleUpdateStock,
   };
 };

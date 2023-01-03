@@ -234,4 +234,51 @@ export const stylesInventoryByID = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'Roboto-Regular',
   },
+
+  //Modal Stocks
+  modalContent: {
+    width: width / 1.2,
+    height: Platform.OS === 'android' ? height / 3.16 : height / 3.7,
+    borderTopLeftRadius: 17,
+    borderTopRightRadius: 17,
+    borderBottomLeftRadius: 17,
+    borderBottomRightRadius: 17,
+    paddingTop: 30,
+    paddingHorizontal: 20,
+  },
+  wrapperHeaderStocks: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    marginBottom: 17,
+  },
+  titleModalStocks: {
+    fontSize: 27.5,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+    marginLeft: 8.9,
+  },
+  contentInput: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    // maxHeight: '18%',
+    marginBottom: 22,
+  },
+  btnSaveInfo: {
+    borderRadius: 30,
+    alignContent: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: 50,
+    paddingHorizontal: 35,
+    marginBottom: 15,
+  },
+  textBtnSaveInfo: {
+    fontSize: 20.5,
+    textAlign: 'center',
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+  },
 });
