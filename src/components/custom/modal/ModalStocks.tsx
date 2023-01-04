@@ -28,13 +28,9 @@ export const ModalStocks = ({
     theme: {colors},
   } = useContext(ThemeContext);
   const {isUpdateStocksModal, toggleModalStocks} = useContext(UIContext);
-  const {
-    control,
-    handleSubmit: onSubmit,
-    watch,
-  } = useFormContext<ISingleReplacement>();
-  const existencia = watch('existencia');
-  console.log(typeof existencia);
+  const {control, handleSubmit: onSubmit} =
+    useFormContext<ISingleReplacement>();
+
   return (
     <SafeAreaView>
       <StatusBar

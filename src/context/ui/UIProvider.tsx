@@ -6,6 +6,7 @@ export interface IUIState {
   isOpenFilterInventory: boolean;
   isOpenOTModal: boolean;
   isUpdateStocksModal: boolean;
+  isCreateFollowModal: boolean;
   isSnackbarSuccess: boolean;
   isSnackbarError: boolean;
 }
@@ -14,6 +15,7 @@ export const UI_INITIAL_STATE: IUIState = {
   isOpenFilterInventory: false,
   isOpenOTModal: false,
   isUpdateStocksModal: false,
+  isCreateFollowModal: false,
   isSnackbarSuccess: false,
   isSnackbarError: false,
 };
@@ -37,6 +39,10 @@ export const UIProvider: FC<Props> = ({children}) => {
     dispatch({type: '[UI] Change Modal Stocks State'});
   };
 
+  const toggleModalFollow = () => {
+    dispatch({type: '[UI] Change Modal Follow State'});
+  };
+
   const toggleSnackBarSuccess = () => {
     dispatch({type: '[UI] Toggle Snackbar Success'});
   };
@@ -53,6 +59,7 @@ export const UIProvider: FC<Props> = ({children}) => {
         changeModalFilterInventory,
         toggleModalOTs,
         toggleModalStocks,
+        toggleModalFollow,
         toggleSnackBarSuccess,
         toggleSnackBarError,
       }}>

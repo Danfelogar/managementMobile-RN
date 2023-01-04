@@ -91,18 +91,12 @@ const LoginForm = () => {
 };
 
 export function Login() {
-  const {
-    textPrimary,
-    textSecondary,
-    background,
-    primary,
-    tertiary,
-    formMethods,
-  } = useLogin();
+  const {textPrimary, textSecondary, background, primary, formMethods} =
+    useLogin();
   // console.log(Platform.OS, StatusBar.currentHeight);
   return (
     <KeyboardAvoidingView
-      style={{...stylesLogin.wrapperLogin, backgroundColor: tertiary}}
+      style={{...stylesLogin.wrapperLogin, backgroundColor: '#e3f2fe'}}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView>
         <View style={{...stylesLogin.wrapperHeaderLogin}}>

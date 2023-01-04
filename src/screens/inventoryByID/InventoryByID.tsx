@@ -23,6 +23,7 @@ import {SnapCarouselByID, SnapCarouselByRep} from './components';
 import {useNavigation} from '@react-navigation/native';
 import {
   Button,
+  ModalFollow,
   ModalStocks,
   Skeleton,
   SnackbarError,
@@ -57,11 +58,14 @@ export const InventoryByID = ({route, navigation}: Props) => {
     textError,
     isLoadingStockOrAddTracking,
     isLoading,
+    isLoading2,
+    formMethodsCreate,
     formMethodsUpdate,
     updateStockOrAddTracking,
     toggleSnackBarError,
     toggleSnackBarSuccess,
     handleUpdateStock,
+    handleCreateFollow,
   } = useInventoryByID({singleInventoryID, type});
 
   // console.log({singleInventory});
@@ -447,6 +451,12 @@ export const InventoryByID = ({route, navigation}: Props) => {
         <ModalStocks
           isLoading={isLoading}
           handleUpdateStock={handleUpdateStock}
+        />
+      </FormProvider>
+      <FormProvider {...formMethodsCreate}>
+        <ModalFollow
+          isLoading={isLoading2}
+          handleCreateFollow={handleCreateFollow}
         />
       </FormProvider>
     </View>

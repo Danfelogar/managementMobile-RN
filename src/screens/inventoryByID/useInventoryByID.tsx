@@ -2,7 +2,7 @@ import {useContext, useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {yupResolver} from '@hookform/resolvers/yup';
 
-import {IPropsUseInventoryByID} from './types';
+import {IPropsUseInventoryByID, ISeguimiento} from './types';
 import {IInventario, ISingleReplacement} from '../inventory';
 import {managementApi} from '../../services';
 import {
@@ -20,6 +20,7 @@ import {
 import {source as Isource} from '../../components';
 import {
   distanceCompareInKm,
+  validationCreateFollow,
   validationUpdateInventoryStock,
 } from '../../helpers';
 import {useForm} from 'react-hook-form';
@@ -43,6 +44,7 @@ export const useInventoryByID = ({
     toggleSnackBarError,
     toggleSnackBarSuccess,
     toggleModalStocks,
+    toggleModalFollow,
     isUpdateStocksModal,
     isSnackbarError,
     isSnackbarSuccess,
@@ -57,6 +59,7 @@ export const useInventoryByID = ({
   const [isLoadingStockOrAddTracking, setIsLoadingStockOrAddTracking] =
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
   const {
     theme: {colors},
   } = useContext(ThemeContext);
@@ -117,6 +120,10 @@ export const useInventoryByID = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const formMethodsCreate = useForm<ISeguimiento>({
+    resolver: yupResolver(validationCreateFollow),
+  });
+
   const formMethodsUpdate = useForm<Partial<ISingleReplacement>>({
     resolver: yupResolver(validationUpdateInventoryStock),
   });
@@ -141,7 +148,7 @@ export const useInventoryByID = ({
       return;
     }
     setIsLoading(true);
-    console.log({data});
+    // console.log({data});
     return await managementApi
       .put('/admin/inventorys', {
         ...data,
@@ -164,6 +171,41 @@ export const useInventoryByID = ({
         toggleSnackBarError();
         toggleModalStocks();
         return setIsLoading(false);
+      });
+  };
+
+  const handleCreateFollow = async (data: Partial<ISeguimiento>) => {
+    if (isLoading2) {
+      return;
+    }
+    setIsLoading2(true);
+    // console.log({data});
+    // console.log(
+    //   typeof data.tiempoDeFuncionamiento,
+    //   typeof data.tiempoDeReparacion,
+    //   typeof data.tiempoDeFalla,
+    //   typeof Number(data.maquina_id_relacion),
+    // );
+    return await managementApi
+      .post('/admin/follows', {
+        ...data,
+        maquina_id_relacion: Number(data.maquina_id_relacion),
+      })
+      .then(() => {
+        setTextSuccess('Se ha creado con éxito el seguimiento');
+        getSingleReplacementData(singleInventoryID).then(res =>
+          setSingleInventory(res),
+        );
+        toggleModalFollow();
+        toggleSnackBarSuccess();
+        return setIsLoading2(false);
+      })
+      .catch(err => {
+        console.log(err.message);
+        setTextError(err.message);
+        toggleSnackBarError();
+        toggleModalFollow();
+        return setIsLoading2(false);
       });
   };
 
@@ -416,10 +458,15 @@ export const useInventoryByID = ({
       authorizedToAdd.includes(user?.user?.rol!) &&
       user?.user?.rol! !== 'super_admin'
     ) {
+      setIsLoadingStockOrAddTracking(false);
+      formMethodsCreate.reset();
+      toggleModalFollow();
     } else if (user?.user?.rol! === 'super_admin') {
       if (res.tipoInventario === 'maquina') {
         //TODO: openModal for follow
         setIsLoadingStockOrAddTracking(false);
+        formMethodsCreate.reset();
+        toggleModalFollow();
       } else if (res.tipoInventario === 'repuesto') {
         //TODO: openModal for stocks
         changeInventoryForUpdate(res);
@@ -446,12 +493,15 @@ export const useInventoryByID = ({
     textSuccess,
     isLoadingStockOrAddTracking,
     isLoading,
+    isLoading2,
     //methods
+    formMethodsCreate,
     formMethodsUpdate,
     //functions
     updateStockOrAddTracking,
     toggleSnackBarError,
     toggleSnackBarSuccess,
     handleUpdateStock,
+    handleCreateFollow,
   };
 };

@@ -4,6 +4,7 @@ type UIActionType =
   | {type: '[UI] Change Modal Filter Inventory State'}
   | {type: '[UI] Change Modal OT State'}
   | {type: '[UI] Toggle Snackbar Success'}
+  | {type: '[UI] Change Modal Follow State'}
   | {type: '[UI] Toggle Snackbar Error'}
   | {type: '[UI] Change Modal Stocks State'};
 
@@ -23,6 +24,11 @@ export const uiReducer = (state: IUIState, action: UIActionType): IUIState => {
       return {
         ...state,
         isUpdateStocksModal: !state.isUpdateStocksModal,
+      };
+    case '[UI] Change Modal Follow State':
+      return {
+        ...state,
+        isCreateFollowModal: !state.isCreateFollowModal,
       };
     case '[UI] Toggle Snackbar Success':
       return {

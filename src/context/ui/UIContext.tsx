@@ -5,12 +5,14 @@ interface ContextProps {
   isOpenFilterInventory: boolean;
   isOpenOTModal: boolean;
   isUpdateStocksModal: boolean;
+  isCreateFollowModal: boolean;
   isSnackbarSuccess: boolean;
   isSnackbarError: boolean;
   //functions
   changeModalFilterInventory: () => void;
   toggleModalOTs: () => void;
   toggleModalStocks: () => void;
+  toggleModalFollow: () => void;
   toggleSnackBarSuccess: () => void;
   toggleSnackBarError: () => void;
 }

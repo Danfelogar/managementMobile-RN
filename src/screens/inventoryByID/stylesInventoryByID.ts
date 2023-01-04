@@ -246,6 +246,13 @@ export const stylesInventoryByID = StyleSheet.create({
     paddingTop: 30,
     paddingHorizontal: 20,
   },
+  modalContentFollow: {
+    flex: 1,
+    borderTopLeftRadius: 37,
+    borderTopRightRadius: 37,
+    paddingTop: 30,
+    paddingHorizontal: 20,
+  },
   wrapperHeaderStocks: {
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -257,6 +264,12 @@ export const stylesInventoryByID = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'Roboto-Black',
     marginLeft: 8.9,
+  },
+  titleOfInput: {
+    fontSize: 16.3,
+    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
+    marginBottom: 10,
   },
   contentInput: {
     display: 'flex',

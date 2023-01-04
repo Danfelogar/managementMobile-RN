@@ -24,7 +24,7 @@ export const Inventory = () => {
     useContext(InventoryContext);
   const isFocused = useIsFocused();
   const {background, secondary, textPrimary} = useInventory();
-  const arrSkeleton = [0, 1, 2, 3, 4, 5];
+  const arrSkeleton = [0, 1, 2, 3, 4, 5, 6];
   // console.log({dataInventory});
   useEffect(() => {
     if (isFocused) {
@@ -124,7 +124,6 @@ export const Inventory = () => {
           // extraData={selectedId}
         />
       )}
-
       <ModalFilter />
     </SafeAreaView>
   );
