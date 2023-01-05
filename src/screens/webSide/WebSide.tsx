@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
 
 import {ThemeContext} from '../../context';
-import {height} from '../../helpers';
+import {height, urlForGraphics} from '../../helpers';
 
 import {IPropsWebSide} from './types';
 import {stylesWebSide} from './stylesWebSide';
@@ -18,6 +18,7 @@ export const WebSide = ({route, navigation}: IPropsWebSide) => {
   const [progress, setProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   // console.log({idForIND, navigation});
+  console.log(`${urlForGraphics}${idForIND}`);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.secondary}}>
       <View style={{width: '100%', marginBottom: 10}}>
@@ -45,7 +46,7 @@ export const WebSide = ({route, navigation}: IPropsWebSide) => {
         />
       )}
       <WebView
-        source={{uri: 'https://www.npmjs.com/package/react-native-webview'}}
+        source={{uri: `${urlForGraphics}${idForIND}`}}
         onError={event =>
           console.log(`webview error ${event.nativeEvent.description}`)
         }

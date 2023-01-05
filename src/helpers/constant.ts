@@ -10,3 +10,5 @@ export const BASE_URL =
 // ? 'https://management-mec-panel-admin.vercel.app/api'
 // : 'https://management-mec-panel-admin.vercel.app/api';
 export const distanceCompareInKm = 0.21; //distance in Km validation
+export const urlForGraphics = 'http://localhost:3000/graphics/';
+// https://management-mec-panel-admin.vercel.app/graphics/

@@ -2,6 +2,12 @@ import {Platform, StyleSheet} from 'react-native';
 
 export const stylesCalendar = StyleSheet.create({
   //calendar
+  wrapperIcons:{
+    width: '100%',
+    alignItems: 'flex-end',
+    paddingHorizontal: 20,
+    marginTop: 6,
+  },
   wrapperHeaderText: {
     width: '100%',
     justifyContent: 'flex-start',

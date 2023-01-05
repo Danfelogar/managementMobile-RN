@@ -3,13 +3,15 @@ import {SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
 import {LocaleConfig} from 'react-native-calendars';
 import 'react-native-gesture-handler';
 import {Calendar as CalendarComponent} from 'react-native-calendars';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 import {useCalendar} from './useCalendar';
 import {stylesCalendar} from './stylesCalendar';
 import {OTsContext, UIContext} from '../../context';
 import {OTCard} from './components';
-import {ModalOT, SnackbarSuccess} from '../../components';
+import {Button, ModalOT, SnackbarSuccess} from '../../components';
 import {FormProvider} from 'react-hook-form';
+import { height } from '../../helpers';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -73,6 +75,7 @@ export const Calendar = () => {
     changeDaySelected,
     changeMonthSelected,
     changeModalUpdate,
+    logout,
   } = useCalendar();
 
   return (
@@ -83,6 +86,24 @@ export const Calendar = () => {
         barStyle="default"
       />
       <View style={{backgroundColor: secondary}}>
+        <View style={{...stylesCalendar.wrapperIcons}}>
+          <Button
+            buttonStyle={{flexDirection: 'row', alignItems: 'center'}}
+            activeOpacity={0.8}
+            lastIcon={<SimpleLineIcons
+              name="logout"
+              size={height / 36}
+              color={'#FFF'}
+            />}
+            onPress={logout}
+            textContent={
+              <Text
+                style={{...stylesCalendar.textDateTitleHeader, marginRight: 7}}>
+                Logout
+              </Text>
+            }
+          />
+        </View>
         <View style={{...stylesCalendar.wrapperHeaderText}}>
           <Text style={{...stylesCalendar.textDateTitleHeader}}>Hoy</Text>
           <Text

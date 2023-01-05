@@ -46,7 +46,7 @@ let today = new Date(
 
 export const useCalendar = () => {
   let labelToday = `${objMonth[monthName]} ${dayNumber}, ${objDay[dayName]}`;
-  const {isLoggedIn} = useContext(AuthContext);
+  const {isLoggedIn, logout} = useContext(AuthContext);
   const {
     dataOTsByMonth,
     isLoading,
@@ -303,5 +303,6 @@ export const useCalendar = () => {
     changeModalCreate,
     changeModalUpdate,
     handleCreateOrUpdateOT,
+    logout,
   };
 };

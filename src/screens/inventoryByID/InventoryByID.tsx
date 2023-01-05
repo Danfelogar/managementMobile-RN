@@ -432,6 +432,7 @@ export const InventoryByID = ({route, navigation}: Props) => {
       <SnackbarSuccess
         handleChangeSnackbar={toggleSnackBarSuccess}
         isOpen={isSnackbarSuccess}
+        isNotPlusIcon
         msmText={
           textSuccess
             ? textSuccess
