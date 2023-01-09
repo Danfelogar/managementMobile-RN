@@ -18,7 +18,6 @@ export const WebSide = ({route, navigation}: IPropsWebSide) => {
   const [progress, setProgress] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   // console.log({idForIND, navigation});
-  console.log(`${urlForGraphics}${idForIND}`);
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: colors.secondary}}>
       <View style={{width: '100%', marginBottom: 10}}>
@@ -46,7 +45,7 @@ export const WebSide = ({route, navigation}: IPropsWebSide) => {
         />
       )}
       <WebView
-        source={{uri: `${urlForGraphics}${idForIND}`}}
+        source={{uri: `${urlForGraphics}/${idForIND}`}}
         onError={event =>
           console.log(`webview error ${event.nativeEvent.description}`)
         }
@@ -55,7 +54,7 @@ export const WebSide = ({route, navigation}: IPropsWebSide) => {
         onLoadEnd={() => setIsLoaded(true)}
         onLoadProgress={({nativeEvent}) => {
           setProgress(nativeEvent.progress);
-          console.log('testing====>', nativeEvent.progress);
+          // console.log('testing====>', nativeEvent.progress);
         }}
       />
     </SafeAreaView>

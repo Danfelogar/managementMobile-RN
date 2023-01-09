@@ -67,6 +67,10 @@ export const useCalendar = () => {
   } = useContext(ThemeContext);
 
   const [daySelected, setDaySelected] = useState<string>(today);
+  const [monthAndYear, setMonthAndYear] = useState({
+    monthState: 0,
+    yearState: 0,
+  });
   const [idxIdRelationMaq, setIdxIdRelationMaq] = useState<
     Array<{label: string; value: string}>
   >([]);
@@ -152,9 +156,11 @@ export const useCalendar = () => {
   };
 
   useEffect(() => {
-    handlerIndexOfIdMaq();
-    handlerIndexOfIdRep();
-    handlerIndexOfUsersMttos();
+    handlerIndexOfIdMaq().finally(() => {
+      handlerIndexOfIdRep().finally(() => {
+        handlerIndexOfUsersMttos();
+      });
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -165,7 +171,22 @@ export const useCalendar = () => {
   };
 
   const changeMonthSelected = (month: number, year: number) => {
-    getOTsDataByMonthQAndYear(`${year}-${month}`);
+    if (month === monthAndYear.monthState && year === monthAndYear.yearState) {
+      console.log('quieto');
+      return;
+    } else if (
+      month !== monthAndYear.monthState &&
+      year !== monthAndYear.yearState
+    ) {
+      console.log(
+        'actualizado=====>',
+        {month, year},
+        monthAndYear.monthState,
+        monthAndYear.yearState,
+      );
+      getOTsDataByMonthQAndYear(`${year}-${month}`);
+      return setMonthAndYear({monthState: month, yearState: year});
+    }
   };
 
   const formMethodsCreate = useForm<IOT>({

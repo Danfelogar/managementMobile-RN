@@ -11,7 +11,7 @@ import {OTsContext, UIContext} from '../../context';
 import {OTCard} from './components';
 import {Button, ModalOT, SnackbarSuccess} from '../../components';
 import {FormProvider} from 'react-hook-form';
-import { height } from '../../helpers';
+import {height} from '../../helpers';
 
 LocaleConfig.locales.fr = {
   monthNames: [
@@ -90,11 +90,13 @@ export const Calendar = () => {
           <Button
             buttonStyle={{flexDirection: 'row', alignItems: 'center'}}
             activeOpacity={0.8}
-            lastIcon={<SimpleLineIcons
-              name="logout"
-              size={height / 36}
-              color={'#FFF'}
-            />}
+            lastIcon={
+              <SimpleLineIcons
+                name="logout"
+                size={height / 36}
+                color={'#FFF'}
+              />
+            }
             onPress={logout}
             textContent={
               <Text

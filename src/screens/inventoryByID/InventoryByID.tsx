@@ -69,10 +69,11 @@ export const InventoryByID = ({route, navigation}: Props) => {
   } = useInventoryByID({singleInventoryID, type});
 
   // console.log({singleInventory});
-
+  console.log(singleInventory?.imagenes[0]);
   return (
     <View style={{flex: 1}}>
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={{
           backgroundColor: background,
         }}>
@@ -136,9 +137,10 @@ export const InventoryByID = ({route, navigation}: Props) => {
               }}
               onError={e => setCatchError(e)}
               source={{
-                uri: !catchError
-                  ? singleInventory?.imagenes[0]
-                  : 'https://cdn-icons-png.flaticon.com/512/2748/2748558.png',
+                uri:
+                  !catchError && singleInventory
+                    ? singleInventory?.imagenes[0]
+                    : 'https://cdn-icons-png.flaticon.com/512/2748/2748558.png',
               }}
             />
           ) : (

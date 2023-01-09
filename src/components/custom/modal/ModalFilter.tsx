@@ -94,9 +94,7 @@ export const ModalFilter = () => {
               placeholder="Escribe una maquina o repuesto"
               placeholderTextColor={textSecondary}
               inputColor={textPrimary}
-              onChange={e =>
-                setStateFilters({...stateFilters, [searchName]: e})
-              }
+              onChange={e => setStateFilters({...stateFilters, searchName: e})}
               value={searchName}
             />
             <ScrollView style={{marginTop: 14}}>

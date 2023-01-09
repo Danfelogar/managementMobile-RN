@@ -68,7 +68,7 @@ export const OTsProvider: FC<Props> = ({children}) => {
     fecha_expedicion: string,
   ): Promise<IOT[]> => {
     return await managementApi
-      .get('/admin/ots', {
+      .get('/admin/otsByMonth', {
         params: {fecha_expedicion},
       })
       .then(({data}) => {
@@ -152,8 +152,9 @@ export const OTsProvider: FC<Props> = ({children}) => {
   };
 
   useEffect(() => {
-    getOTsDataByMonthQAndYear(`${yearOfDate}-${monthOfDate}`);
-    getOTsByData(today);
+    getOTsDataByMonthQAndYear(`${yearOfDate}-${monthOfDate}`).finally(() =>
+      getOTsByData(today),
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
