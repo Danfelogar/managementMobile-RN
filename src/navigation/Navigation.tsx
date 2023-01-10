@@ -1,8 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {ActivityIndicator, View} from 'react-native';
+// import {ActivityIndicator, View} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
-import {AuthContext, ThemeContext} from '../context';
+// import {AuthContext, ThemeContext} from '../context';
+import {AuthContext} from '../context';
 import {Login, Onboarding} from '../screens';
 import {TabNavigation} from './TabNavigation';
 import {WebSide} from '../screens/webSide';
@@ -20,20 +22,27 @@ const Stack = createStackNavigator<RootStackMainParams>();
 
 export const Navigation = () => {
   const {isBlockedOnboard, isLoggedIn} = useContext(AuthContext);
-  const {theme} = useContext(ThemeContext);
+  // const {theme} = useContext(ThemeContext);
   // console.log({isBlockedOnboard, isLoggedIn});
+
+  useEffect(() => {
+    if (isLoggedIn !== 'pending') {
+      SplashScreen.hide();
+    }
+  }, [isLoggedIn]);
 
   if (isLoggedIn === 'pending') {
     return (
-      <View
-        style={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-      </View>
+      <></>
+      // <View
+      //   style={{
+      //     flex: 1,
+      //     display: 'flex',
+      //     justifyContent: 'center',
+      //     alignItems: 'center',
+      //   }}>
+      //   <ActivityIndicator size="large" color={theme.colors.primary} />
+      // </View>
     );
   }
 

@@ -254,7 +254,7 @@ export const useCalendar = () => {
           toggleModalOTs();
           toggleSnackBarSuccess();
         })
-        .catch(res => {
+        .catch(() => {
           changeIsLoading();
           // console.log({res});
           // alert(res);
@@ -319,6 +319,15 @@ export const useCalendar = () => {
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     // When the component is unmounted, remove the listener
     return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    dynamicLinks()
+      .getInitialLink()
+      .then(link => {
+        handleDynamicLink(link);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

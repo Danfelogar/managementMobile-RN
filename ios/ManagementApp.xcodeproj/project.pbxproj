@@ -40,6 +40,7 @@
 		72BEFA0B28D18EF90095E2C2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72BEF9FB28D18EF90095E2C2 /* EvilIcons.ttf */; };
 		72BEFA0C28D18EF90095E2C2 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72BEF9FC28D18EF90095E2C2 /* Foundation.ttf */; };
 		72BEFA0D28D18EF90095E2C2 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72BEF9FD28D18EF90095E2C2 /* Zocial.ttf */; };
+		72D82F48296D29D100414066 /* 1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 72D82F47296D29D000414066 /* 1024.png */; };
 		7CA6B6D8AC2F48B89DE9E293 /* BungeeSpice-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD5194ACF7C14D209CD1DE7F /* BungeeSpice-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		B12BABCC55E09DA2D3934300 /* Pods_ManagementApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A4E7E8422C7B0264EC0F90 /* Pods_ManagementApp.framework */; };
@@ -90,6 +91,7 @@
 		72BEF9FB28D18EF90095E2C2 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		72BEF9FC28D18EF90095E2C2 /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		72BEF9FD28D18EF90095E2C2 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zocial.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		72D82F47296D29D000414066 /* 1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1024.png; sourceTree = "<group>"; };
 		801E35671FE54390BD14524D /* AbyssinicaSIL-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "AbyssinicaSIL-Regular.ttf"; path = "../assets/fonts/AbyssinicaSIL-Regular.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ManagementApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ManagementApp-ManagementAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManagementApp-ManagementAppTests.release.xcconfig"; path = "Target Support Files/Pods-ManagementApp-ManagementAppTests/Pods-ManagementApp-ManagementAppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				72D82F47296D29D000414066 /* 1024.png */,
 				727EAAA2296CA43800746557 /* GoogleService-Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -344,6 +347,7 @@
 				72BEFA0628D18EF90095E2C2 /* Entypo.ttf in Resources */,
 				72BEFA0A28D18EF90095E2C2 /* SimpleLineIcons.ttf in Resources */,
 				72BEFA0028D18EF90095E2C2 /* Ionicons.ttf in Resources */,
+				72D82F48296D29D100414066 /* 1024.png in Resources */,
 				72BEFA0D28D18EF90095E2C2 /* Zocial.ttf in Resources */,
 				721E7A0428E960480073DD33 /* Roboto-Black.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
