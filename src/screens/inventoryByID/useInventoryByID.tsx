@@ -15,7 +15,7 @@ import {
 import {
   ImagePickerResponse,
   launchCamera,
-  launchImageLibrary,
+  // launchImageLibrary,
 } from 'react-native-image-picker';
 import {source as Isource} from '../../components';
 import {
@@ -234,7 +234,7 @@ export const useInventoryByID = ({
 
   const getPhotographs = async (imgBase: string) => {
     return new Promise((resolve, reject) => {
-      launchImageLibrary(
+      launchCamera(
         {
           mediaType: 'photo',
           quality: 0.7,
@@ -415,7 +415,7 @@ export const useInventoryByID = ({
           askCameraPermissions().then(async resp => {
             if (resp === 'granted') {
               const getPhoto: any = await getPhotographs(res.imagenes[0]);
-              console.log({getPhoto});
+              // console.log({getPhoto});
 
               if (getPhoto.message === 'Validation fails') {
                 //TODO: hacer que funciones snackbar error
@@ -430,7 +430,7 @@ export const useInventoryByID = ({
         }
         if (res.validacionPorIMG === 'si' && cameraState === 'granted') {
           const getPhoto: any = await getPhotographs(res.imagenes[0]);
-          console.log({getPhoto});
+          // console.log({getPhoto});
 
           if (getPhoto.message === 'Validation fails') {
             //TODO: hacer que funciones snackbar error

@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>FirebaseDynamicLinksCustomDomains</key>
+	<array>
+		<string>https://managementappbydanfelogar.page.link</string>
+		<string>hhttps://admin-management.onrender.com/inventory</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

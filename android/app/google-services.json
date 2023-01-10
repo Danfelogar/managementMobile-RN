@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "484451100012",
+    "project_id": "support-managmentadmin",
+    "storage_bucket": "support-managmentadmin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484451100012:android:dd6bf945429f1ebdd3bf49",
+        "android_client_info": {
+          "package_name": "com.managementapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484451100012-l1uv3vosuc8k6t6rp45vt8aub63qucib.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.managementapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "484451100012-ktqsd9648fs8i00p0kjabb8d2l543j43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLWuASAq46_U5MJnNcwao-4nditxbw1AQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484451100012-ktqsd9648fs8i00p0kjabb8d2l543j43.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "484451100012-e1jqgq9jv8e7pi3p6ckd0cgiu6qnas17.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.managementAppByDanfelogar"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

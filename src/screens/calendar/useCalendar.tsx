@@ -1,6 +1,7 @@
-import {useNavigation} from '@react-navigation/native';
-import {useContext, useEffect, useState} from 'react';
+import {useCallback, useContext, useEffect, useState} from 'react';
 import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
+import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useForm} from 'react-hook-form';
 
@@ -172,18 +173,18 @@ export const useCalendar = () => {
 
   const changeMonthSelected = (month: number, year: number) => {
     if (month === monthAndYear.monthState && year === monthAndYear.yearState) {
-      console.log('quieto');
+      // console.log('quieto');
       return;
     } else if (
       month !== monthAndYear.monthState &&
       year !== monthAndYear.yearState
     ) {
-      console.log(
-        'actualizado=====>',
-        {month, year},
-        monthAndYear.monthState,
-        monthAndYear.yearState,
-      );
+      // console.log(
+      //   'actualizado=====>',
+      //   {month, year},
+      //   monthAndYear.monthState,
+      //   monthAndYear.yearState,
+      // );
       getOTsDataByMonthQAndYear(`${year}-${month}`);
       return setMonthAndYear({monthState: month, yearState: year});
     }
@@ -255,7 +256,7 @@ export const useCalendar = () => {
         })
         .catch(res => {
           changeIsLoading();
-          console.log({res});
+          // console.log({res});
           // alert(res);
         });
       //console.log('actualizando:', data)
@@ -284,14 +285,42 @@ export const useCalendar = () => {
             );
           }
         })
-        .catch((res: any) => {
+        .catch(() => {
           changeIsLoading();
-          console.log({res});
+          // console.log({res});
           // alert(res);
         });
       // console.log('creando', data)
     }
   };
+
+  const handleDynamicLink = useCallback(
+    async (link: any) => {
+      // Handle dynamic link inside your own application
+      if (link.url) {
+        // ...navigate to your offers screen
+        const url_nav = await link.url.split('/');
+        // console.log(url_nav[url_nav.length - 1], url_nav[url_nav.length - 2]);
+
+        navigation.navigate('Inventory', {
+          screen: 'NavigationInventoryByID',
+          params: {
+            singleInventoryID: url_nav[url_nav.length - 2],
+            type: url_nav[url_nav.length - 1],
+          },
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [navigation],
+  );
+
+  useEffect(() => {
+    const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
+    // When the component is unmounted, remove the listener
+    return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!isLoggedIn) {

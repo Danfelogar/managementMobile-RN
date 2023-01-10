@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+// import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useIsFocused} from '@react-navigation/native';
 
 import {useInventory} from './useInventory';
@@ -43,12 +43,12 @@ export const Inventory = () => {
       />
       <View style={{backgroundColor: secondary}}>
         <View style={{...stylesInventory.wrapperHeaderIcon}}>
-          <AntDesign
+          {/* <AntDesign
             name="qrcode"
             style={{marginHorizontal: 12}}
             size={31}
             color={'#fff'}
-          />
+          /> */}
           <IconFeather
             onPress={changeModalFilterInventory}
             name="filter"

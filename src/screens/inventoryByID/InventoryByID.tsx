@@ -69,7 +69,6 @@ export const InventoryByID = ({route, navigation}: Props) => {
   } = useInventoryByID({singleInventoryID, type});
 
   // console.log({singleInventory});
-  console.log(singleInventory?.imagenes[0]);
   return (
     <View style={{flex: 1}}>
       <ScrollView
@@ -84,7 +83,7 @@ export const InventoryByID = ({route, navigation}: Props) => {
           }}>
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={() => navigation.goBack()}
+            onPress={() => navigation.navigate('NavigationInventory')}
             style={{
               ...stylesInventoryByID.wrapperBtnBack,
               backgroundColor: background,
