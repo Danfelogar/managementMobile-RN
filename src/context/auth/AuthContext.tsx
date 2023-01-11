@@ -6,7 +6,7 @@ export interface ContextProps {
   isBlockedOnboard: boolean;
   user?: IUser;
   //methods
-  handleLogin: (data: ICredencial) => void;
+  handleLogin: (data: ICredencial) => Promise<void>;
   // login: (user: IUser, validate?: boolean) => void;
   logout: () => void;
   changeBlockedOnboard: () => void;

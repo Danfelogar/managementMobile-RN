@@ -27,8 +27,9 @@ export const useLogin = () => {
       return;
     }
     setIsLoading(true);
-    handleLogin(data);
-    setIsLoading(false);
+    handleLogin(data).finally(() => {
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
