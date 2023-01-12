@@ -62,9 +62,11 @@ export const AuthProvider: FC<Props> = ({children}) => {
       .then(({data}) => {
         // console.log({data});
         login(data as IUser);
+        return data;
       })
       .catch(err => {
         console.log({err});
+        return err;
       });
   };
 

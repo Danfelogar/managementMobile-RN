@@ -1,4 +1,4 @@
-package com.managementapp;
+package com.danfelogar.managementapp;
 
 import android.os.Bundle; // here
 

@@ -11,8 +11,8 @@ import {
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 
-import {Button, InputGeneric} from '../../components';
-import {height, ICredencial} from '../../helpers';
+import {Button, InputGeneric, SnackbarError} from '../../components';
+import {height, ICredencial, width} from '../../helpers';
 import {stylesLogin} from './stylesLogin';
 import {useLogin} from './useLogin';
 import {FormProvider, useFormContext} from 'react-hook-form';
@@ -25,8 +25,11 @@ const LoginForm = () => {
     secondary,
     card,
     isLoading,
+    textError,
+    isSnackbarError,
     changePasswordSecret,
     validateCredentialsLogin,
+    toggleSnackBarError,
   } = useLogin();
   const {control, handleSubmit: onSubmit} = useFormContext<ICredencial>();
   return (
@@ -86,6 +89,18 @@ const LoginForm = () => {
           }
         />
       </View>
+      <SnackbarError
+        handleChangeSnackbar={toggleSnackBarError}
+        isOpen={isSnackbarError}
+        styled={{
+          left: -width / (Platform.OS === 'ios' ? 2.21 : 2.25),
+        }}
+        msmText={
+          textError
+            ? textError
+            : 'ha ocurrido un error al iniciar sesión por favor inténtelo mas tarde'
+        }
+      />
     </>
   );
 };

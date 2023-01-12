@@ -3,16 +3,18 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import {useNavigation} from '@react-navigation/native';
 
-import {AuthContext, ThemeContext} from '../../context';
+import {AuthContext, ThemeContext, UIContext} from '../../context';
 import {ICredencial} from '../../helpers/types';
 import {validateLogin} from '../../helpers';
 
 export const useLogin = () => {
   const {isLoggedIn, handleLogin} = useContext(AuthContext);
+  const {toggleSnackBarError, isSnackbarError} = useContext(UIContext);
   const navigation = useNavigation<any>();
 
   const [isPasswordSecret, setIsPasswordSecret] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [textError, setTextError] = useState<string | undefined>(undefined);
 
   const formMethods = useForm<ICredencial>({
     resolver: yupResolver(validateLogin),
@@ -27,9 +29,20 @@ export const useLogin = () => {
       return;
     }
     setIsLoading(true);
-    handleLogin(data).finally(() => {
-      setIsLoading(false);
-    });
+    handleLogin(data)
+      .then(res => {
+        if (!res?.token) {
+          toggleSnackBarError();
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
+        setTextError(err.message);
+        toggleSnackBarError();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -63,10 +76,13 @@ export const useLogin = () => {
     card,
     isPasswordSecret,
     isLoading,
+    textError,
+    isSnackbarError,
     //methods
     formMethods,
     //functions
     changePasswordSecret,
     validateCredentialsLogin,
+    toggleSnackBarError,
   };
 };
