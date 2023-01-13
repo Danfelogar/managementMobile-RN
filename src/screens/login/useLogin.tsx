@@ -15,7 +15,6 @@ export const useLogin = () => {
   const [isPasswordSecret, setIsPasswordSecret] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [textError, setTextError] = useState<string | undefined>(undefined);
-
   const formMethods = useForm<ICredencial>({
     resolver: yupResolver(validateLogin),
   });

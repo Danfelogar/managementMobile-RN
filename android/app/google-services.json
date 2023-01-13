@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:484451100012:android:dd6bf945429f1ebdd3bf49",
+        "mobilesdk_app_id": "1:484451100012:android:c5ba1bbe94130d70d3bf49",
         "android_client_info": {
           "package_name": "com.danfelogar.managementapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "484451100012-l1uv3vosuc8k6t6rp45vt8aub63qucib.apps.googleusercontent.com",
+          "client_id": "484451100012-mmr0udho51t2rbhjuq8k8hog23bfp7rp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.danfelogar.managementapp",
