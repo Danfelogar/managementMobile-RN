@@ -72,7 +72,7 @@ export const TabNavigation = () => {
                   onPress={() => {
                     if (routeIdx === 0) {
                       changeModalCreate();
-                    } else if (routeIdx === 2) {
+                    } else if (routeIdx !== 2) {
                       return;
                     }
                   }}

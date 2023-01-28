@@ -6,6 +6,7 @@ import {
   PERMISSIONS,
   PermissionStatus,
   request,
+  // requestMultiple,
 } from 'react-native-permissions';
 import {PermissionsContext} from './PermissionsContext';
 import {PermissionsReducer} from './permissionsReducer';
@@ -74,6 +75,7 @@ export const PermissionsProvider: FC<Props> = ({children}) => {
 
   const askCameraPermissions = async () => {
     let permissionStatus: PermissionStatus;
+    // let sad: any;
 
     if (Platform.OS === 'ios') {
       //   permissionStatus = await check(PERMISSIONS.IOS.CAMERA);
@@ -84,11 +86,16 @@ export const PermissionsProvider: FC<Props> = ({children}) => {
       });
     } else {
       //   permissionStatus = await check(PERMISSIONS.ANDROID.CAMERA);
+      // sad = await requestMultiple([
+      //   PERMISSIONS.ANDROID.CAMERA,
+      //   PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+      // ]);
       permissionStatus = await request(PERMISSIONS.ANDROID.CAMERA);
       dispatch({
         type: '[PERMISSIONS] Get Camera Permissions Status',
         payload: permissionStatus,
       });
+      // console.log({sad, permissionStatus});
     }
 
     if (permissionStatus === 'blocked' || permissionStatus === 'limited') {

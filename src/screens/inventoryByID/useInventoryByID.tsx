@@ -106,7 +106,7 @@ export const useInventoryByID = ({
   };
 
   useEffect(() => {
-    if (singleInventoryID) {
+    if (singleInventoryID && singleInventory === undefined) {
       if (type === 'maquina') {
         getSingleMachineData(singleInventoryID).then(res =>
           setSingleInventory(res[0]),
@@ -118,7 +118,7 @@ export const useInventoryByID = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [singleInventoryID,type]);
 
   const formMethodsCreate = useForm<ISeguimiento>({
     resolver: yupResolver(validationCreateFollow),

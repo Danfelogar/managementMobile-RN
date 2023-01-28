@@ -4,7 +4,7 @@ export const BASE_URL =
   Platform.OS === 'android'
     ? 'https://admin-management.onrender.com/api'
     : 'https://admin-management.onrender.com/api';
-// ? 'http://10.0.2.2:3000/api'
+//   ?'http://10.0.2.2:3000/api'
 // : 'http://localhost:3000/api';
 // 'https://managementpaneladmin.up.railway.app/api'
 // https://management-mec-panel-admin.vercel.app/

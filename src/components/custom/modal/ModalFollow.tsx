@@ -41,7 +41,6 @@ export const ModalFollow = ({
   const [idxIdRelationMaq, setIdxIdRelationMaq] = useState<
     Array<{label: string; value: string}>
   >([]);
-
   const handlerIndexOfIdMaq = async () => {
     await managementApi
       .get('/admin/inventorysMaq')
@@ -278,17 +277,21 @@ export const ModalFollow = ({
                 }}>
                 Maquina de relación
               </Text>
-              <View style={{marginBottom: 13}}>
-                <InputSelect
-                  borderColor={colors.secondary}
-                  control={control}
-                  name="maquina_id_relacion"
-                  placeholder="MAQ_YYYY"
-                  colorValueSelected={colors.textPrimary}
-                  placeholderTextColor={colors.textSecondary}
-                  itemArr={idxIdRelationMaq}
-                />
-              </View>
+              {
+                idxIdRelationMaq &&(
+                  <View style={{marginBottom: 13}}>
+                    <InputSelect
+                      borderColor={colors.secondary}
+                      control={control}
+                      name="maquina_id_relacion"
+                      placeholder="MAQ_YYYY"
+                      colorValueSelected={colors.textPrimary}
+                      placeholderTextColor={colors.textSecondary}
+                      itemArr={idxIdRelationMaq}
+                    />
+                  </View>
+                )
+              }
               <View style={{marginBottom: 15}}>
                 <Button
                   isLoading={isLoading}

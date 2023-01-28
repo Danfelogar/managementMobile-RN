@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Platform, StyleSheet, Text, View} from 'react-native';
 import {
   ImagePickerResponse,
   launchCamera,
@@ -98,40 +98,79 @@ export const InputSingleImage = ({
         };
 
         const takePhotoByGallery = () => {
-          if (galleryState !== 'granted') {
-            askGalleryPermissions().then(res => {
-              if (res === 'granted') {
-                launchImageLibrary(
-                  {
-                    mediaType: 'photo',
-                    quality: 0.7,
-                  },
-                  ({assets, didCancel, errorMessage}: ImagePickerResponse) => {
-                    if (didCancel) {
-                      return;
-                    }
-                    if (!assets) {
-                      return;
-                    }
-                    if (errorMessage) {
-                      return console.log({errorMessage});
-                    }
-                    // console.log({assets});
-                    const uri = assets[0]?.uri;
-                    const type = assets[0]?.type;
-                    const name = assets[0]?.fileName;
-                    const source = {
-                      uri,
-                      type,
-                      name,
-                    };
-                    onFilesSelected(source);
-                  },
-                );
-              }
-            });
-          }
-          if (galleryState === 'granted') {
+          // console.log('hola galería', Platform.Version);
+          if (Platform.OS === 'android' && Platform.Version > 32) {
+            //console.log('entro aquí 1');
+            if (galleryState !== 'granted') {
+              askGalleryPermissions().then(res => {
+                // console.log({res});
+                if (res === 'granted') {
+                  launchImageLibrary(
+                    {
+                      mediaType: 'photo',
+                      quality: 0.7,
+                    },
+                    ({
+                      assets,
+                      didCancel,
+                      errorMessage,
+                    }: ImagePickerResponse) => {
+                      if (didCancel) {
+                        return;
+                      }
+                      if (!assets) {
+                        return;
+                      }
+                      if (errorMessage) {
+                        return console.log({errorMessage});
+                      }
+                      // console.log({assets});
+                      const uri = assets[0]?.uri;
+                      const type = assets[0]?.type;
+                      const name = assets[0]?.fileName;
+                      const source = {
+                        uri,
+                        type,
+                        name,
+                      };
+                      onFilesSelected(source);
+                    },
+                  );
+                }
+              });
+            }
+            if (galleryState === 'granted') {
+              launchImageLibrary(
+                {
+                  mediaType: 'photo',
+                  quality: 0.7,
+                },
+                ({assets, didCancel, errorMessage}: ImagePickerResponse) => {
+                  if (didCancel) {
+                    return;
+                  }
+                  if (!assets) {
+                    return;
+                  }
+                  if (errorMessage) {
+                    return console.log({errorMessage});
+                  }
+                  //console.log({assets});
+                  const uri = assets[0]?.uri;
+                  const type = assets[0]?.type;
+                  const name = assets[0]?.fileName;
+                  const source = {
+                    uri,
+                    type,
+                    name,
+                  };
+
+                  onFilesSelected(source);
+                },
+              );
+            }
+          } else if (Platform.OS === 'android' && Platform.Version < 33) {
+            //console.log('entro aquí 11');
             launchImageLibrary(
               {
                 mediaType: 'photo',
@@ -147,7 +186,7 @@ export const InputSingleImage = ({
                 if (errorMessage) {
                   return console.log({errorMessage});
                 }
-                // console.log({assets});
+                //console.log({assets});
                 const uri = assets[0]?.uri;
                 const type = assets[0]?.type;
                 const name = assets[0]?.fileName;
@@ -156,9 +195,80 @@ export const InputSingleImage = ({
                   type,
                   name,
                 };
+
                 onFilesSelected(source);
               },
             );
+          } else if (Platform.OS === 'ios') {
+            //console.log('entro aquí 111');
+            if (galleryState !== 'granted') {
+              askGalleryPermissions().then(res => {
+                // console.log({res});
+                if (res === 'granted') {
+                  launchImageLibrary(
+                    {
+                      mediaType: 'photo',
+                      quality: 0.7,
+                    },
+                    ({
+                      assets,
+                      didCancel,
+                      errorMessage,
+                    }: ImagePickerResponse) => {
+                      if (didCancel) {
+                        return;
+                      }
+                      if (!assets) {
+                        return;
+                      }
+                      if (errorMessage) {
+                        return console.log({errorMessage});
+                      }
+                      // console.log({assets});
+                      const uri = assets[0]?.uri;
+                      const type = assets[0]?.type;
+                      const name = assets[0]?.fileName;
+                      const source = {
+                        uri,
+                        type,
+                        name,
+                      };
+                      onFilesSelected(source);
+                    },
+                  );
+                }
+              });
+            }
+            if (galleryState === 'granted') {
+              launchImageLibrary(
+                {
+                  mediaType: 'photo',
+                  quality: 0.7,
+                },
+                ({assets, didCancel, errorMessage}: ImagePickerResponse) => {
+                  if (didCancel) {
+                    return;
+                  }
+                  if (!assets) {
+                    return;
+                  }
+                  if (errorMessage) {
+                    return console.log({errorMessage});
+                  }
+                  //console.log({assets});
+                  const uri = assets[0]?.uri;
+                  const type = assets[0]?.type;
+                  const name = assets[0]?.fileName;
+                  const source = {
+                    uri,
+                    type,
+                    name,
+                  };
+
+                  onFilesSelected(source);
+                },
+              );
+            }
           }
         };
 
@@ -178,11 +288,35 @@ export const InputSingleImage = ({
 
             formData.append('file', target);
             //el 'file' es el nombre que recibe la propiedad podia ser el nombre que quisieras
-            const {data} = await managementApi.post<{message: string}>(
-              '/upload',
-              formData,
-            );
-
+            // const {data} = await managementApi.post<{message: string}>(
+            //   '/upload',
+            //   {
+            //     headers: {
+            //       Accept: 'application/json, text/plain, */*',
+            //       'Content-Type': 'multipart/form-data',
+            //       'accept-language': 'es-ES,es;q=0.9,en;q=0.8',
+            //       'Access-Control-Allow-Origin': '*',
+            //     },
+            //     data: formData,
+            //   },
+            // );
+            // .then(res => {
+            //   console.log('respuesta', res);k
+            // })
+            // .catch(error1 => {
+            //   console.log({error1});
+            // });
+            const {data} = await managementApi({
+              method: 'post',
+              url: '/upload',
+              headers: {
+                      Accept: 'application/json, text/plain, */*',
+                      'Content-Type': 'multipart/form-data',
+                      'accept-language': 'es-ES,es;q=0.9,en;q=0.8',
+                      'Access-Control-Allow-Origin': '*',
+                    },
+                    data: formData,
+            })
             //console.log(data);
             //seteamos la nueva imagen traida del backend con cloudinary en el formulario con useForm y renderizamos de una
             onChange(data.message);

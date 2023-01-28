@@ -69,6 +69,7 @@ export const InventoryByID = ({route, navigation}: Props) => {
   } = useInventoryByID({singleInventoryID, type});
 
   // console.log({singleInventory});
+  console.log('xDaIuda :(',singleInventory?.imagenes[0]);
   return (
     <View style={{flex: 1}}>
       <ScrollView
