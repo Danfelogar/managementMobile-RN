@@ -36,4 +36,4 @@ y reemplazarlo con lo siguiente:
 
 para compatibilidad del snap-carousel
 npx patch-package react-native
-node_modules/react-native/index.js
+node_modules/react-native/index.js 
