@@ -33,3 +33,7 @@ y reemplazarlo con lo siguiente:
 -comentar una de las lineas de los logs que te salen en pantalla
 
 - tanto este error como el otro se muestran cuando se hace yarn install por primera vez o se instala una librería es necesario hacer estos pasos todas las veces
+
+para compatibilidad del snap-carousel
+npx patch-package react-native
+node_modules/react-native/index.js
