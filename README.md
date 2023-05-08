@@ -37,3 +37,14 @@ y reemplazarlo con lo siguiente:
 para compatibilidad del snap-carousel
 npx patch-package react-native
 node_modules/react-native/index.js 
+
+
+##Link de la play store
+https://play.google.com/store/apps/details?id=com.danfelogar.managementapp
+
+## Link del video en youtube
+[![Alt text](https://img.youtube.com/vi/STUuUnjB5Y0/0.jpg)](https://www.youtube.com/watch?v=STUuUnjB5Y0)
+
+## Credenciales:
+user: bodega@bodega.com
+password: secret
