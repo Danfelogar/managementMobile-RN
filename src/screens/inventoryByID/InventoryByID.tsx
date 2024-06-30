@@ -240,7 +240,7 @@ export const InventoryByID = ({route, navigation}: Props) => {
                     ...stylesInventoryByID.textContentCard,
                     color: textPrimary,
                   }}>
-                  Entrada:{' '}
+                  Entrada para actualizar:{' '}
                   {moment(new Date(singleInventory?.fechaDeEntrada!)).format(
                     'YYYY-MM-DD',
                   )}
