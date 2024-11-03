@@ -118,7 +118,7 @@ export const useInventoryByID = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [singleInventoryID,type]);
+  }, [singleInventoryID, type]);
 
   const formMethodsCreate = useForm<ISeguimiento>({
     resolver: yupResolver(validationCreateFollow),
